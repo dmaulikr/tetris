@@ -7,8 +7,7 @@
 //
 
 #import "PieceView.h"
-
-#define kGridSize 32
+#import "GameController.h"
 
 @implementation PieceView
 
@@ -116,6 +115,7 @@
     }
     
 }
+
 
 
 @end

@@ -20,6 +20,7 @@
 		5815961C1724D33C00046DFD /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5815961A1724D33C00046DFD /* ViewController_iPhone.xib */; };
 		5815961F1724D33C00046DFD /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5815961D1724D33C00046DFD /* ViewController_iPad.xib */; };
 		660EB3331725EDCD002C493E /* PieceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 660EB3321725EDCD002C493E /* PieceView.m */; };
+		660EB33C172607BC002C493E /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660EB33B172607BB002C493E /* GameController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,8 @@
 		5815961E1724D33C00046DFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		660EB3311725EDCD002C493E /* PieceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceView.h; sourceTree = "<group>"; };
 		660EB3321725EDCD002C493E /* PieceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieceView.m; sourceTree = "<group>"; };
+		660EB33A172607BB002C493E /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		660EB33B172607BB002C493E /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 				581596061724D33B00046DFD /* Supporting Files */,
 				660EB3311725EDCD002C493E /* PieceView.h */,
 				660EB3321725EDCD002C493E /* PieceView.m */,
+				660EB33A172607BB002C493E /* GameController.h */,
+				660EB33B172607BB002C493E /* GameController.m */,
 			);
 			path = Tetris360;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 				581596101724D33B00046DFD /* AppDelegate.m in Sources */,
 				581596191724D33C00046DFD /* ViewController.m in Sources */,
 				660EB3331725EDCD002C493E /* PieceView.m in Sources */,
+				660EB33C172607BC002C493E /* GameController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

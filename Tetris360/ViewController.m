@@ -8,16 +8,17 @@
 
 #import "ViewController.h"
 
+
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+@synthesize movingPieceView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -26,22 +27,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (IBAction)generatePiece:(id)sender{
-    //remove old pieces
-    for (UIView *subview in [self.view subviews]) {
-        if ([subview isKindOfClass:[PieceView class]]) {
-            [subview removeFromSuperview];
-        }
+- (IBAction)startGameClickeed:(id)sender{
+    if ([[GameController shareManager] gameStatus] == GameRunning) {
+        [[GameController shareManager] pauseGame];
+        [[GameController shareManager] setGameStatus:GamePaused];
+        [self.startButton setTitle:@"Play" forState:UIControlStateNormal];
     }
-
-    //generate a random tetris piece
-    int randomNumber = rand()%7; //7 types of pieces
-
-    PieceView *onePieceView = [[PieceView alloc] initWithPieceType:randomNumber];
-
-    [self.view addSubview: onePieceView];
+    else if([[GameController shareManager] gameStatus] == GamePaused) {
+        [[GameController shareManager] startGame];
+        [[GameController shareManager] setGameStatus:GameRunning];
+        [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
+        movingPieceView = [[GameController shareManager] generatePiece];
+        [self.view addSubview:movingPieceView];
+    }
 }
 
+- (IBAction)leftClicked:(id)sender{
+    [[GameController shareManager] movePieceLeft];
+}
+
+
+- (IBAction)rightClicked:(id)sender{
+    [[GameController shareManager] movePieceRight];
+}
 
 @end

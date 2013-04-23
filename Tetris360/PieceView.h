@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#define kGridSize 32
 typedef enum{
     PieceTypeI = 0, // □□□□
 
@@ -38,5 +38,6 @@ typedef enum{
 @property (nonatomic, assign) CGPoint pieceOriginLocation;
 
 - (id)initWithPieceType:(PieceType)type;
+
 
 @end

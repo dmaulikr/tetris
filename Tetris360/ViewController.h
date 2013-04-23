@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "PieceView.h"
+#import "GameController.h"
+
 
 @interface ViewController : UIViewController
 
 
-- (IBAction)generatePiece:(id)sender;
+@property (nonatomic, retain) IBOutlet UIButton *startButton;
+@property (nonatomic, retain) PieceView *movingPieceView;
+
+- (IBAction)startGameClickeed:(id)sender;
+- (IBAction)leftClicked:(id)sender;
+- (IBAction)rightClicked:(id)sender;
+
 @end
