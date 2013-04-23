@@ -26,4 +26,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction)generatePiece:(id)sender{
+    //remove old pieces
+    for (UIView *subview in [self.view subviews]) {
+        if ([subview isKindOfClass:[PieceView class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+
+    //generate a random tetris piece
+    int randomNumber = rand()%7; //7 types of pieces
+
+    PieceView *onePieceView = [[PieceView alloc] initWithPieceType:randomNumber];
+
+    [self.view addSubview: onePieceView];
+}
+
+
 @end

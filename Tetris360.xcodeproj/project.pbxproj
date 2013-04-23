@@ -19,6 +19,7 @@
 		581596191724D33C00046DFD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 581596181724D33C00046DFD /* ViewController.m */; };
 		5815961C1724D33C00046DFD /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5815961A1724D33C00046DFD /* ViewController_iPhone.xib */; };
 		5815961F1724D33C00046DFD /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5815961D1724D33C00046DFD /* ViewController_iPad.xib */; };
+		660EB3331725EDCD002C493E /* PieceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 660EB3321725EDCD002C493E /* PieceView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		581596181724D33C00046DFD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5815961B1724D33C00046DFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		5815961E1724D33C00046DFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		660EB3311725EDCD002C493E /* PieceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceView.h; sourceTree = "<group>"; };
+		660EB3321725EDCD002C493E /* PieceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieceView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 				5815961A1724D33C00046DFD /* ViewController_iPhone.xib */,
 				5815961D1724D33C00046DFD /* ViewController_iPad.xib */,
 				581596061724D33B00046DFD /* Supporting Files */,
+				660EB3311725EDCD002C493E /* PieceView.h */,
+				660EB3321725EDCD002C493E /* PieceView.m */,
 			);
 			path = Tetris360;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				5815960C1724D33B00046DFD /* main.m in Sources */,
 				581596101724D33B00046DFD /* AppDelegate.m in Sources */,
 				581596191724D33C00046DFD /* ViewController.m in Sources */,
+				660EB3331725EDCD002C493E /* PieceView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +318,7 @@
 				581596241724D33C00046DFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

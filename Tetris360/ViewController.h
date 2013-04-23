@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PieceView.h"
 
 @interface ViewController : UIViewController
 
+
+- (IBAction)generatePiece:(id)sender;
 @end
