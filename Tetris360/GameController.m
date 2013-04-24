@@ -218,6 +218,145 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
     }
 }
 
+
+- (void)movePieceLeft{
+    //check colision
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
+    int row = potentialFrame.origin.y/kGridSize;
+
+    BOOL hittingAPiece = NO;
+
+    switch (self.currentPieceView.pieceType) {
+        case PieceTypeI:
+            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeO:
+            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeJ:
+            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeL:
+            if (pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row][(column +1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeS:
+            if (pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row][column%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeT:
+            if (pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row][column%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeZ:
+            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][column%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeNone:
+            break;
+    }
+
+    if (!hittingAPiece) {
+        [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x - kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+    }
+}
+
+
+
+- (void)movePieceRight{
+    //check colision
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
+    int row = potentialFrame.origin.y/kGridSize;
+
+    BOOL hittingAPiece = NO;
+
+    switch (self.currentPieceView.pieceType) {
+        case PieceTypeI:
+            if (pieceStack[row][(column + 4)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeO:
+            if (pieceStack[row][(column + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN  + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeJ:
+            if (pieceStack[row][(column + 1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeL:
+            if (pieceStack[row][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeS:
+            if (pieceStack[row][(column + kNUMBER_OF_COLUMN  + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN  + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeT:
+            if (pieceStack[row][(column + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeZ:
+            if (pieceStack[row][(column + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
+                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
+            {
+                hittingAPiece = YES;
+            }
+            break;
+        case PieceTypeNone:
+            break;
+    }
+
+    if (!hittingAPiece) {
+        [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+    }
+
+}
+
+
+
+
 - (void)recordBitmapWithCurrenetPiece{
     int column = self.currentPieceView.frame.origin.x/kGridSize + self.columnOffset;
     int row = self.currentPieceView.frame.origin.y/kGridSize;
@@ -283,13 +422,6 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
     //    [self.delegate recordRectAtx:column andRow:row withType:type];
 }
 
-- (void)movePieceLeft{
-    [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x - kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
-}
-
-- (void)movePieceRight{
-    [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
-}
 
 - (void)moveToColumn:(NSInteger)column
 {
