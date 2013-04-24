@@ -7,6 +7,7 @@
 //
 
 #import "StackView.h"
+#import "GameController.h"
 
 @implementation StackView
 
@@ -15,6 +16,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -25,8 +27,19 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    [[PieceView getColorOfType:self.currentPieceType] setFill];
-    UIRectFill( rect );
+
+    for (int i = 0; i < kNUMBER_OF_ROW; i++) {
+        for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
+            int type = [[GameController alloc] getTypeAtLocationX:j andY:i];
+            if (type) {
+                CGRect rectangle = CGRectMake(i * kGridSize, j * kGridSize, kGridSize, kGridSize);
+                [[PieceView getColorOfType:type] setFill];
+                UIRectFill( rectangle );
+            }
+
+        }
+    }
+    
 }
 
 

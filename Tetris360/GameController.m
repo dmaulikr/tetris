@@ -233,13 +233,17 @@
         default:
             break;
     }
+    [self.delegate updateStackView];
+}
 
+- (int)getTypeAtLocationX:(int)x andY:(int)y{
+    return pieceStack[x][y];
 }
 
 - (void)updateViewAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
     pieceStack[xLocation][yLocation] = type;
     //update pieceStackView
-    [self.delegate recordRectAtx:xLocation andY:yLocation withType:type];
+//    [self.delegate recordRectAtx:xLocation andY:yLocation withType:type];
 }
 
 - (void)movePieceLeft{

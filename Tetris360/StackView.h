@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "PieceView.h"
 
-@interface StackView : UIView
+@interface StackView : UIView{
 
+}
 
 @property (nonatomic, assign) PieceType currentPieceType;
+
 @end

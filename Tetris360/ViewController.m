@@ -30,9 +30,9 @@
 {
     [super viewDidLoad];
 
-//    [self.view addSubview:self.pieceStackView];
     [self setupCameraView];
     [self setupCompass];
+    [self setupStackView];
 }
 
 - (void)setupCompass
@@ -61,6 +61,17 @@
     [self.cameraView.layer addSublayer:self.previewLayer];
 }
 
+
+- (void)setupStackView
+{
+    self.pieceStackView  = [[StackView alloc] initWithFrame:CGRectMake(0, 0, kGridSize * kNUMBER_OF_COLUMN, kGridSize * kNUMBER_OF_ROW)];
+    [self.view addSubview:self.pieceStackView];
+    [self.view bringSubviewToFront:self.startButton];
+    [self.view bringSubviewToFront:self.leftButton];
+    [self.view bringSubviewToFront:self.rightButton];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -86,6 +97,11 @@
         [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
         [[GameController shareManager] resumeGame];
     }
+}
+
+- (void)updateStackView{
+    //TODO - add offset from compass to draw only one section
+    [self.pieceStackView drawRect:self.pieceStackView.bounds];
 }
 
 - (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
