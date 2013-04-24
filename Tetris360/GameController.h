@@ -25,12 +25,11 @@ typedef enum{
 @required
 - (void)dropNewPiece;
 - (void)removeCurrentPiece;
-- (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type;
 - (void)updateStackView;
 @end
 
 @interface GameController : NSObject{
-    PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
+    
 }
 
 + (id)shareManager;
@@ -55,7 +54,7 @@ typedef enum{
 - (PieceView *)generatePiece;
 - (void)movePieceLeft;
 - (void)movePieceRight;
-- (PieceType)getTypeAtLocationX:(int)x andY:(int)y;
+- (PieceType)getTypeAtRow:(int)row andColumn:(int)column;
 - (void)didChangeHeading:(NSInteger)heading;
 
 @end

@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
 
-//    [self setupCameraView];
-//    [self setupCompass];
+    [self setupCameraView];
+    [self setupCompass];
     [self setupStackView];
 }
 
@@ -65,7 +65,6 @@
 - (void)setupStackView
 {
     self.pieceStackView  = [[StackView alloc] initWithFrame:CGRectMake(0, 0, kGridSize * kNUMBER_OF_COLUMN, kGridSize * kNUMBER_OF_ROW)];
-    self.pieceStackView.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.pieceStackView];
     [self.view bringSubviewToFront:self.startButton];
     [self.view bringSubviewToFront:self.leftButton];
@@ -103,12 +102,6 @@
 - (void)updateStackView{
     //TODO - add offset from compass to draw only one section
     [self.pieceStackView setNeedsDisplayInRect:self.pieceStackView.bounds];
-}
-
-- (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
-    CGRect rect = CGRectMake(xLocation * kGridSize, yLocation * kGridSize, kGridSize, kGridSize);
-    self.pieceStackView.currentPieceType = type;
-    [self.pieceStackView setNeedsDisplayInRect:rect];
 }
 
 - (void)dropNewPiece{

@@ -30,13 +30,12 @@
 
     for (int i = 0; i < kNUMBER_OF_ROW; i++) {
         for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
-            PieceType type = [[GameController alloc] getTypeAtLocationX:j andY:i];
+            PieceType type = [[GameController alloc] getTypeAtRow:i andColumn:j];
             if (type != PieceTypeNone) {
                 CGRect rectangle = CGRectMake(i * kGridSize, j * kGridSize, kGridSize, kGridSize);
                 UIColor *color = [PieceView getColorOfType:type];
                 [color setFill];
-                CGContextRef context = UIGraphicsGetCurrentContext();
-                CGContextClearRect(context, rectangle);
+                UIRectFill(rectangle);
             }
 
         }

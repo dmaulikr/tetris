@@ -10,6 +10,8 @@
 #import "ViewController.h"
 #import "PieceView.h"
 
+static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
+
 @interface GameController ()
 
 @property (assign) NSInteger newPieceHeading;
@@ -40,9 +42,9 @@
         self.gameLevel = 12; //the higher the level, the faster the dropping speed
         
         //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
-        for (int i = 0; i < kNUMBER_OF_ROW; i++) {
-            for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
-                pieceStack[i][j] = PieceTypeNone;
+        for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
+            for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+                pieceStack[row_index][column_index] = 0;
             }
         }
     }
@@ -93,72 +95,72 @@
 
 - (void)movePieceDown {
     CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int xLocation = potentialFrame.origin.x/kGridSize + self.offset;
-    int yLocation = potentialFrame.origin.y/kGridSize;
+    int column = potentialFrame.origin.x/kGridSize + self.offset;
+    int row = potentialFrame.origin.y/kGridSize;
     
     BOOL hittingTheFloor = !(self.currentPieceView.frame.origin.y < kGridSize*(kNUMBER_OF_ROW - self.currentPieceView.frame.size.height/kGridSize));
     BOOL hittingAPiece = NO;
     
     switch (self.currentPieceView.pieceType) {
         case PieceTypeI:
-            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 2][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 3][yLocation] != PieceTypeNone)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 2][row] != PieceTypeNone ||
+                pieceStack[column + 3][row] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeO:
-            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeJ:
-            if (pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation][yLocation + 2] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 2] != PieceTypeNone)
+            if (pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column][row + 2] != PieceTypeNone ||
+                pieceStack[column + 1][row + 2] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeL:
-            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation][yLocation + 2] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 2] != PieceTypeNone)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column][row + 2] != PieceTypeNone ||
+                pieceStack[column + 1][row + 2] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeS:
-            if (pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation + 2][yLocation] != PieceTypeNone)
+            if (pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column + 2][row] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeT:
-            if (pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation + 2][yLocation + 1] != PieceTypeNone)
+            if (pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column + 2][row + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeZ:
-            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
-                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
-                pieceStack[xLocation + 2][yLocation + 1] != PieceTypeNone)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column + 2][row + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
@@ -185,54 +187,53 @@
 }
 
 - (void)recordBitmapWithCurrenetPiece{
-    
-    int xLocation = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
-    int yLocation = self.currentPieceView.frame.origin.y/kGridSize;
+    int column = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
+    int row = self.currentPieceView.frame.origin.y/kGridSize;
 
     //TODO - consider rotation and fit the piece to bitmap accordingly
     int type = self.currentPieceView.pieceType;
     switch (type) {
         case PieceTypeI:
-            [self updateViewAtx:xLocation andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+2 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+3 andY:yLocation withType:type];            
+            [self updateViewAtx:column andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row withType:type];
+            [self updateViewAtx:column+2 andY:row withType:type];
+            [self updateViewAtx:column+3 andY:row withType:type];            
             break;
         case PieceTypeO:
-            [self updateViewAtx:xLocation andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
+            [self updateViewAtx:column andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row withType:type];
+            [self updateViewAtx:column andY:row+1 withType:type];
+            [self updateViewAtx:column+1 andY:row+1 withType:type];
             break;
         case PieceTypeJ:
-            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation andY:yLocation+2 withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+2 withType:type];
+            [self updateViewAtx:column+1 andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row+1 withType:type];
+            [self updateViewAtx:column andY:row+2 withType:type];
+            [self updateViewAtx:column+1 andY:row+2 withType:type];
             break;
         case PieceTypeL:
-            [self updateViewAtx:xLocation andY:yLocation withType:type];
-            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation andY:yLocation+2 withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+2 withType:type];
+            [self updateViewAtx:column andY:row withType:type];
+            [self updateViewAtx:column andY:row+1 withType:type];
+            [self updateViewAtx:column andY:row+2 withType:type];
+            [self updateViewAtx:column+1 andY:row+2 withType:type];
             break;
         case PieceTypeS:
-            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation+2 andY:yLocation withType:type];
+            [self updateViewAtx:column andY:row+1 withType:type];
+            [self updateViewAtx:column+1 andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row+1 withType:type];
+            [self updateViewAtx:column+2 andY:row withType:type];
             break;
         case PieceTypeT:
-            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation+2 andY:yLocation+1 withType:type];
+            [self updateViewAtx:column andY:row+1 withType:type];
+            [self updateViewAtx:column+1 andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row+1 withType:type];
+            [self updateViewAtx:column+2 andY:row+1 withType:type];
             break;
         case PieceTypeZ:
-            [self updateViewAtx:xLocation andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
-            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
-            [self updateViewAtx:xLocation+2 andY:yLocation+1 withType:type];
+            [self updateViewAtx:column andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row withType:type];
+            [self updateViewAtx:column+1 andY:row+1 withType:type];
+            [self updateViewAtx:column+2 andY:row+1 withType:type];
             break;
         default:
             break;
@@ -240,14 +241,14 @@
     [self.delegate updateStackView];
 }
 
-- (PieceType)getTypeAtLocationX:(int)x andY:(int)y{
-    return pieceStack[x][y];
+- (PieceType)getTypeAtRow:(int)row andColumn:(int)column{
+    return pieceStack[row][column];
 }
 
-- (void)updateViewAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
-    pieceStack[yLocation][xLocation] = type;
+- (void)updateViewAtx:(int)column andY: (int)row withType:(PieceType)type{
+    pieceStack[row][column] = type;
     //update pieceStackView
-//    [self.delegate recordRectAtx:xLocation andY:yLocation withType:type];
+//    [self.delegate recordRectAtx:column andY:row withType:type];
 }
 
 - (void)movePieceLeft{
