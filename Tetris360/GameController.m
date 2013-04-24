@@ -295,11 +295,11 @@ float nfmod(float a,float b)
 }
 
 - (void)movePieceLeft{
-    [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x - kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+    [self moveToColumn:self.columnOffset-1];
 }
 
 - (void)movePieceRight{
-    [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+    [self moveToColumn:self.columnOffset+1];
 }
 
 - (void)moveToColumn:(NSInteger)column
