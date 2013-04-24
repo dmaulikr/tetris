@@ -100,64 +100,64 @@
     
     switch (self.currentPieceView.pieceType) {
         case PieceTypeI:
-            if (pieceStack[column][row] != 0 ||
-                pieceStack[column + 1][row] != 0 ||
-                pieceStack[column + 2][row] != 0 ||
-                pieceStack[column + 3][row] != 0)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 2][row] != PieceTypeNone ||
+                pieceStack[column + 3][row] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeO:
-            if (pieceStack[column][row] != 0 ||
-                pieceStack[column + 1][row] != 0 ||
-                pieceStack[column][row + 1] != 0 ||
-                pieceStack[column + 1][row + 1] != 0)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeJ:
-            if (pieceStack[column + 1][row] != 0 ||
-                pieceStack[column + 1][row + 1] != 0 ||
-                pieceStack[column][row + 2] != 0 ||
-                pieceStack[column + 1][row + 2] != 0)
+            if (pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column][row + 2] != PieceTypeNone ||
+                pieceStack[column + 1][row + 2] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeL:
-            if (pieceStack[column][row] != 0 ||
-                pieceStack[column][row + 1] != 0 ||
-                pieceStack[column][row + 2] != 0 ||
-                pieceStack[column + 1][row + 2] != 0)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column][row + 2] != PieceTypeNone ||
+                pieceStack[column + 1][row + 2] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeS:
-            if (pieceStack[column][row + 1] != 0 ||
-                pieceStack[column + 1][row] != 0 ||
-                pieceStack[column + 1][row + 1] != 0 ||
-                pieceStack[column + 2][row] != 0)
+            if (pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column + 2][row] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeT:
-            if (pieceStack[column][row + 1] != 0 ||
-                pieceStack[column + 1][row] != 0 ||
-                pieceStack[column + 1][row + 1] != 0 ||
-                pieceStack[column + 2][row + 1] != 0)
+            if (pieceStack[column][row + 1] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column + 2][row + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeZ:
-            if (pieceStack[column][row] != 0 ||
-                pieceStack[column + 1][row] != 0 ||
-                pieceStack[column + 1][row + 1] != 0 ||
-                pieceStack[column + 2][row + 1] != 0)
+            if (pieceStack[column][row] != PieceTypeNone ||
+                pieceStack[column + 1][row] != PieceTypeNone ||
+                pieceStack[column + 1][row + 1] != PieceTypeNone ||
+                pieceStack[column + 2][row + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
