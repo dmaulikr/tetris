@@ -70,19 +70,16 @@
 - (IBAction)startGameClickeed:(id)sender{
     if ([[GameController shareManager] gameStatus] == GameRunning) { //pause game
         [[GameController shareManager] pauseGame];
-        [[GameController shareManager] setGameStatus:GamePaused];
         [self.startButton setTitle:@"Play" forState:UIControlStateNormal];
     }
     else if([[GameController shareManager] gameStatus] == GameStopped) { //start game
         [[GameController shareManager] startGame];
-        [[GameController shareManager] setGameStatus:GameRunning];
         [[GameController shareManager] setDelegate:self];
         [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
         movingPieceView = [[GameController shareManager] generatePiece];
         [self.view addSubview:movingPieceView];
     }
     else if([[GameController shareManager] gameStatus] == GamePaused) { //resume game
-        [[GameController shareManager] setGameStatus:GameRunning];
         [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
         [[GameController shareManager] resumeGame];
     }
@@ -90,6 +87,10 @@
 
 - (void)updateStackView{
     //TODO - add offset from compass to draw only one section
+    if ([[GameController shareManager] gameStatus] == GameStopped) {
+        movingPieceView = nil;
+        [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
+    }
     [self.pieceStackView setNeedsDisplay];
 }
 
