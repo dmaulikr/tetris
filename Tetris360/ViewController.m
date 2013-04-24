@@ -101,7 +101,7 @@
 
 - (void)updateStackView{
     //TODO - add offset from compass to draw only one section
-    [self.pieceStackView drawRect:self.pieceStackView.bounds];
+    [self.pieceStackView setNeedsDisplay];
 }
 
 - (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
