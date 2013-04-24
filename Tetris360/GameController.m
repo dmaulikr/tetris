@@ -77,7 +77,7 @@
 - (PieceView *)generatePiece{
     [self.gameTimer invalidate];
     //generate a random tetris piece
-    int randomNumber = rand() % 7; //7 types of pieces
+    int randomNumber = rand() % 7 +1; //7 types of pieces
     self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber];
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self

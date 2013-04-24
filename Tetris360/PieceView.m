@@ -48,7 +48,7 @@
 }
 
 
-- (UIColor*)getColorOfType: (PieceType)type{
++ (UIColor*)getColorOfType: (PieceType)type{
     switch (type) {
         case PieceTypeI:
             return [UIColor redColor];
@@ -85,7 +85,7 @@
     CGRect rectangle;
     CGContextRef context = UIGraphicsGetCurrentContext();
 //    [[UIColor blackColor] setStroke];
-    [[self getColorOfType:self.pieceType] setFill];
+    [[PieceView getColorOfType:self.pieceType] setFill];
     UIRectFill( rect );
     switch (self.pieceType) {
         case PieceTypeJ:

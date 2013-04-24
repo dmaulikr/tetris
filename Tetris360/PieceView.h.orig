@@ -39,5 +39,10 @@ typedef enum{
 @property (nonatomic, assign) NSInteger currentColumn;
 
 - (id)initWithPieceType:(PieceType)type;
+<<<<<<< HEAD
 + (UIColor*)getColorOfType: (PieceType)type;
+- (void)moveToColumn:(NSInteger)column;
+=======
+>>>>>>> b7b90fa2198e4d9d14fc2d950b3aa14b584d9624
+
 @end
