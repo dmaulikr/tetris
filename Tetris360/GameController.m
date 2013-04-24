@@ -205,46 +205,46 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
     int type = self.currentPieceView.pieceType;
     switch (type) {
         case PieceTypeI:
-            [self updateViewAtx:column andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row withType:type];
-            [self updateViewAtx:column+2 andY:row withType:type];
-            [self updateViewAtx:column+3 andY:row withType:type];            
+            [self updateViewAtColumn:column andRow:row withType:type];
+            [self updateViewAtColumn:column+1 andRow:row withType:type];
+            [self updateViewAtColumn:column+2 andRow:row withType:type];
+            [self updateViewAtColumn:column+3 andRow:row withType:type];
             break;
         case PieceTypeO:
-            [self updateViewAtx:column andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row withType:type];
-            [self updateViewAtx:column andY:row+1 withType:type];
-            [self updateViewAtx:column+1 andY:row+1 withType:type];
+            [self updateViewAtColumn:column andRow:row withType:type];
+            [self updateViewAtColumn:column+1 andRow:row withType:type];
+            [self updateViewAtColumn:column andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
             break;
         case PieceTypeJ:
-            [self updateViewAtx:column+1 andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row+1 withType:type];
-            [self updateViewAtx:column andY:row+2 withType:type];
-            [self updateViewAtx:column+1 andY:row+2 withType:type];
+            [self updateViewAtColumn:column andRow:row withType:type];
+            [self updateViewAtColumn:column andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
             break;
         case PieceTypeL:
-            [self updateViewAtx:column andY:row withType:type];
-            [self updateViewAtx:column andY:row+1 withType:type];
-            [self updateViewAtx:column andY:row+2 withType:type];
-            [self updateViewAtx:column+1 andY:row+2 withType:type];
+            [self updateViewAtColumn:column+2 andRow:row withType:type];
+            [self updateViewAtColumn:column andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
             break;
         case PieceTypeS:
-            [self updateViewAtx:column andY:row+1 withType:type];
-            [self updateViewAtx:column+1 andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row+1 withType:type];
-            [self updateViewAtx:column+2 andY:row withType:type];
+            [self updateViewAtColumn:column andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+1 andRow:row withType:type];
+            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+2 andRow:row withType:type];
             break;
         case PieceTypeT:
-            [self updateViewAtx:column andY:row+1 withType:type];
-            [self updateViewAtx:column+1 andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row+1 withType:type];
-            [self updateViewAtx:column+2 andY:row+1 withType:type];
+            [self updateViewAtColumn:column andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+1 andRow:row withType:type];
+            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
             break;
         case PieceTypeZ:
-            [self updateViewAtx:column andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row withType:type];
-            [self updateViewAtx:column+1 andY:row+1 withType:type];
-            [self updateViewAtx:column+2 andY:row+1 withType:type];
+            [self updateViewAtColumn:column andRow:row withType:type];
+            [self updateViewAtColumn:column+1 andRow:row withType:type];
+            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
             break;
         default:
             break;
@@ -256,10 +256,10 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
     return pieceStack[row][column];
 }
 
-- (void)updateViewAtx:(int)column andY: (int)row withType:(PieceType)type{
+- (void)updateViewAtColumn:(int)column andRow: (int)row withType:(PieceType)type{
     pieceStack[row][column] = type;
     //update pieceStackView
-//    [self.delegate recordRectAtx:column andY:row withType:type];
+    //    [self.delegate recordRectAtx:column andRow:row withType:type];
 }
 
 - (void)movePieceLeft{

@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
 
-    [self setupCameraView];
+//    [self setupCameraView];
     [self setupStackView];
 }
 
