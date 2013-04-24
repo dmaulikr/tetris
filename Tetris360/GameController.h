@@ -29,7 +29,7 @@ typedef enum{
 @end
 
 @interface GameController : NSObject{
-    int pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
+    PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 }
 
 + (id)shareManager;

@@ -39,9 +39,15 @@
         self.gameLevel = 12; //the higher the level, the faster the dropping speed
         
         //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
+<<<<<<< HEAD
         for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
             for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
                 pieceStack[row_index][column_index] = 0;
+=======
+        for (int i = 0; i < kNUMBER_OF_ROW; i++) {
+            for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
+                pieceStack[i][j] = PieceTypeNone;
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             }
         }
     }
@@ -100,64 +106,113 @@
     
     switch (self.currentPieceView.pieceType) {
         case PieceTypeI:
+<<<<<<< HEAD
             if (pieceStack[column][row] != 0 ||
                 pieceStack[column + 1][row] != 0 ||
                 pieceStack[column + 2][row] != 0 ||
                 pieceStack[column + 3][row] != 0)
+=======
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 3][yLocation] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeO:
+<<<<<<< HEAD
             if (pieceStack[column][row] != 0 ||
                 pieceStack[column + 1][row] != 0 ||
                 pieceStack[column][row + 1] != 0 ||
                 pieceStack[column + 1][row + 1] != 0)
+=======
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeJ:
+<<<<<<< HEAD
             if (pieceStack[column + 1][row] != 0 ||
                 pieceStack[column + 1][row + 1] != 0 ||
                 pieceStack[column][row + 2] != 0 ||
                 pieceStack[column + 1][row + 2] != 0)
+=======
+            if (pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 2] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 2] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeL:
+<<<<<<< HEAD
             if (pieceStack[column][row] != 0 ||
                 pieceStack[column][row + 1] != 0 ||
                 pieceStack[column][row + 2] != 0 ||
                 pieceStack[column + 1][row + 2] != 0)
+=======
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 2] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 2] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeS:
+<<<<<<< HEAD
             if (pieceStack[column][row + 1] != 0 ||
                 pieceStack[column + 1][row] != 0 ||
                 pieceStack[column + 1][row + 1] != 0 ||
                 pieceStack[column + 2][row] != 0)
+=======
+            if (pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeT:
+<<<<<<< HEAD
             if (pieceStack[column][row + 1] != 0 ||
                 pieceStack[column + 1][row] != 0 ||
                 pieceStack[column + 1][row + 1] != 0 ||
                 pieceStack[column + 2][row + 1] != 0)
+=======
+            if (pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation + 1] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeZ:
+<<<<<<< HEAD
             if (pieceStack[column][row] != 0 ||
                 pieceStack[column + 1][row] != 0 ||
                 pieceStack[column + 1][row + 1] != 0 ||
                 pieceStack[column + 2][row + 1] != 0)
+=======
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation + 1] != PieceTypeNone)
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
             {
                 hittingAPiece = YES;
             }
@@ -184,8 +239,14 @@
 }
 
 - (void)recordBitmapWithCurrenetPiece{
+<<<<<<< HEAD
     int column = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
     int row = self.currentPieceView.frame.origin.y/kGridSize;
+=======
+    
+    int xLocation = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
+    int yLocation = self.currentPieceView.frame.origin.y/kGridSize;
+>>>>>>> b60e432c53a8d6bb7b4ca5539b8cc89283006db9
 
     //TODO - consider rotation and fit the piece to bitmap accordingly
     int type = self.currentPieceView.pieceType;
