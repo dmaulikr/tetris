@@ -14,20 +14,20 @@
 
 - (id)initWithPieceType:(PieceType)type{
     self.pieceType = type;
-    CGRect frame = CGRectMake(0, 0, kGridSize, kGridSize);
+    CGRect frame = CGRectMake(4*kGridSize, 0, kGridSize, kGridSize);
     switch (type) {
         case PieceTypeI:
-            frame = CGRectMake(0, 0, kGridSize * 4, kGridSize);
+            frame = CGRectMake(3*kGridSize, 0, kGridSize * 4, kGridSize);
             break;
         case PieceTypeO:
-            frame = CGRectMake(0, 0, kGridSize * 2, kGridSize * 2);
+            frame = CGRectMake(4*kGridSize, 0, kGridSize * 2, kGridSize * 2);
             break;
         case PieceTypeJ:
         case PieceTypeL:
         case PieceTypeS:
         case PieceTypeT:
         case PieceTypeZ:
-            frame = CGRectMake(0, 0, kGridSize * 3, kGridSize * 2);
+            frame = CGRectMake(3*kGridSize, 0, kGridSize * 3, kGridSize * 2);
             break;
         default:
             break;
@@ -45,17 +45,6 @@
         [self setBackgroundColor:[UIColor clearColor]];
     }
     return self;
-}
-
-- (void)moveToColumn:(NSInteger)column
-{
-    NSLog(@"Moving to column: %ld", (long)column);
-    if (column == self.currentColumn) {
-        return;
-    }
-    
-    [self setFrame:CGRectMake(self.frame.origin.x - column * kGridSize, self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
-    self.currentColumn = column;
 }
 
 

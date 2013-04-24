@@ -171,22 +171,16 @@
     [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
 }
 
-- (void)moveToColumn:(NSInteger)column
-{
-    NSLog(@"Moving to column: %ld", (long)column);
-    [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x - column * kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
-}
-
 - (void)didChangeHeading:(NSInteger)heading
 {
     if (self.gameStatus == GameRunning) {
         NSLog(@"heading: %d", heading);
         NSInteger newColumnHeading = ((heading - self.newPieceHeading) / kDegreesPerColumn) % kNUMBER_OF_COLUMN;
-        [self moveToColumn:newColumnHeading];
+        NSLog(@"column heading: %d", heading);
+        // TODO: move view to new column
     }
     
     self.previousHeading = heading;
 }
-
 
 @end
