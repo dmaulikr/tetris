@@ -9,6 +9,11 @@
 #import "GameController.h"
 #import "ViewController.h"
 
+<<<<<<< HEAD
+=======
+#define kNUMBER_OF_ROW 15
+#define kNUMBER_OF_COLUMN 60
+
 @interface GameController ()
 
 @property (assign) NSInteger headingAtGameStart;
@@ -16,6 +21,7 @@
 
 @end
 
+>>>>>>> 3f272781c2e68a83893f884782c04c8c08980682
 @implementation GameController
 @synthesize gameStatus = _gameStatus;
 @synthesize gameTimer = _gameTimer;
