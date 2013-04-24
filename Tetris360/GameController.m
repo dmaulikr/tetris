@@ -58,7 +58,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 41; //the higher the level, the faster the dropping speed
+    self.gameLevel = 3; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
