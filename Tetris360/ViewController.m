@@ -8,16 +8,14 @@
 
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import <CoreLocation/CoreLocation.h>
 #import "StackView.h"
 
-@interface ViewController () <CLLocationManagerDelegate>
+@interface ViewController ()
 
 @property AVCaptureSession *captureSession;
 @property AVCaptureVideoPreviewLayer *previewLayer;
 @property IBOutlet UIView *cameraView;
 
-@property CLLocationManager *locationManager;
 @property (nonatomic, retain) PieceView *movingPieceView; //current dropping piece
 @property (nonatomic, retain) StackView *pieceStackView; //60*15 grid view for pieces already dropped
 
@@ -31,16 +29,7 @@
     [super viewDidLoad];
 
 //    [self setupCameraView];
-//    [self setupCompass];
     [self setupStackView];
-}
-
-- (void)setupCompass
-{
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    self.locationManager.headingFilter = 10;
-    [self.locationManager startUpdatingHeading];
 }
 
 - (void)setupCameraView
@@ -124,11 +113,11 @@
     [[GameController shareManager] movePieceRight];
 }
 
-#pragma mark - CLLocationManagerDelegate methods
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+- (void)centerOnStackViewColumn:(NSInteger)column
 {
-    [[GameController shareManager] didChangeHeading:newHeading.magneticHeading];
+    CGRect frame = self.pieceStackView.frame;
+    frame.origin.x = column *kGridSize;
+    self.pieceStackView.frame = frame;
 }
 
 @end
