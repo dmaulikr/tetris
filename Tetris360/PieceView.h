@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #define kGridSize 32
 typedef enum{
-    PieceTypeI, // □□□□
+    PieceTypeI = 1, // □□□□
 
     PieceTypeO, // □□
                 // □□
@@ -39,7 +39,5 @@ typedef enum{
 @property (nonatomic, assign) NSInteger currentColumn;
 
 - (id)initWithPieceType:(PieceType)type;
-
-- (void)moveToColumn:(NSInteger)column;
 
 @end

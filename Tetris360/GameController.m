@@ -91,23 +91,92 @@
 }
 
 - (void)movePieceDown{
-
-    //TODO - add checking bottom line from the pieceStack to stop dropping
-    if (self.currentPieceView.frame.origin.y < kGridSize*(kNUMBER_OF_ROW - self.currentPieceView.frame.size.height/kGridSize)) {
-        [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    int xLocation = potentialFrame.origin.x/kGridSize + self.offset;
+    int yLocation = potentialFrame.origin.y/kGridSize;
+    
+    BOOL mustStop = NO;
+    
+    switch (self.currentPieceView.pieceType) {
+        case PieceTypeI:
+            if (pieceStack[xLocation][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation] != 0 ||
+                pieceStack[xLocation + 2][yLocation] != 0 ||
+                pieceStack[xLocation + 3][yLocation] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
+        case PieceTypeO:
+            if (pieceStack[xLocation][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation] != 0 ||
+                pieceStack[xLocation][yLocation + 1] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 1] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
+        case PieceTypeJ:
+            if (pieceStack[xLocation + 1][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
+                pieceStack[xLocation][yLocation + 2] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 2] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
+        case PieceTypeL:
+            if (pieceStack[xLocation][yLocation] != 0 ||
+                pieceStack[xLocation][yLocation + 1] != 0 ||
+                pieceStack[xLocation][yLocation + 2] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 2] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
+        case PieceTypeS:
+            if (pieceStack[xLocation][yLocation + 1] != 0 ||
+                pieceStack[xLocation + 1][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
+                pieceStack[xLocation + 2][yLocation] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
+        case PieceTypeT:
+            if (pieceStack[xLocation][yLocation + 1] != 0 ||
+                pieceStack[xLocation + 1][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
+                pieceStack[xLocation + 2][yLocation + 1] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
+        case PieceTypeZ:
+            if (pieceStack[xLocation][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation] != 0 ||
+                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
+                pieceStack[xLocation + 2][yLocation + 1] != 0)
+            {
+                mustStop = YES;
+            }
+            break;
     }
-    else{
-        //record the piece to bitmap with the piece position on screen + offset
-        
-        
+    
 
+    if (mustStop) {
         //remove the subview of this piece
         if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
             [self.delegate removeCurrentPiece];
-
+        
+        [self recordBitmapWithCurrenetPiece];
+        
         //drop a new piece
         if([self.delegate respondsToSelector:@selector(dropNewPiece)])
             [self.delegate dropNewPiece];
+    }
+    else{
+        self.currentPieceView.frame = potentialFrame;
     }
 }
 
