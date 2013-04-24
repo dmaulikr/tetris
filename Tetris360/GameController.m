@@ -241,7 +241,7 @@
 }
 
 - (void)updateViewAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
-    pieceStack[xLocation][yLocation] = type;
+    pieceStack[yLocation][xLocation] = type;
     //update pieceStackView
 //    [self.delegate recordRectAtx:xLocation andY:yLocation withType:type];
 }
