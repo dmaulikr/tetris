@@ -34,7 +34,8 @@
             if (type) {
                 CGRect rectangle = CGRectMake(i * kGridSize, j * kGridSize, kGridSize, kGridSize);
                 [[PieceView getColorOfType:type] setFill];
-                UIRectFill( rectangle );
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                CGContextClearRect(context, rectangle);
             }
 
         }

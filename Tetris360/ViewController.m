@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
 
-    [self setupCameraView];
-    [self setupCompass];
+//    [self setupCameraView];
+//    [self setupCompass];
     [self setupStackView];
 }
 
@@ -105,9 +105,8 @@
 }
 
 - (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
-    CGRect rect = CGRectMake(xLocation * kGridSize, yLocation * kGridSize, kGridSize, kGridSize);
     self.pieceStackView.currentPieceType = type;
-    [self.pieceStackView drawRect:rect];
+    [self.pieceStackView setNeedsDisplay];
 }
 
 - (void)dropNewPiece{
