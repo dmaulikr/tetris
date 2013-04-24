@@ -42,7 +42,6 @@ typedef enum{
 @property (nonatomic, retain) PieceView *currentPieceView;
 
 @property (nonatomic, assign) int gameLevel;
-@property (nonatomic, assign) int offset; //offset from compass direction
 @property (nonatomic, assign) int pieceRotation;
 
 @property NSInteger currentColumn;
