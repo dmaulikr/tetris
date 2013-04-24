@@ -41,7 +41,7 @@
         //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
         for (int i = 0; i < kNUMBER_OF_ROW; i++) {
             for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
-                pieceStack[i][j] = 0;
+                pieceStack[i][j] = PieceTypeNone;
             }
         }
     }
@@ -90,7 +90,7 @@
     return self.currentPieceView;
 }
 
-- (void)movePieceDown{
+- (void)movePieceDown {
     CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
     int xLocation = potentialFrame.origin.x/kGridSize + self.offset;
     int yLocation = potentialFrame.origin.y/kGridSize;
@@ -100,67 +100,69 @@
     
     switch (self.currentPieceView.pieceType) {
         case PieceTypeI:
-            if (pieceStack[xLocation][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation] != 0 ||
-                pieceStack[xLocation + 2][yLocation] != 0 ||
-                pieceStack[xLocation + 3][yLocation] != 0)
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 3][yLocation] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeO:
-            if (pieceStack[xLocation][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation] != 0 ||
-                pieceStack[xLocation][yLocation + 1] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 1] != 0)
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeJ:
-            if (pieceStack[xLocation + 1][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
-                pieceStack[xLocation][yLocation + 2] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 2] != 0)
+            if (pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 2] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 2] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeL:
-            if (pieceStack[xLocation][yLocation] != 0 ||
-                pieceStack[xLocation][yLocation + 1] != 0 ||
-                pieceStack[xLocation][yLocation + 2] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 2] != 0)
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation][yLocation + 2] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 2] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeS:
-            if (pieceStack[xLocation][yLocation + 1] != 0 ||
-                pieceStack[xLocation + 1][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
-                pieceStack[xLocation + 2][yLocation] != 0)
+            if (pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeT:
-            if (pieceStack[xLocation][yLocation + 1] != 0 ||
-                pieceStack[xLocation + 1][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
-                pieceStack[xLocation + 2][yLocation + 1] != 0)
+            if (pieceStack[xLocation][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
             break;
         case PieceTypeZ:
-            if (pieceStack[xLocation][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation] != 0 ||
-                pieceStack[xLocation + 1][yLocation + 1] != 0 ||
-                pieceStack[xLocation + 2][yLocation + 1] != 0)
+            if (pieceStack[xLocation][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation] != PieceTypeNone ||
+                pieceStack[xLocation + 1][yLocation + 1] != PieceTypeNone ||
+                pieceStack[xLocation + 2][yLocation + 1] != PieceTypeNone)
             {
                 hittingAPiece = YES;
             }
+            break;
+        case PieceTypeNone:
             break;
     }
     
@@ -182,6 +184,7 @@
 }
 
 - (void)recordBitmapWithCurrenetPiece{
+    
     int xLocation = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
     int yLocation = self.currentPieceView.frame.origin.y/kGridSize;
 
