@@ -7,9 +7,14 @@
 //
 
 #import "ViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 
 @interface ViewController ()
+
+@property AVCaptureSession *captureSession;
+@property AVCaptureVideoPreviewLayer *previewLayer;
+@property IBOutlet UIView *cameraView;
 
 @end
 
@@ -20,6 +25,20 @@
 {
     [super viewDidLoad];
     
+    self.captureSession = [[AVCaptureSession alloc] init];
+    [self.captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
+    
+    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
+    [self.captureSession addInput:input];
+    [self.captureSession setSessionPreset:@"AVCaptureSessionPresetPhoto"];
+    [self.captureSession startRunning];
+    
+    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
+    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    self.previewLayer.frame = self.view.frame;
+    
+    [self.cameraView.layer addSublayer:self.previewLayer];
 }
 
 - (void)didReceiveMemoryWarning
