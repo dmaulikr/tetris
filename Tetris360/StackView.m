@@ -30,7 +30,7 @@
 
     for (int i = 0; i < kNUMBER_OF_ROW; i++) {
         for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
-            int type = [[GameController alloc] getTypeAtLocationX:j andY:i];
+            int type = [[GameController alloc] getTypeAtRow:i andColumn:j];
             if (type) {
                 CGRect rectangle = CGRectMake(i * kGridSize, j * kGridSize, kGridSize, kGridSize);
                 [[PieceView getColorOfType:type] setFill];

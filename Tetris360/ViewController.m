@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
 
-//    [self setupCameraView];
-//    [self setupCompass];
+    [self setupCameraView];
+    [self setupCompass];
     [self setupStackView];
 }
 
@@ -102,12 +102,6 @@
 - (void)updateStackView{
     //TODO - add offset from compass to draw only one section
     [self.pieceStackView setNeedsDisplayInRect:self.pieceStackView.bounds];
-}
-
-- (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
-    CGRect rect = CGRectMake(xLocation * kGridSize, yLocation * kGridSize, kGridSize, kGridSize);
-    self.pieceStackView.currentPieceType = type;
-    [self.pieceStackView setNeedsDisplayInRect:rect];
 }
 
 - (void)dropNewPiece{

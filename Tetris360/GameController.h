@@ -25,7 +25,6 @@ typedef enum{
 @required
 - (void)dropNewPiece;
 - (void)removeCurrentPiece;
-- (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type;
 - (void)updateStackView;
 @end
 
@@ -55,7 +54,7 @@ typedef enum{
 - (PieceView *)generatePiece;
 - (void)movePieceLeft;
 - (void)movePieceRight;
-- (int)getTypeAtLocationX:(int)x andY:(int)y;
+- (int)getTypeAtRow:(int)row andColumn:(int)column;
 - (void)didChangeHeading:(NSInteger)heading;
 
 @end
