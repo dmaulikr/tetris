@@ -60,9 +60,8 @@
         case PieceTypeI:
             [[UIColor redColor] setFill];
             UIRectFill( rect );
-            [[UIColor blackColor] setFill];
             rectangle = CGRectMake(0, kGridSize, kGridSize * 4, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
 //            CGContextStrokeRect(context, rectangle);
             break;
         case PieceTypeO:
@@ -72,43 +71,38 @@
         case PieceTypeJ:
             [[UIColor yellowColor] setFill];
             UIRectFill( rect );
-            [[UIColor blackColor] setFill];
             rectangle = CGRectMake(kGridSize, 0, kGridSize * 2, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             break;
         case PieceTypeL:
             [[UIColor greenColor] setFill];
             UIRectFill( rect );
-            [[UIColor blackColor] setFill];
             rectangle = CGRectMake(0, 0, kGridSize * 2, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             break;
         case PieceTypeS:
             [[UIColor blueColor] setFill];
             UIRectFill( rect );
-            [[UIColor blackColor] setFill];
             rectangle = CGRectMake(0, 0, kGridSize, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             rectangle = CGRectMake(kGridSize * 2, kGridSize, kGridSize, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             break;
         case PieceTypeT:
             [[UIColor purpleColor] setFill];
             UIRectFill( rect );
-            [[UIColor blackColor] setFill];
             rectangle = CGRectMake(0, kGridSize, kGridSize, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             rectangle = CGRectMake(kGridSize * 2, 0, kGridSize, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             break;
         case PieceTypeZ:
             [[UIColor cyanColor] setFill];
             UIRectFill( rect );
-            [[UIColor blackColor] setFill];
             rectangle = CGRectMake(0, 0, kGridSize, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             rectangle = CGRectMake(kGridSize * 2, 0, kGridSize, kGridSize);
-            CGContextFillRect(context, rectangle);
+            CGContextClearRect(context, rectangle);
             break;
         default:
             break;

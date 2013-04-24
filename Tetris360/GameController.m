@@ -33,7 +33,7 @@
     if (self = [super init]) {
         //game status
         self.gameStatus = GameStopped;
-        self.gameLevel = 2; //the higher the level, the faster the dropping speed
+        self.gameLevel = 12; //the higher the level, the faster the dropping speed
         
         //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
         pieceStack = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_ROW];
