@@ -92,8 +92,6 @@
     }
     else{
         //record the piece into the pieceStack
-        pieceStack[]
-
 
         //drop a new piece
         if([self.delegate respondsToSelector:@selector(dropNewPiece)])
