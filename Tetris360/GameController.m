@@ -9,13 +9,9 @@
 #import "GameController.h"
 #import "ViewController.h"
 
-#define kNUMBER_OF_ROW 15
-#define kNUMBER_OF_COLUMN 60
-
 @implementation GameController
 @synthesize gameStatus = _gameStatus;
 @synthesize gameTimer = _gameTimer;
-@synthesize pieceStack = _pieceStack;
 @synthesize delegate = _delegate;
 
 
@@ -36,10 +32,10 @@
         self.gameLevel = 12; //the higher the level, the faster the dropping speed
         
         //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
-        self.pieceStack = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_ROW];
         for (int i = 0; i < kNUMBER_OF_ROW; i++) {
-            NSMutableArray *oneColumn = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_COLUMN];
-            [self.pieceStack insertObject:oneColumn atIndex:i];
+            for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
+                pieceStack[i][j] = 0;
+            }
         }
     }
     return self;
@@ -91,8 +87,65 @@
         [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
     }
     else{
+        //record the piece to bitmap with the piece position on screen + offset
+        int xLocation = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
+        int yLocation = self.currentPieceView.frame.origin.y/kGridSize;
+        
+        //TODO - consider rotation and fit the piece to bitmap accordingly
+        int colorCode = self.currentPieceView.pieceType;
+        switch (colorCode) {
+            case PieceTypeI:
+                pieceStack[xLocation][yLocation] = colorCode;
+                pieceStack[xLocation+1][yLocation] = colorCode;
+                pieceStack[xLocation+2][yLocation] = colorCode;
+                pieceStack[xLocation+3][yLocation] = colorCode;
+                break;
+            case PieceTypeO:
+                pieceStack[xLocation][yLocation] = colorCode;
+                pieceStack[xLocation+1][yLocation] = colorCode;
+                pieceStack[xLocation][yLocation+1] = colorCode;
+                pieceStack[xLocation+1][yLocation+1] = colorCode;
+                break;
+            case PieceTypeJ:
+                pieceStack[xLocation+1][yLocation] = colorCode;
+                pieceStack[xLocation+1][yLocation+1] = colorCode;
+                pieceStack[xLocation][yLocation+2] = colorCode;
+                pieceStack[xLocation+1][yLocation+2] = colorCode;
+                break;
+            case PieceTypeL:
+                pieceStack[xLocation][yLocation] = colorCode;
+                pieceStack[xLocation][yLocation+1] = colorCode;
+                pieceStack[xLocation][yLocation+2] = colorCode;
+                pieceStack[xLocation+1][yLocation+2] = colorCode;
+                break;
+            case PieceTypeS:
+                pieceStack[xLocation][yLocation+1] = colorCode;
+                pieceStack[xLocation+1][yLocation] = colorCode;
+                pieceStack[xLocation+1][yLocation+1] = colorCode;
+                pieceStack[xLocation+2][yLocation] = colorCode;
+                break;
+            case PieceTypeT:
+                pieceStack[xLocation+1][yLocation] = colorCode;
+                pieceStack[xLocation][yLocation+1] = colorCode;
+                pieceStack[xLocation+1][yLocation+1] = colorCode;
+                pieceStack[xLocation+2][yLocation+1] = colorCode;
+                break;
+            case PieceTypeZ:
+                pieceStack[xLocation][yLocation] = colorCode;
+                pieceStack[xLocation+1][yLocation] = colorCode;
+                pieceStack[xLocation+1][yLocation+1] = colorCode;
+                pieceStack[xLocation+2][yLocation+1] = colorCode;
+                break;
+            default:
+                break;
+        }
+        
         //update pieceStackView
         
+
+        //remove the subview of this piece
+        if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
+            [self.delegate removeCurrentPiece];
 
         //drop a new piece
         if([self.delegate respondsToSelector:@selector(dropNewPiece)])
