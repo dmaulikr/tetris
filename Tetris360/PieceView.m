@@ -103,13 +103,13 @@
             CGContextClearRect(context, rectangle);
             break;
         case PieceTypeT:
-            rectangle = CGRectMake(0, kGridSize, kGridSize, kGridSize);
+            rectangle = CGRectMake(0, 0, kGridSize, kGridSize);
             CGContextClearRect(context, rectangle);
             rectangle = CGRectMake(kGridSize * 2, 0, kGridSize, kGridSize);
             CGContextClearRect(context, rectangle);
             break;
         case PieceTypeZ:
-            rectangle = CGRectMake(0, 0, kGridSize, kGridSize);
+            rectangle = CGRectMake(0, kGridSize, kGridSize, kGridSize);
             CGContextClearRect(context, rectangle);
             rectangle = CGRectMake(kGridSize * 2, 0, kGridSize, kGridSize);
             CGContextClearRect(context, rectangle);

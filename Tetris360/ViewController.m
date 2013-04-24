@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
 
-    [self setupCameraView];
-    [self setupCompass];
+//    [self setupCameraView];
+//    [self setupCompass];
     [self setupStackView];
 }
 
