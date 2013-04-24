@@ -39,18 +39,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 }
 
 - (id)init {
-    if (self = [super init]) {
-        //game status
-        self.gameStatus = GameStopped;
-        self.gameLevel = 12; //the higher the level, the faster the dropping speed
-        
-        //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
-        for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
-            for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
-                pieceStack[row_index][column_index] = 0;
-            }
-        }
-        
+    if (self = [super init]) { 
         [self setupCompass];
     }
     return self;
@@ -66,8 +55,16 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 #pragma mark - game play
 - (void)startGame{
-    //generate a random tetris piece
+    //init game status
+    self.gameStatus = GameRunning;
+    self.gameLevel = 41; //the higher the level, the faster the dropping speed
 
+    //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
+    for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
+        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+            pieceStack[row_index][column_index] = 0;
+        }
+    }
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
     self.gameStartHeading = self.lastHeading;
 }
@@ -75,11 +72,13 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 - (void)pauseGame{
     //freeze piece and pause timer
+    self.gameStatus = GamePaused;
     [self.gameTimer invalidate];
 }
 
 - (void)resumeGame{
     //freeze piece and pause timer
+    self.gameStatus = GameRunning;
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self
                                                     selector:@selector(movePieceDown)
@@ -87,6 +86,20 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
                                                      repeats:YES];
 }
 
+
+- (void)gameOver{
+    self.gameStatus = GameStopped;
+    [self.gameTimer invalidate];
+    self.gameTimer = nil;
+
+    //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
+    for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
+        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+            pieceStack[row_index][column_index] = 0;
+        }
+    }
+    [self.delegate updateStackView];
+}
 
 #pragma mark - control of pieces
 
@@ -185,12 +198,19 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
         //remove the subview of this piece
         if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
             [self.delegate removeCurrentPiece];
-        
+
         [self recordBitmapWithCurrenetPiece];
         
-        //drop a new piece
-        if([self.delegate respondsToSelector:@selector(dropNewPiece)])
-            [self.delegate dropNewPiece];
+        if (self.currentPieceView.frame.origin.y == 0) { //game over
+            [self gameOver];
+            //auto restart game for testing
+//            [self startGame];
+        }
+        else{
+            //drop a new piece
+            if([self.delegate respondsToSelector:@selector(dropNewPiece)])
+                [self.delegate dropNewPiece];
+        }
     }
     else{
         self.currentPieceView.frame = potentialFrame;
