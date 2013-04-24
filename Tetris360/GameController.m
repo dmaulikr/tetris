@@ -12,10 +12,12 @@
 #define kNUMBER_OF_ROW 15
 #define kNUMBER_OF_COLUMN 60
 
+#define kDegreesPerColumn 36
+
 @interface GameController ()
 
-@property (assign) NSInteger headingAtGameStart;
-@property (assign) NSInteger previousColumnHeading;
+@property (assign) NSInteger newPieceHeading;
+@property (assign) NSInteger previousHeading;
 
 @end
 
@@ -58,8 +60,6 @@
     //generate a random tetris piece
 
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
-    
-    self.headingAtGameStart = self.previousColumnHeading;
 }
 
 
@@ -90,6 +90,9 @@
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil
                                                      repeats:YES];
+    
+    self.newPieceHeading = self.previousHeading;
+    
     return self.currentPieceView;
 }
 
@@ -117,18 +120,21 @@
     [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
 }
 
-- (void)didChangeColumnHeading:(NSInteger)columnHeading
+- (void)moveToColumn:(NSInteger)column
 {
-    if (columnHeading == self.previousColumnHeading) {
-        return;
+    NSLog(@"Moving to column: %ld", (long)column);
+    [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x - column * kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+}
+
+- (void)didChangeHeading:(NSInteger)heading
+{
+    if (self.gameStatus == GameRunning) {
+        NSLog(@"heading: %d", heading);
+        NSInteger newColumnHeading = ((heading - self.newPieceHeading) / kDegreesPerColumn) % kNUMBER_OF_COLUMN;
+        [self moveToColumn:newColumnHeading];
     }
     
-    if (columnHeading > self.previousColumnHeading) {
-        [self movePieceRight];
-    }
-    else {
-        [self movePieceLeft];
-    }
+    self.previousHeading = heading;
 }
 
 

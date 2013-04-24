@@ -10,8 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-#define kDegreesPerGridCell 36
-
 
 @interface ViewController () <CLLocationManagerDelegate>
 
@@ -40,7 +38,7 @@
 {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.headingFilter = kDegreesPerGridCell;
+    self.locationManager.headingFilter = 10;
     [self.locationManager startUpdatingHeading];
 }
 
@@ -107,8 +105,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-    NSInteger newColumnHeading = newHeading.magneticHeading / kDegreesPerGridCell;
-    [[GameController shareManager] didChangeColumnHeading:newColumnHeading];
+    [[GameController shareManager] didChangeHeading:newHeading.magneticHeading];
 }
 
 @end

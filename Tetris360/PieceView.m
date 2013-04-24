@@ -47,6 +47,17 @@
     return self;
 }
 
+- (void)moveToColumn:(NSInteger)column
+{
+    NSLog(@"Moving to column: %ld", (long)column);
+    if (column == self.currentColumn) {
+        return;
+    }
+    
+    [self setFrame:CGRectMake(self.frame.origin.x - column * kGridSize, self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
+    self.currentColumn = column;
+}
+
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

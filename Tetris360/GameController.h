@@ -50,6 +50,6 @@ typedef enum{
 - (void)movePieceLeft;
 - (void)movePieceRight;
 
-- (void)didChangeColumnHeading:(NSInteger)columnHeading;
+- (void)didChangeHeading:(NSInteger)heading;
 
 @end
