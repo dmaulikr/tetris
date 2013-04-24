@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #define kGridSize 32
 typedef enum{
-    PieceTypeI, // □□□□
+    PieceTypeI = 1, // □□□□
 
     PieceTypeO, // □□
                 // □□

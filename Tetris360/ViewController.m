@@ -29,7 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+//    [self.view addSubview:self.pieceStackView];
     [self setupCameraView];
     [self setupCompass];
 }
@@ -86,7 +87,6 @@
         [[GameController shareManager] resumeGame];
     }
 }
-
 
 - (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
     CGRect rect = CGRectMake(xLocation * kGridSize, yLocation * kGridSize, kGridSize, kGridSize);
