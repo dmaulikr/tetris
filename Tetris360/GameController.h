@@ -10,9 +10,17 @@
 #import "PieceView.h"
 
 typedef enum{
-    GameRunning = 0,
-    GamePaused = 1
-}GameStatus;
+    GameStopped,
+    GameRunning,
+    GamePaused
+} GameStatus;
+
+@class GameController;
+
+@protocol GameControllerDelegate <NSObject>
+@required
+- (void)dropNewPiece;
+@end
 
 @interface GameController : NSObject{
     
@@ -20,11 +28,20 @@ typedef enum{
 
 @property (nonatomic, retain) NSTimer *gameTimer;
 @property (nonatomic, assign) GameStatus gameStatus;
-@property (nonatomic, retain) NSMutableArray *gridRows;
+@property (nonatomic, assign) int gameLevel;
+@property (nonatomic, retain) NSMutableArray *pieceStack;
 @property (nonatomic, retain) PieceView *currentPieceView;
+
 + (id)shareManager;
+// define delegate property
+@property (nonatomic, assign) id<GameControllerDelegate> delegate;
+
+//game control
 - (void)startGame;
 - (void)pauseGame;
+- (void)resumeGame;
+
+//piece control
 - (PieceView *)generatePiece;
 - (void)movePieceLeft;
 - (void)movePieceRight;
