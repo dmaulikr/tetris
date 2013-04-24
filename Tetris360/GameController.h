@@ -11,7 +11,7 @@
 
 #define kNUMBER_OF_ROW 15
 #define kNUMBER_OF_COLUMN 60
-#define kDegreesPerColumn 36
+#define kDegreesPerColumn 6
 
 typedef enum{
     GameStopped,

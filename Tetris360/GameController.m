@@ -61,7 +61,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.headingFilter = 10;
+    self.locationManager.headingFilter = 1;
     [self.locationManager startUpdatingHeading];
 }
 
@@ -273,6 +273,10 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 - (void)moveToColumn:(NSInteger)column
 {
+    if (column == self.columnOffset) {
+        return;
+    }
+    
     if (column > 0 & column < kNUMBER_OF_COLUMN) {
         [self.delegate centerOnStackViewColumn:column];
         self.columnOffset = column;
@@ -283,8 +287,6 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-    
-    
     if (self.gameStatus == GameRunning) {
         NSInteger relativeHeading = newHeading.magneticHeading - self.gameStartHeading;
         NSInteger column = relativeHeading / kDegreesPerColumn;
