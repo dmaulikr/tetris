@@ -13,13 +13,18 @@
 
 static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
+float nfmod(float a,float b)
+{
+    return a - b * floor(a / b);
+}
+
 @interface GameController () <CLLocationManagerDelegate>
 
 @property CLLocationManager *locationManager;
 
 @property (assign) float lastHeading;
 @property (assign) float gameStartHeading;
-@property (assign) float columnOffset;
+@property (assign) int columnOffset;
 
 @end
 
@@ -277,6 +282,12 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
     return pieceStack[row][column];
 }
 
+- (NSInteger)columnForScreenColumn:(NSInteger)column
+{
+    int realColumn = (self.columnOffset + column) % kNUMBER_OF_COLUMN;
+    return realColumn;
+}
+
 - (void)updateViewAtColumn:(int)column andRow: (int)row withType:(PieceType)type{
     pieceStack[row][column] = type;
     //update pieceStackView
@@ -298,9 +309,14 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
         return;
     }
     
+    if (column == 0) {
+        // Recalibrate when passing through 0
+        self.gameStartHeading = self.lastHeading;
+    }
+    
     if (column > 0 & column < kNUMBER_OF_COLUMN) {
-        [self.delegate centerOnStackViewColumn:column];
         self.columnOffset = column;
+        [self.delegate centerOnStackViewColumn:column];
     }
 }
 
@@ -310,7 +326,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 {
     if (self.gameStatus == GameRunning) {
         float relativeHeading = newHeading.magneticHeading - self.gameStartHeading;
-        NSInteger column = relativeHeading / kDegreesPerColumn;
+        NSInteger column = nfmod((int)(relativeHeading / kDegreesPerColumn), kNUMBER_OF_COLUMN);
         [self moveToColumn:column];
     }
     

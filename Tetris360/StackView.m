@@ -31,9 +31,9 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     for (int i = 0; i < kNUMBER_OF_ROW; i++) {
-        for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
+        for (int j = 0; j < kNUMBER_OF_COLUMN_PER_SCREEN; j++) {
 
-            PieceType type = [[GameController alloc] getTypeAtRow:i andColumn:j];
+            PieceType type = [[GameController alloc] getTypeAtRow:i andColumn:[[GameController shareManager] columnForScreenColumn:j]];
             CGRect rectangle = CGRectMake(j * kGridSize, i * kGridSize, kGridSize, kGridSize);
             
             if (type != PieceTypeNone) {
@@ -46,7 +46,7 @@
             if (i == kNUMBER_OF_ROW - 1) {
                 CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
                 CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-                NSString *columnNumber = [NSString stringWithFormat:@"%d", j];
+                NSString *columnNumber = [NSString stringWithFormat:@"%d", [[GameController shareManager] columnForScreenColumn:j]];
                 [columnNumber drawInRect:rectangle withFont:[UIFont systemFontOfSize:14]];
                 CGContextStrokeRect(context, rectangle);
             }

@@ -11,6 +11,7 @@
 
 #define kNUMBER_OF_ROW 15
 #define kNUMBER_OF_COLUMN 60
+#define kNUMBER_OF_COLUMN_PER_SCREEN 10
 #define kDegreesPerColumn 6
 
 typedef enum{
@@ -57,5 +58,6 @@ typedef enum{
 - (void)movePieceLeft;
 - (void)movePieceRight;
 - (PieceType)getTypeAtRow:(int)row andColumn:(int)column;
+- (NSInteger)columnForScreenColumn:(NSInteger)column;
 
 @end
