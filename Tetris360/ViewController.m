@@ -65,6 +65,7 @@
 - (void)setupStackView
 {
     self.pieceStackView  = [[StackView alloc] initWithFrame:CGRectMake(0, 0, kGridSize * kNUMBER_OF_COLUMN, kGridSize * kNUMBER_OF_ROW)];
+    self.pieceStackView.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.pieceStackView];
     [self.view bringSubviewToFront:self.startButton];
     [self.view bringSubviewToFront:self.leftButton];

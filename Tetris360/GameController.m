@@ -8,6 +8,7 @@
 
 #import "GameController.h"
 #import "ViewController.h"
+#import "PieceView.h"
 
 @interface GameController ()
 
@@ -239,7 +240,7 @@
     [self.delegate updateStackView];
 }
 
-- (int)getTypeAtLocationX:(int)x andY:(int)y{
+- (PieceType)getTypeAtLocationX:(int)x andY:(int)y{
     return pieceStack[x][y];
 }
 
