@@ -8,13 +8,18 @@
 
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import <CoreLocation/CoreLocation.h>
+
+#define kDegreesPerGridCell 36
 
 
-@interface ViewController ()
+@interface ViewController () <CLLocationManagerDelegate>
 
 @property AVCaptureSession *captureSession;
 @property AVCaptureVideoPreviewLayer *previewLayer;
 @property IBOutlet UIView *cameraView;
+
+@property CLLocationManager *locationManager;
 
 @end
 
@@ -25,6 +30,20 @@
 {
     [super viewDidLoad];
     
+    [self setupCameraView];
+    [self setupCompass];
+}
+
+- (void)setupCompass
+{
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.headingFilter = kDegreesPerGridCell;
+    [self.locationManager startUpdatingHeading];
+}
+
+- (void)setupCameraView
+{
     self.captureSession = [[AVCaptureSession alloc] init];
     [self.captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
     
@@ -80,6 +99,14 @@
 
 - (IBAction)rightClicked:(id)sender{
     [[GameController shareManager] movePieceRight];
+}
+
+#pragma mark - CLLocationManagerDelegate methods
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+    NSInteger newColumnHeading = newHeading.magneticHeading / kDegreesPerGridCell;
+    [[GameController shareManager] didChangeColumnHeading:newColumnHeading];
 }
 
 @end

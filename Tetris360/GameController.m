@@ -12,6 +12,13 @@
 #define kNUMBER_OF_ROW 15
 #define kNUMBER_OF_COLUMN 60
 
+@interface GameController ()
+
+@property (assign) NSInteger headingAtGameStart;
+@property (assign) NSInteger previousColumnHeading;
+
+@end
+
 @implementation GameController
 @synthesize gameStatus;
 @synthesize gameTimer;
@@ -51,6 +58,8 @@
     //generate a random tetris piece
 
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
+    
+    self.headingAtGameStart = self.previousColumnHeading;
 }
 
 
@@ -105,6 +114,20 @@
 
 - (void)movePieceRight{
     [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+}
+
+- (void)didChangeColumnHeading:(NSInteger)columnHeading
+{
+    if (columnHeading == self.previousColumnHeading) {
+        return;
+    }
+    
+    if (columnHeading > self.previousColumnHeading) {
+        [self movePieceRight];
+    }
+    else {
+        [self movePieceLeft];
+    }
 }
 
 

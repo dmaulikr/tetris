@@ -45,4 +45,7 @@ typedef enum{
 - (PieceView *)generatePiece;
 - (void)movePieceLeft;
 - (void)movePieceRight;
+
+- (void)didChangeColumnHeading:(NSInteger)columnHeading;
+
 @end
