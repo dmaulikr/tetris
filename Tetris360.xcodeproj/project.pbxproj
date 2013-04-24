@@ -110,11 +110,11 @@
 				581596181724D33C00046DFD /* ViewController.m */,
 				5815961A1724D33C00046DFD /* ViewController_iPhone.xib */,
 				5815961D1724D33C00046DFD /* ViewController_iPad.xib */,
-				581596061724D33B00046DFD /* Supporting Files */,
 				660EB3311725EDCD002C493E /* PieceView.h */,
 				660EB3321725EDCD002C493E /* PieceView.m */,
 				660EB33A172607BB002C493E /* GameController.h */,
 				660EB33B172607BB002C493E /* GameController.m */,
+				581596061724D33B00046DFD /* Supporting Files */,
 			);
 			path = Tetris360;
 			sourceTree = "<group>";
