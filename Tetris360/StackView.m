@@ -27,17 +27,19 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
 
     for (int i = 0; i < kNUMBER_OF_ROW; i++) {
         for (int j = 0; j < kNUMBER_OF_COLUMN; j++) {
             PieceType type = [[GameController alloc] getTypeAtRow:i andColumn:j];
             if (type != PieceTypeNone) {
-                CGRect rectangle = CGRectMake(i * kGridSize, j * kGridSize, kGridSize, kGridSize);
+                CGRect rectangle = CGRectMake(j * kGridSize, i * kGridSize, kGridSize, kGridSize);
                 UIColor *color = [PieceView getColorOfType:type];
-                [color setFill];
+                CGContextSetFillColorWithColor(context, color.CGColor);
+                CGContextFillRect(context, rectangle);
                 UIRectFill(rectangle);
             }
-
         }
     }
     
