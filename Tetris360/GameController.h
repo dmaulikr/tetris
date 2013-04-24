@@ -11,6 +11,7 @@
 
 #define kNUMBER_OF_ROW 15
 #define kNUMBER_OF_COLUMN 60
+#define kDegreesPerColumn 36
 
 typedef enum{
     GameStopped,
@@ -54,6 +55,6 @@ typedef enum{
 - (void)movePieceLeft;
 - (void)movePieceRight;
 
-- (void)didChangeColumnHeading:(NSInteger)columnHeading;
+- (void)didChangeHeading:(NSInteger)heading;
 
 @end
