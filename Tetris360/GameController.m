@@ -50,7 +50,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.headingFilter = 1;
+    self.locationManager.headingFilter = 5;
     [self.locationManager startUpdatingHeading];
 }
 
@@ -58,7 +58,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 41; //the higher the level, the faster the dropping speed
+    self.gameLevel = 5; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
@@ -293,6 +293,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 - (void)moveToColumn:(NSInteger)column
 {
+    NSLog(@"Move to column : %d", column);
     if (column == self.columnOffset) {
         return;
     }
@@ -308,7 +309,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
     if (self.gameStatus == GameRunning) {
-        NSInteger relativeHeading = newHeading.magneticHeading - self.gameStartHeading;
+        float relativeHeading = newHeading.magneticHeading - self.gameStartHeading;
         NSInteger column = relativeHeading / kDegreesPerColumn;
         [self moveToColumn:column];
     }
