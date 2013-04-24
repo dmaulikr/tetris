@@ -23,6 +23,7 @@
 		5E07A18A172840A80073BD49 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E07A189172840A80073BD49 /* CoreLocation.framework */; };
 		660EB3331725EDCD002C493E /* PieceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 660EB3321725EDCD002C493E /* PieceView.m */; };
 		660EB33C172607BC002C493E /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660EB33B172607BB002C493E /* GameController.m */; };
+		66617B471728609700244561 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66617B461728609700244561 /* StackView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,8 @@
 		660EB3321725EDCD002C493E /* PieceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieceView.m; sourceTree = "<group>"; };
 		660EB33A172607BB002C493E /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
 		660EB33B172607BB002C493E /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
+		66617B451728609700244561 /* StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackView.h; sourceTree = "<group>"; };
+		66617B461728609700244561 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 			children = (
 				5815960E1724D33B00046DFD /* AppDelegate.h */,
 				5815960F1724D33B00046DFD /* AppDelegate.m */,
+				66617B451728609700244561 /* StackView.h */,
+				66617B461728609700244561 /* StackView.m */,
 				581596171724D33C00046DFD /* ViewController.h */,
 				581596181724D33C00046DFD /* ViewController.m */,
 				5815961A1724D33C00046DFD /* ViewController_iPhone.xib */,
@@ -200,6 +205,7 @@
 				581596191724D33C00046DFD /* ViewController.m in Sources */,
 				660EB3331725EDCD002C493E /* PieceView.m in Sources */,
 				660EB33C172607BC002C493E /* GameController.m in Sources */,
+				66617B471728609700244561 /* StackView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

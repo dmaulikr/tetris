@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "StackView.h"
 
 @interface ViewController () <CLLocationManagerDelegate>
 
@@ -19,7 +19,7 @@
 
 @property CLLocationManager *locationManager;
 @property (nonatomic, retain) PieceView *movingPieceView; //current dropping piece
-@property (nonatomic, retain) UIView *pieceStackView; //60*15 grid view for pieces already dropped
+@property (nonatomic, retain) StackView *pieceStackView; //60*15 grid view for pieces already dropped
 
 @end
 
@@ -89,7 +89,9 @@
 
 
 - (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
-    
+    CGRect rect = CGRectMake(xLocation * kGridSize, yLocation * kGridSize, kGridSize, kGridSize);
+    self.pieceStackView.currentPieceType = type;
+    [self.pieceStackView drawRect:rect];
 }
 
 - (void)dropNewPiece{
