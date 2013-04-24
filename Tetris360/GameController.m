@@ -107,7 +107,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 - (void)movePieceDown {
     CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = potentialFrame.origin.x/kGridSize + self.offset;
+    int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
     int row = potentialFrame.origin.y/kGridSize;
     
     BOOL hittingTheFloor = !(self.currentPieceView.frame.origin.y < kGridSize*(kNUMBER_OF_ROW - self.currentPieceView.frame.size.height/kGridSize));
@@ -199,7 +199,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 }
 
 - (void)recordBitmapWithCurrenetPiece{
-    int column = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
+    int column = self.currentPieceView.frame.origin.x/kGridSize + self.columnOffset;
     int row = self.currentPieceView.frame.origin.y/kGridSize;
 
     //TODO - consider rotation and fit the piece to bitmap accordingly
