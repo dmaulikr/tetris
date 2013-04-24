@@ -25,6 +25,7 @@ typedef enum{
 @required
 - (void)dropNewPiece;
 - (void)removeCurrentPiece;
+- (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type;
 @end
 
 @interface GameController : NSObject{
