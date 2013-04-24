@@ -116,12 +116,7 @@
 
 - (void)centerOnStackViewColumn:(NSInteger)column
 {
-    NSLog(@"column : %d", column);
-    [UIView animateWithDuration:0.1 animations:^{
-        CGRect frame = self.pieceStackView.frame;
-        frame.origin.x = -(column *kGridSize);
-        self.pieceStackView.frame = frame;
-    }];
+    [self.pieceStackView setNeedsDisplay];
 }
 
 @end
