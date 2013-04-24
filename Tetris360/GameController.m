@@ -20,10 +20,10 @@
 @end
 
 @implementation GameController
-@synthesize gameStatus;
-@synthesize gameTimer;
-@synthesize pieceStack;
-@synthesize delegate;
+@synthesize gameStatus = _gameStatus;
+@synthesize gameTimer = _gameTimer;
+@synthesize pieceStack = _pieceStack;
+@synthesize delegate = _delegate;
 
 
 //game manager singleton
@@ -43,10 +43,10 @@
         self.gameLevel = 12; //the higher the level, the faster the dropping speed
         
         //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
-        pieceStack = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_ROW];
+        self.pieceStack = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_ROW];
         for (int i = 0; i < kNUMBER_OF_ROW; i++) {
             NSMutableArray *oneColumn = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_COLUMN];
-            [pieceStack insertObject:oneColumn atIndex:i];
+            [self.pieceStack insertObject:oneColumn atIndex:i];
         }
     }
     return self;
@@ -100,7 +100,8 @@
         [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
     }
     else{
-        //record the piece into the pieceStack
+        //update pieceStackView
+        
 
         //drop a new piece
         if([self.delegate respondsToSelector:@selector(dropNewPiece)])

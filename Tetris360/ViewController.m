@@ -20,6 +20,8 @@
 @property IBOutlet UIView *cameraView;
 
 @property CLLocationManager *locationManager;
+@property (nonatomic, retain) PieceView *movingPieceView; //current dropping piece
+@property (nonatomic, retain) UIView *pieceStackView; //60*15 grid view for pieces already dropped
 
 @end
 

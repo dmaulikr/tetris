@@ -17,7 +17,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *startButton;
 @property (nonatomic, retain) IBOutlet UIButton *leftButton;
 @property (nonatomic, retain) IBOutlet UIButton *rightButton;
-@property (nonatomic, retain) PieceView *movingPieceView; //current dropping piece
 
 - (IBAction)startGameClickeed:(id)sender;
 - (IBAction)leftClicked:(id)sender;

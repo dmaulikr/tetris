@@ -26,15 +26,19 @@ typedef enum{
     
 }
 
-@property (nonatomic, retain) NSTimer *gameTimer;
-@property (nonatomic, assign) GameStatus gameStatus;
-@property (nonatomic, assign) int gameLevel;
-@property (nonatomic, retain) NSMutableArray *pieceStack;
-@property (nonatomic, retain) PieceView *currentPieceView;
-
 + (id)shareManager;
 // define delegate property
 @property (nonatomic, assign) id<GameControllerDelegate> delegate;
+
+@property (nonatomic, retain) NSTimer *gameTimer;
+@property (nonatomic, assign) GameStatus gameStatus;
+@property (nonatomic, retain) NSMutableArray *pieceStack;
+@property (nonatomic, retain) PieceView *currentPieceView;
+
+@property (nonatomic, assign) int gameLevel;
+@property (nonatomic, assign) int offset; //offset from compass direction
+
+
 
 //game control
 - (void)startGame;
