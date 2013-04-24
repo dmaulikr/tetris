@@ -19,6 +19,7 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 @property (assign) float lastHeading;
 @property (assign) float gameStartHeading;
+@property (assign) float columnOffset;
 
 @end
 
@@ -272,7 +273,10 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
 - (void)moveToColumn:(NSInteger)column
 {
-    [self.delegate centerOnStackViewColumn:column];
+    if (column > 0 & column < kNUMBER_OF_COLUMN) {
+        [self.delegate centerOnStackViewColumn:column];
+        self.columnOffset = column;
+    }
 }
 
 #pragma mark - CLLocationManagerDelegate methods
