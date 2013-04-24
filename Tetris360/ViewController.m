@@ -87,9 +87,18 @@
     }
 }
 
+
+
+
 - (void)dropNewPiece{
     movingPieceView = [[GameController shareManager] generatePiece];
     [self.view addSubview:movingPieceView];
+}
+
+
+- (void)removeCurrentPiece{
+    [movingPieceView removeFromSuperview];
+    movingPieceView = nil;
 }
 
 - (IBAction)leftClicked:(id)sender{
