@@ -95,7 +95,8 @@
     int xLocation = potentialFrame.origin.x/kGridSize + self.offset;
     int yLocation = potentialFrame.origin.y/kGridSize;
     
-    BOOL mustStop = NO;
+    BOOL hittingTheFloor = !(self.currentPieceView.frame.origin.y < kGridSize*(kNUMBER_OF_ROW - self.currentPieceView.frame.size.height/kGridSize));
+    BOOL hittingAPiece = NO;
     
     switch (self.currentPieceView.pieceType) {
         case PieceTypeI:
@@ -104,7 +105,7 @@
                 pieceStack[xLocation + 2][yLocation] != 0 ||
                 pieceStack[xLocation + 3][yLocation] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
         case PieceTypeO:
@@ -113,7 +114,7 @@
                 pieceStack[xLocation][yLocation + 1] != 0 ||
                 pieceStack[xLocation + 1][yLocation + 1] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
         case PieceTypeJ:
@@ -122,7 +123,7 @@
                 pieceStack[xLocation][yLocation + 2] != 0 ||
                 pieceStack[xLocation + 1][yLocation + 2] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
         case PieceTypeL:
@@ -131,7 +132,7 @@
                 pieceStack[xLocation][yLocation + 2] != 0 ||
                 pieceStack[xLocation + 1][yLocation + 2] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
         case PieceTypeS:
@@ -140,7 +141,7 @@
                 pieceStack[xLocation + 1][yLocation + 1] != 0 ||
                 pieceStack[xLocation + 2][yLocation] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
         case PieceTypeT:
@@ -149,7 +150,7 @@
                 pieceStack[xLocation + 1][yLocation + 1] != 0 ||
                 pieceStack[xLocation + 2][yLocation + 1] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
         case PieceTypeZ:
@@ -158,13 +159,13 @@
                 pieceStack[xLocation + 1][yLocation + 1] != 0 ||
                 pieceStack[xLocation + 2][yLocation + 1] != 0)
             {
-                mustStop = YES;
+                hittingAPiece = YES;
             }
             break;
     }
     
 
-    if (mustStop) {
+    if (hittingAPiece || hittingTheFloor) {
         //remove the subview of this piece
         if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
             [self.delegate removeCurrentPiece];
