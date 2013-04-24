@@ -48,6 +48,35 @@
 }
 
 
+- (UIColor*)getColorOfType: (PieceType)type{
+    switch (type) {
+        case PieceTypeI:
+            return [UIColor redColor];
+            break;
+        case PieceTypeO:
+            return [UIColor orangeColor];
+            break;
+        case PieceTypeJ:
+            return [UIColor yellowColor];
+            break;
+        case PieceTypeL:
+            return [UIColor greenColor];
+            break;
+        case PieceTypeS:
+            return [UIColor blueColor];
+            break;
+        case PieceTypeT:
+            return [UIColor purpleColor];
+            break;
+        case PieceTypeZ:
+            return [UIColor cyanColor];
+            break;
+        default:
+            return nil;
+            break;
+    }
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect

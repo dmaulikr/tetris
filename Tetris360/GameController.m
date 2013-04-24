@@ -97,59 +97,7 @@
     }
     else{
         //record the piece to bitmap with the piece position on screen + offset
-        int xLocation = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
-        int yLocation = self.currentPieceView.frame.origin.y/kGridSize;
         
-        //TODO - consider rotation and fit the piece to bitmap accordingly
-        int colorCode = self.currentPieceView.pieceType;
-        switch (colorCode) {
-            case PieceTypeI:
-                pieceStack[xLocation][yLocation] = colorCode;
-                pieceStack[xLocation+1][yLocation] = colorCode;
-                pieceStack[xLocation+2][yLocation] = colorCode;
-                pieceStack[xLocation+3][yLocation] = colorCode;
-                break;
-            case PieceTypeO:
-                pieceStack[xLocation][yLocation] = colorCode;
-                pieceStack[xLocation+1][yLocation] = colorCode;
-                pieceStack[xLocation][yLocation+1] = colorCode;
-                pieceStack[xLocation+1][yLocation+1] = colorCode;
-                break;
-            case PieceTypeJ:
-                pieceStack[xLocation+1][yLocation] = colorCode;
-                pieceStack[xLocation+1][yLocation+1] = colorCode;
-                pieceStack[xLocation][yLocation+2] = colorCode;
-                pieceStack[xLocation+1][yLocation+2] = colorCode;
-                break;
-            case PieceTypeL:
-                pieceStack[xLocation][yLocation] = colorCode;
-                pieceStack[xLocation][yLocation+1] = colorCode;
-                pieceStack[xLocation][yLocation+2] = colorCode;
-                pieceStack[xLocation+1][yLocation+2] = colorCode;
-                break;
-            case PieceTypeS:
-                pieceStack[xLocation][yLocation+1] = colorCode;
-                pieceStack[xLocation+1][yLocation] = colorCode;
-                pieceStack[xLocation+1][yLocation+1] = colorCode;
-                pieceStack[xLocation+2][yLocation] = colorCode;
-                break;
-            case PieceTypeT:
-                pieceStack[xLocation+1][yLocation] = colorCode;
-                pieceStack[xLocation][yLocation+1] = colorCode;
-                pieceStack[xLocation+1][yLocation+1] = colorCode;
-                pieceStack[xLocation+2][yLocation+1] = colorCode;
-                break;
-            case PieceTypeZ:
-                pieceStack[xLocation][yLocation] = colorCode;
-                pieceStack[xLocation+1][yLocation] = colorCode;
-                pieceStack[xLocation+1][yLocation+1] = colorCode;
-                pieceStack[xLocation+2][yLocation+1] = colorCode;
-                break;
-            default:
-                break;
-        }
-        
-        //update pieceStackView
         
 
         //remove the subview of this piece
@@ -160,6 +108,67 @@
         if([self.delegate respondsToSelector:@selector(dropNewPiece)])
             [self.delegate dropNewPiece];
     }
+}
+
+- (void)recordBitmapWithCurrenetPiece{
+    int xLocation = self.currentPieceView.frame.origin.x/kGridSize + self.offset;
+    int yLocation = self.currentPieceView.frame.origin.y/kGridSize;
+
+    //TODO - consider rotation and fit the piece to bitmap accordingly
+    int type = self.currentPieceView.pieceType;
+    switch (type) {
+        case PieceTypeI:
+            [self updateViewAtx:xLocation andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+2 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+3 andY:yLocation withType:type];            
+            break;
+        case PieceTypeO:
+            [self updateViewAtx:xLocation andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
+            break;
+        case PieceTypeJ:
+            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation andY:yLocation+2 withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+2 withType:type];
+            break;
+        case PieceTypeL:
+            [self updateViewAtx:xLocation andY:yLocation withType:type];
+            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation andY:yLocation+2 withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+2 withType:type];
+            break;
+        case PieceTypeS:
+            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation+2 andY:yLocation withType:type];
+            break;
+        case PieceTypeT:
+            [self updateViewAtx:xLocation andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation+2 andY:yLocation+1 withType:type];
+            break;
+        case PieceTypeZ:
+            [self updateViewAtx:xLocation andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation withType:type];
+            [self updateViewAtx:xLocation+1 andY:yLocation+1 withType:type];
+            [self updateViewAtx:xLocation+2 andY:yLocation+1 withType:type];
+            break;
+        default:
+            break;
+    }
+
+}
+
+- (void)updateViewAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
+    pieceStack[xLocation][yLocation] = type;
+    //update pieceStackView
+    [self.delegate recordRectAtx:xLocation andY:yLocation withType:type];
 }
 
 - (void)movePieceLeft{

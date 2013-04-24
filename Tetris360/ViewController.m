@@ -90,7 +90,9 @@
 }
 
 
-
+- (void)recordRectAtx:(int)xLocation andY: (int)yLocation withType:(int)type{
+    
+}
 
 - (void)dropNewPiece{
     movingPieceView = [[GameController shareManager] generatePiece];
