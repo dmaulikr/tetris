@@ -9,13 +9,16 @@
 #import "GameController.h"
 #import "ViewController.h"
 #import "PieceView.h"
+#import <CoreLocation/CoreLocation.h>
 
 static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
 
-@interface GameController ()
+@interface GameController () <CLLocationManagerDelegate>
 
-@property (assign) NSInteger newPieceHeading;
-@property (assign) NSInteger previousHeading;
+@property CLLocationManager *locationManager;
+
+@property (assign) float lastHeading;
+@property (assign) float gameStartHeading;
 
 @end
 
@@ -47,16 +50,26 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
                 pieceStack[row_index][column_index] = 0;
             }
         }
+        
+        [self setupCompass];
     }
     return self;
 }
 
+- (void)setupCompass
+{
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.headingFilter = 10;
+    [self.locationManager startUpdatingHeading];
+}
 
 #pragma mark - game play
 - (void)startGame{
     //generate a random tetris piece
 
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
+    self.gameStartHeading = self.lastHeading;
 }
 
 
@@ -87,8 +100,6 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil
                                                      repeats:YES];
-    
-    self.newPieceHeading = self.previousHeading;
     
     return self.currentPieceView;
 }
@@ -259,16 +270,24 @@ static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
     [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
 }
 
-- (void)didChangeHeading:(NSInteger)heading
+- (void)moveToColumn:(NSInteger)column
 {
+    [self.delegate centerOnStackViewColumn:column];
+}
+
+#pragma mark - CLLocationManagerDelegate methods
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+    
+    
     if (self.gameStatus == GameRunning) {
-        NSLog(@"heading: %d", heading);
-        NSInteger newColumnHeading = ((heading - self.newPieceHeading) / kDegreesPerColumn) % kNUMBER_OF_COLUMN;
-        NSLog(@"column heading: %d", heading);
-        // TODO: move view to new column
+        NSInteger relativeHeading = newHeading.magneticHeading - self.gameStartHeading;
+        NSInteger column = relativeHeading / kDegreesPerColumn;
+        [self moveToColumn:column];
     }
     
-    self.previousHeading = heading;
+    self.lastHeading = newHeading.magneticHeading;
 }
 
 @end

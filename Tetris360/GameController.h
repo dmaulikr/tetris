@@ -26,6 +26,7 @@ typedef enum{
 - (void)dropNewPiece;
 - (void)removeCurrentPiece;
 - (void)updateStackView;
+- (void)centerOnStackViewColumn:(NSInteger)column;
 @end
 
 @interface GameController : NSObject{
@@ -44,6 +45,8 @@ typedef enum{
 @property (nonatomic, assign) int offset; //offset from compass direction
 @property (nonatomic, assign) int pieceRotation;
 
+@property NSInteger currentColumn;
+
 
 //game control
 - (void)startGame;
@@ -55,6 +58,5 @@ typedef enum{
 - (void)movePieceLeft;
 - (void)movePieceRight;
 - (PieceType)getTypeAtRow:(int)row andColumn:(int)column;
-- (void)didChangeHeading:(NSInteger)heading;
 
 @end
