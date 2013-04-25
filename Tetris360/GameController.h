@@ -57,6 +57,7 @@ typedef enum{
 
 //piece control
 - (PieceView *)generatePiece;
+- (void)dropPiece;
 - (void)movePieceLeft;
 - (void)movePieceRight;
 - (void)moveScreenLeft;
