@@ -133,14 +133,14 @@
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    self.layer.anchorPoint = CGPointMake(1.5*kGridSize, 1.5*kGridSize);
-    
-    [self setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.width)];
+//    self.layer.anchorPoint = CGPointMake(1.5*kGridSize, 1.5*kGridSize);
+//    
+//    [self setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.width)];
+//
+//    if (self.pieceType == PieceTypeI) {
+//        self.layer.anchorPoint = CGPointMake(kGridSize, kGridSize);
+//    }
 
-    if (self.pieceType == PieceTypeI) {
-        self.layer.anchorPoint = CGPointMake(kGridSize, kGridSize);
-    }
-    
     if (self.pieceType != PieceTypeO) {
         // Repositions and resizes the view.
         [UIView beginAnimations:@"rotate" context:nil];
