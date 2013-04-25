@@ -68,7 +68,7 @@ float nfmod(float a,float b)
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 10; //the higher the level, the faster the dropping speed
+    self.gameLevel = 2; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
@@ -184,8 +184,11 @@ float nfmod(float a,float b)
         if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)] != PieceTypeNone) {
             hittingAPiece = YES;
         }
-        if (blockPoint.y == kNUMBER_OF_ROW - 1) {
+        if (newLogicalCenter.y >= kNUMBER_OF_ROW - 1) {
             hittingTheFloor = YES;
+        }
+        else {
+            NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
         }
     }
     
