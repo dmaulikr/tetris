@@ -38,7 +38,6 @@ typedef enum{
 @interface PieceView : UIView
 
 @property (nonatomic, assign) PieceType pieceType;
-@property (nonatomic, assign) CGPoint pieceOriginLocation;
 
 - (id)initWithPieceType:(PieceType)type;
 + (UIColor*)getColorOfType: (PieceType)type;
