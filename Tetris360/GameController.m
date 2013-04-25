@@ -174,7 +174,7 @@ float nfmod(float a,float b)
     return self.currentPieceView;
 }
 
-- (void)movePieceDown {
+- (BOOL)movePieceDown {
     CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x, self.currentPieceView.center.y + kGridSize);
     CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x, self.currentPieceView.pieceCenter.y + 1);
     
@@ -217,6 +217,15 @@ float nfmod(float a,float b)
     else{
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
+    }
+    
+    return hittingAPiece || hittingTheFloor;
+}
+
+- (void)dropPiece
+{
+    while (![self movePieceDown]) {
+        continue;
     }
 }
 

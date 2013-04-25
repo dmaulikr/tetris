@@ -131,6 +131,13 @@
     
 }
 
+- (IBAction)respondToSwipe:(UITapGestureRecognizer *)recognizer
+{
+    if ([[GameController shareManager] gameStatus]) {
+        [[GameController shareManager] dropPiece];
+    }
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if (touch.view != self.pieceStackView) {
