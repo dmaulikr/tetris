@@ -117,7 +117,9 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUITapGestureRecognizer" id="350236691"/>
+			<object class="IBUITapGestureRecognizer" id="1064135690">
+				<bool key="IBUICancelsTouchesInView">NO</bool>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -149,7 +151,7 @@
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="774585933"/>
-						<reference key="destination" ref="350236691"/>
+						<reference key="destination" ref="1064135690"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -167,7 +169,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="350236691"/>
+						<reference key="source" ref="1064135690"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">137</int>
@@ -175,7 +177,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">respondToScreenTap:</string>
-						<reference key="source" ref="350236691"/>
+						<reference key="source" ref="1064135690"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">140</int>
@@ -391,7 +393,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">136</int>
-						<reference key="object" ref="350236691"/>
+						<reference key="object" ref="1064135690"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
