@@ -345,7 +345,6 @@ float nfmod(float a,float b)
         }
     }
     
-    self.zeroColumnHeading = self.lastHeading - (self.columnOffset * kDegreesPerColumn);
     self.isMovingScreen = NO;
 }
 
@@ -387,9 +386,7 @@ float nfmod(float a,float b)
         float relativeHeading = newHeading.trueHeading - self.zeroColumnHeading;
         NSInteger column = nfmod((int)(relativeHeading / kDegreesPerColumn), kNUMBER_OF_COLUMN);
         
-        if (!self.isMovingScreen) {
-            [self moveToColumn:column];
-        }
+        [self moveToColumn:column];
     }
     
     self.lastHeading = newHeading.trueHeading;
