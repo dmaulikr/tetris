@@ -162,7 +162,7 @@ float nfmod(float a,float b)
     [self.gameTimer invalidate];
     //generate a random tetris piece
     int randomNumber = arc4random() % 7 +1; //7 types of pieces
-    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber];
+    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(4, 0)];
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self
                                                     selector:@selector(movePieceDown)
@@ -184,8 +184,11 @@ float nfmod(float a,float b)
         if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)] != PieceTypeNone) {
             hittingAPiece = YES;
         }
-        if (blockPoint.y == kNUMBER_OF_ROW - 1) {
+        if (newLogicalCenter.y >= kNUMBER_OF_ROW - 1) {
             hittingTheFloor = YES;
+        }
+        else {
+            NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
         }
     }
     
@@ -235,7 +238,9 @@ float nfmod(float a,float b)
     BOOL hittingEdgeOfScreen = NO;
     for (NSValue *block in blocks) {
         CGPoint blockPoint = [block CGPointValue];
-        if (blockPoint.x < 0 || blockPoint.x > (kNUMBER_OF_COLUMN_PER_SCREEN - 1)) {
+        if (
+            (location.x + blockPoint.x*kGridSize) <= (kGridSize/2) ||
+            (location.x + blockPoint.x*kGridSize) > ((kNUMBER_OF_COLUMN_PER_SCREEN+0.5) * kGridSize)) {
             hittingEdgeOfScreen = YES;
         }
     }
@@ -246,7 +251,7 @@ float nfmod(float a,float b)
     CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x - kGridSize, self.currentPieceView.center.y);
     CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x-1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
-    if (![self screenBorderCollisionForLocation:newLogicalCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
+    if (![self screenBorderCollisionForLocation:newViewCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
         NSLog(@"Move piece left to column : %f", self.currentPieceView.pieceCenter.x);
@@ -257,7 +262,7 @@ float nfmod(float a,float b)
     CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x + kGridSize, self.currentPieceView.center.y);
     CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x + 1, self.currentPieceView.pieceCenter.y);
     
-    if (![self screenBorderCollisionForLocation:newLogicalCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
+    if (![self screenBorderCollisionForLocation:newViewCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
         NSLog(@"Move piece left to column : %f", self.currentPieceView.pieceCenter.x);

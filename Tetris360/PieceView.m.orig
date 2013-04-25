@@ -20,7 +20,11 @@
     CGRect frame;
     switch (type) {
         case PieceTypeI:
+<<<<<<< HEAD
+            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 4, kGridSize);
+=======
             frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 4, kGridSize * 2);
+>>>>>>> 0121a9c868ad4c652585942a20ec29c0530f63df
             break;
         case PieceTypeO:
             frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 2, kGridSize * 2);
@@ -30,7 +34,11 @@
         case PieceTypeS:
         case PieceTypeT:
         case PieceTypeZ:
+<<<<<<< HEAD
+            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 3, kGridSize * 3);
+=======
             frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 3, kGridSize * 2);
+>>>>>>> 0121a9c868ad4c652585942a20ec29c0530f63df
             break;
         default:
             break;

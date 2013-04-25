@@ -52,6 +52,6 @@ typedef enum{
 @property (nonatomic, assign) CGPoint pieceCenter; //absolute location in the game grid view, e.g (3, 5), so the coordinate or the piece center is (3*32, 5*32)
 @property (nonatomic, retain) NSMutableArray *blocksCenter; //relative location of other blocks to the piece center, 3 for each block, e.g (-1, 0) means one block left
 
-- (id)initWithPieceType:(PieceType)type;
+- (id)initWithPieceType:(PieceType)type pieceCenter:(CGPoint)center;
 + (UIColor*)getColorOfType: (PieceType)type;
 @end
