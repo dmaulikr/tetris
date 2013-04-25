@@ -168,7 +168,7 @@
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    self.layer.anchorPoint = CGPointMake(1, 1);
+    self.layer.anchorPoint = CGPointMake(kGridSize, kGridSize);
 
     if (self.pieceType != PieceTypeO) {
         // Repositions and resizes the view.
