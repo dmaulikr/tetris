@@ -30,6 +30,7 @@ typedef enum{
 - (void)removeCurrentPiece;
 - (void)updateStackView;
 - (void)refreshStackView;
+- (void)finishedCalibrating;
 @end
 
 @interface GameController : NSObject <AVAudioPlayerDelegate>{

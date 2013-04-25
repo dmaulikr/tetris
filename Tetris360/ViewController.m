@@ -16,6 +16,8 @@
 @property AVCaptureVideoPreviewLayer *previewLayer;
 @property IBOutlet UIView *cameraView;
 
+@property NSTimer *calibrationTimer;
+
 @property (nonatomic, retain) PieceView *movingPieceView; //current dropping piece
 @property (nonatomic, retain) StackView *pieceStackView; //60*15 grid view for pieces already dropped
 
@@ -30,6 +32,8 @@
 
 //    [self setupCameraView];
     [self setupStackView];
+    
+    self.calibrationTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(finishedCalibrating) userInfo:nil repeats:NO];
 }
 
 - (void)setupCameraView
@@ -58,6 +62,7 @@
     [self.view bringSubviewToFront:self.startButton];
     [self.view bringSubviewToFront:self.leftButton];
     [self.view bringSubviewToFront:self.rightButton];
+    [self.view bringSubviewToFront:self.calibratingView];
 }
 
 
@@ -138,6 +143,11 @@
 - (void)refreshStackView
 {
     [self.pieceStackView setNeedsDisplay];
+}
+
+- (void)finishedCalibrating
+{
+    [self.calibratingView removeFromSuperview];
 }
 
 @end
