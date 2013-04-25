@@ -162,7 +162,7 @@ float nfmod(float a,float b)
     [self.gameTimer invalidate];
     //generate a random tetris piece
     int randomNumber = arc4random() % 7 +1; //7 types of pieces
-    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber];
+    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(4, 0)];
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self
                                                     selector:@selector(movePieceDown)

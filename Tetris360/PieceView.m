@@ -14,22 +14,23 @@
 @implementation PieceView
 @synthesize blocksCenter = _blocksCenter;
 
-- (id)initWithPieceType:(PieceType)type{
+- (id)initWithPieceType:(PieceType)type pieceCenter:(CGPoint)center {
     self.pieceType = type;
+    self.pieceCenter = center;
     CGRect frame;
     switch (type) {
         case PieceTypeI:
-            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 4, kGridSize * 2);
+            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 4, kGridSize * 2);
             break;
         case PieceTypeO:
-            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 2, kGridSize * 2);
+            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 2, kGridSize * 2);
             break;
         case PieceTypeJ:
         case PieceTypeL:
         case PieceTypeS:
         case PieceTypeT:
         case PieceTypeZ:
-            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 3, kGridSize * 2);
+            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 3, kGridSize * 2);
             break;
         default:
             break;
