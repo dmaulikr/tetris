@@ -173,79 +173,20 @@ float nfmod(float a,float b)
 }
 
 - (void)movePieceDown {
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
-    int row = potentialFrame.origin.y/kGridSize;
+    CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x, self.currentPieceView.center.y + kGridSize);
+    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x, self.currentPieceView.pieceCenter.y + 1);
     
-    BOOL hittingTheFloor = !(self.currentPieceView.frame.origin.y < kGridSize*(kNUMBER_OF_ROW - self.currentPieceView.frame.size.height/kGridSize));
+    NSArray *blocks = [self.currentPieceView blocksCenter];
     BOOL hittingAPiece = NO;
-    
-    switch (self.currentPieceView.pieceType) {
-        case PieceTypeI:
-            if (pieceStack[row][column] != PieceTypeNone ||
-                pieceStack[row][column + 1] != PieceTypeNone ||
-                pieceStack[row][column + 2] != PieceTypeNone ||
-                pieceStack[row][column + 3] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeO:
-            if (pieceStack[row][column] != PieceTypeNone ||
-                pieceStack[row][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column] != PieceTypeNone ||
-                pieceStack[row + 1][column + 1] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeJ:
-            if (pieceStack[row][column] != PieceTypeNone ||
-                pieceStack[row + 1][column] != PieceTypeNone ||
-                pieceStack[row + 1][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 2] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeL:
-            if (pieceStack[row][column + 2] != PieceTypeNone ||
-                pieceStack[row+1][column] != PieceTypeNone ||
-                pieceStack[row+1][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 2] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeS:
-            if (pieceStack[row][column] != PieceTypeNone ||
-                pieceStack[row][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 1] != PieceTypeNone ||
-                pieceStack[row][column + 2] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeT:
-            if (pieceStack[row + 1][column] != PieceTypeNone ||
-                pieceStack[row][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 2] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeZ:
-            if (pieceStack[row][column] != PieceTypeNone ||
-                pieceStack[row][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 1] != PieceTypeNone ||
-                pieceStack[row + 1][column + 2] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeNone:
-            break;
+    BOOL hittingTheFloor = NO;
+    for (NSValue *block in blocks) {
+        CGPoint blockPoint = [block CGPointValue];
+        if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)] != PieceTypeNone) {
+            hittingAPiece = YES;
+        }
+        if (blockPoint.y == kNUMBER_OF_ROW - 1) {
+            hittingTheFloor = YES;
+        }
     }
     
     if (hittingAPiece || hittingTheFloor) {
@@ -253,7 +194,7 @@ float nfmod(float a,float b)
         if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
             [self.delegate removeCurrentPiece];
 
-        [self recordBitmapWithCurrenetPiece];
+        [self recordBitmapWithCurrentPiece];
 
         //check whether we can clear a line
         BOOL hasLineClear = [self checkClearLine];
@@ -270,178 +211,67 @@ float nfmod(float a,float b)
         }
     }
     else{
-        self.currentPieceView.frame = potentialFrame;
+        self.currentPieceView.center = newViewCenter;
+        self.currentPieceView.pieceCenter = newLogicalCenter;
     }
 }
 
-- (BOOL)leftCollisionForPieceType:(PieceType)pieceType row:(int)row column:(int)column
+- (BOOL)lateralCollisionForLocation:(CGPoint)location
 {
+    NSArray *blocks = [self.currentPieceView blocksCenter];
     BOOL hittingAPiece = NO;
-    switch (pieceType) {
-        case PieceTypeI:
-            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeO:
-            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeJ:
-            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeL:
-            if (pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row][(column +1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeS:
-            if (pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row][column%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeT:
-            if (pieceStack[row + 1][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row][column%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeZ:
-            if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][column%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeNone:
-            break;
+    for (NSValue *block in blocks) {
+        CGPoint blockPoint = [block CGPointValue];
+        if (pieceStack[(int)(location.y+blockPoint.y)][(int)(location.x+blockPoint.x)] != PieceTypeNone) {
+            hittingAPiece = YES;
+        }
     }
     return hittingAPiece;
 }
 
-- (BOOL)rightCollisionForPieceType:(PieceType)pieceType row:(int)row column:(int)column
+- (BOOL)screenBorderCollisionForLocation:(CGPoint)location
 {
-    BOOL hittingAPiece = NO;
-    switch (self.currentPieceView.pieceType) {
-        case PieceTypeI:
-            if (pieceStack[row][(column + 4)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeO:
-            if (pieceStack[row][(column + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN  + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeJ:
-            if (pieceStack[row][(column + 1)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeL:
-            if (pieceStack[row][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeS:
-            if (pieceStack[row][(column + kNUMBER_OF_COLUMN  + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + kNUMBER_OF_COLUMN  + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeT:
-            if (pieceStack[row][(column + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeZ:
-            if (pieceStack[row][(column + 2)%kNUMBER_OF_COLUMN] != PieceTypeNone ||
-                pieceStack[row + 1][(column + 3)%kNUMBER_OF_COLUMN] != PieceTypeNone)
-            {
-                hittingAPiece = YES;
-            }
-            break;
-        case PieceTypeNone:
-            break;
+    NSArray *blocks = [self.currentPieceView blocksCenter];
+    BOOL hittingEdgeOfScreen = NO;
+    for (NSValue *block in blocks) {
+        CGPoint blockPoint = [block CGPointValue];
+        if (blockPoint.x < 0 || blockPoint.x > (kNUMBER_OF_COLUMN_PER_SCREEN - 1)) {
+            hittingEdgeOfScreen = YES;
+        }
     }
-    return hittingAPiece;
+    return hittingEdgeOfScreen;
 }
-
 
 - (void)movePieceLeft{
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x - kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x - kGridSize, self.currentPieceView.center.y);
+    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x - 1, self.currentPieceView.pieceCenter.y);
     
-    if (!(potentialFrame.origin.x < 0)) {
-        int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
-        int row = potentialFrame.origin.y/kGridSize;
-        
-        BOOL hittingAPiece = [self leftCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
-        
-        if (!hittingAPiece) {
-            self.currentPieceView.frame = potentialFrame;
-            NSLog(@"Move piece left to column : %d", column);
-        }
-        
-        [self.delegate refreshStackView];
+    if (![self screenBorderCollisionForLocation:newLogicalCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
+        self.currentPieceView.center = newViewCenter;
+        self.currentPieceView.pieceCenter = newLogicalCenter;
+        NSLog(@"Move piece left to column : %f", self.currentPieceView.pieceCenter.x);
     }
 }
 
 - (void)movePieceRight{
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x + kGridSize, self.currentPieceView.center.y);
+    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x + 1, self.currentPieceView.pieceCenter.y);
     
-    NSInteger farthestPointRight = potentialFrame.origin.x + potentialFrame.size.width;
-    NSInteger screenBorder = kGridSize * kNUMBER_OF_COLUMN_PER_SCREEN;
-    
-    if (!(farthestPointRight > screenBorder)) {
-        int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
-        int row = potentialFrame.origin.y/kGridSize;
-        
-        BOOL hittingAPiece = [self rightCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
-        
-        if (!hittingAPiece) {
-            self.currentPieceView.frame = potentialFrame;
-            NSLog(@"Move right to column : %d", column);
-        }
-        
-        [self.delegate refreshStackView];
+    if (![self screenBorderCollisionForLocation:newLogicalCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
+        self.currentPieceView.center = newViewCenter;
+        self.currentPieceView.pieceCenter = newLogicalCenter;
+        NSLog(@"Move piece left to column : %f", self.currentPieceView.pieceCenter.x);
     }
 }
 
 
 - (void)moveScreenLeft{
-    //check colision
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = nfmod(self.columnOffset - 1, kNUMBER_OF_COLUMN);
-    int row = potentialFrame.origin.y/kGridSize;
+    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x - 1, self.currentPieceView.pieceCenter.y);
     
-    BOOL hittingAPiece = [self leftCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
-    
-    if (!hittingAPiece) {
-        self.columnOffset = column;
-        NSLog(@"Move left to column : %d", column);
+    if (![self screenBorderCollisionForLocation:newLogicalCenter]) {
+        self.currentPieceView.pieceCenter = newLogicalCenter;
+        self.columnOffset = self.currentPieceView.pieceCenter.x;
+        NSLog(@"Move left to column : %f", self.currentPieceView.pieceCenter.x);
     }
     
     [self.delegate refreshStackView];
@@ -449,16 +279,12 @@ float nfmod(float a,float b)
 
 
 - (void)moveScreenRight{
-    //check colision
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = nfmod(self.columnOffset + 1, kNUMBER_OF_COLUMN);
-    int row = potentialFrame.origin.y/kGridSize;
+    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x + 1, self.currentPieceView.pieceCenter.y);
     
-    BOOL hittingAPiece = [self rightCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
-    
-    if (!hittingAPiece) {
-        self.columnOffset = column;
-        NSLog(@"Move right to column : %d", column);
+    if (![self screenBorderCollisionForLocation:newLogicalCenter]) {
+        self.currentPieceView.pieceCenter = newLogicalCenter;
+        self.columnOffset = self.currentPieceView.pieceCenter.x;
+        NSLog(@"Move left to column : %f", self.currentPieceView.pieceCenter.x);
     }
     
     [self.delegate refreshStackView];
@@ -507,58 +333,15 @@ float nfmod(float a,float b)
 }
 
 
-- (void)recordBitmapWithCurrenetPiece{
-    int column = self.currentPieceView.frame.origin.x/kGridSize + self.columnOffset;
-    int row = self.currentPieceView.frame.origin.y/kGridSize;
-
-    //TODO - consider rotation and fit the piece to bitmap accordingly
-    int type = self.currentPieceView.pieceType;
-    switch (type) {
-        case PieceTypeI:
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+3)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            break;
-        case PieceTypeO:
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            break;
-        case PieceTypeJ:
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            break;
-        case PieceTypeL:
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            break;
-        case PieceTypeS:
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            break;
-        case PieceTypeT:
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            break;
-        case PieceTypeZ:
-            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
-            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
-            break;
-        default:
-            break;
+- (void)recordBitmapWithCurrentPiece{
+    NSArray *blocks = [self.currentPieceView blocksCenter];
+    for (NSValue *block in blocks) {
+        CGPoint blockPoint = [block CGPointValue];
+        NSInteger column = (int)(self.currentPieceView.pieceCenter.x + blockPoint.x) % kNUMBER_OF_COLUMN;
+        NSInteger row = (int)(self.currentPieceView.pieceCenter.y + blockPoint.y);
+        [self updateViewAtColumn:column andRow:row withType:self.currentPieceView.pieceType];
     }
+
     [self.delegate updateStackView];
 }
 
