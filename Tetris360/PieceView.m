@@ -12,7 +12,7 @@
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
 @implementation PieceView
-
+@synthesize blocksCenter = _blocksCenter;
 
 - (id)initWithPieceType:(PieceType)type{
     self.pieceType = type;
@@ -133,13 +133,7 @@
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-//    self.layer.anchorPoint = CGPointMake(1.5*kGridSize, 1.5*kGridSize);
-//    
-//    [self setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.width)];
-//
-//    if (self.pieceType == PieceTypeI) {
-//        self.layer.anchorPoint = CGPointMake(kGridSize, kGridSize);
-//    }
+    self.layer.anchorPoint = self.pieceCenter;
 
     if (self.pieceType != PieceTypeO) {
         // Repositions and resizes the view.

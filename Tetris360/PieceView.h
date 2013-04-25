@@ -47,6 +47,7 @@ typedef enum{
 @property (nonatomic, assign) PieceType pieceType;
 @property (nonatomic, assign) PieceRotation pieceRotated;
 @property (nonatomic, assign) CGPoint pieceCenter;
+@property (nonatomic, assign) NSMutableArray *blocksCenter;
 
 - (id)initWithPieceType:(PieceType)type;
 + (UIColor*)getColorOfType: (PieceType)type;
