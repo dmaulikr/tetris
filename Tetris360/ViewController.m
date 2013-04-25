@@ -114,7 +114,7 @@
     [[GameController shareManager] movePieceRight];
 }
 
-- (void)centerOnStackViewColumn:(NSInteger)column
+- (void)refreshStackView
 {
     [self.pieceStackView setNeedsDisplay];
 }
