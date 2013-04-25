@@ -19,17 +19,17 @@
     CGRect frame;
     switch (type) {
         case PieceTypeI:
-            frame = CGRectMake(0, 0, kGridSize * 4, kGridSize * 2);
+            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 4, kGridSize * 2);
             break;
         case PieceTypeO:
-            frame = CGRectMake(0, 0, kGridSize * 2, kGridSize * 2);
+            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 2, kGridSize * 2);
             break;
         case PieceTypeJ:
         case PieceTypeL:
         case PieceTypeS:
         case PieceTypeT:
         case PieceTypeZ:
-            frame = CGRectMake(0, 0, kGridSize * 3, kGridSize * 2);
+            frame = CGRectMake(kGridSize * 4, 0, kGridSize * 3, kGridSize * 2);
             break;
         default:
             break;
@@ -168,7 +168,6 @@
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    self.layer.anchorPoint = self.pieceCenter;
 
     if (self.pieceType != PieceTypeO) {
         // Repositions and resizes the view.
