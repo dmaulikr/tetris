@@ -23,8 +23,9 @@ float nfmod(float a,float b)
 @property CLLocationManager *locationManager;
 
 @property (assign) float lastHeading;
-@property (assign) float gameStartHeading;
+@property (assign) float zeroColumnHeading;
 @property (assign) int columnOffset;
+@property (assign) BOOL isMovingScreen;
 
 @end
 
@@ -60,7 +61,7 @@ float nfmod(float a,float b)
 {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.headingFilter = 5;
+    self.locationManager.headingFilter = 1;
     [self.locationManager startUpdatingLocation];
     [self.locationManager startUpdatingHeading];
 }
@@ -78,7 +79,7 @@ float nfmod(float a,float b)
         }
     }
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
-    self.gameStartHeading = self.lastHeading;
+    self.zeroColumnHeading = self.lastHeading;
 
     //start background music
     [self.audioPlayer play];
@@ -187,7 +188,7 @@ float nfmod(float a,float b)
         if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)] != PieceTypeNone) {
             hittingAPiece = YES;
         }
-        if ((newLogicalCenter.y + blockPoint.y) >= kNUMBER_OF_ROW - 1) {
+        if ((newLogicalCenter.y + blockPoint.y) > kNUMBER_OF_ROW - 1) {
             hittingTheFloor = YES;
         }
     }
@@ -278,8 +279,8 @@ float nfmod(float a,float b)
     if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
         self.columnOffset = nfmod(self.columnOffset-1, kNUMBER_OF_COLUMN);
-        NSLog(@"Current screen column : %d", self.columnOffset);
-        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
+//        NSLog(@"Current screen column : %d", self.columnOffset);
+//        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
     
     [self.delegate refreshStackView];
@@ -294,11 +295,8 @@ float nfmod(float a,float b)
     if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
         self.columnOffset = nfmod(self.columnOffset+1, kNUMBER_OF_COLUMN);
-        NSLog(@"Current screen column : %d", self.columnOffset);
-        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
-        if (self.columnOffset != (int)self.currentPieceView.pieceCenter.x) {
-            NSLog(@"WTF");
-        }
+//        NSLog(@"Current screen column : %d", self.columnOffset);
+//        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
     
     [self.delegate refreshStackView];
@@ -306,14 +304,17 @@ float nfmod(float a,float b)
 
 - (void)moveToColumn:(NSInteger)column
 {
+    NSLog(@"Move to column: %d", column);
     if (column == self.columnOffset) {
         return;
     }
     
+    self.isMovingScreen = YES;
+    
     if (column == 0) {
         // Recalibrate when passing through 0
         NSLog(@"Recalibrating");
-        self.gameStartHeading = self.lastHeading;
+        self.zeroColumnHeading = self.lastHeading;
     }
     
     if (column >= 0 & column < kNUMBER_OF_COLUMN) {
@@ -343,6 +344,9 @@ float nfmod(float a,float b)
             }
         }
     }
+    
+    self.zeroColumnHeading = self.lastHeading - (self.columnOffset * kDegreesPerColumn);
+    self.isMovingScreen = NO;
 }
 
 
@@ -380,9 +384,12 @@ float nfmod(float a,float b)
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
     if (self.gameStatus == GameRunning) {
-        float relativeHeading = newHeading.trueHeading - self.gameStartHeading;
+        float relativeHeading = newHeading.trueHeading - self.zeroColumnHeading;
         NSInteger column = nfmod((int)(relativeHeading / kDegreesPerColumn), kNUMBER_OF_COLUMN);
-        [self moveToColumn:column];
+        
+        if (!self.isMovingScreen) {
+            [self moveToColumn:column];
+        }
     }
     
     self.lastHeading = newHeading.trueHeading;

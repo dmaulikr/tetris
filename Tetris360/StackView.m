@@ -43,12 +43,14 @@
                 CGContextFillRect(context, rectangle);
             }
             
+            CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+            CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+            CGContextStrokeRect(context, rectangle);
+            
             if (i == kNUMBER_OF_ROW - 1) {
-                CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
-                CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
                 NSString *columnNumber = [NSString stringWithFormat:@"%d", [[GameController shareManager] columnForScreenColumn:j]];
                 [columnNumber drawInRect:rectangle withFont:[UIFont systemFontOfSize:14]];
-                CGContextStrokeRect(context, rectangle);
+                
             }
         }
     }
