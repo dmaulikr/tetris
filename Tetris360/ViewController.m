@@ -114,6 +114,18 @@
     [[GameController shareManager] movePieceRight];
 }
 
+- (IBAction)respondToScreenTap:(UITapGestureRecognizer *)recognizer
+{
+    CGPoint location = [recognizer locationInView:self.view];
+    if (location.x < (self.view.frame.size.width/2)) {
+        [self leftClicked:nil];
+    }
+    else {
+        [self rightClicked:nil];
+    }
+    
+}
+
 - (void)refreshStackView
 {
     [self.pieceStackView setNeedsDisplay];
