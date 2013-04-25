@@ -212,42 +212,8 @@
         }
     }
 
-
     [self setNeedsDisplay];
 
-    
-//    self.layer.anchorPoint = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-//    NSLog(@"AnchorPoint: x %f   y %f", self.layer.anchorPoint.x, self.layer.anchorPoint.y);
-//    if (self.pieceType != PieceTypeO) {
-//        // Repositions and resizes the view.
-//        [UIView beginAnimations:@"rotate" context:nil];
-//        [UIView setAnimationDuration:0.1];
-//        
-//        switch (self.pieceRotated) {
-//            case PieceOriginal:
-//                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(90));
-//                [self setFrame:CGRectMake(self.frame.origin.x + kGridSize / 2.0, self.frame.origin.y + kGridSize / 2.0, self.frame.size.width, self.frame.size.height)];
-//                self.pieceRotated = PieceRotateOnce;
-//                break;
-//            case PieceRotateOnce:
-//                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(180));
-//                self.pieceRotated = PieceRotateTwice;
-//                break;
-//            case PieceRotateTwice:
-//                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(270));
-//                [self setFrame:CGRectMake(self.frame.origin.x - kGridSize / 2.0, self.frame.origin.y - kGridSize / 2.0, self.frame.size.width, self.frame.size.height)];
-//                self.pieceRotated = PieceRotateThreeTimes;
-//                break;
-//            case PieceRotateThreeTimes:
-//                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(0));
-//                self.pieceRotated = PieceOriginal;
-//                break;
-//            default:
-//                break;
-//        }
-//
-//        [UIView commitAnimations];
-//    }
 }
 
 @end
