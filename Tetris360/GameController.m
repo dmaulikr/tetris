@@ -68,7 +68,7 @@ float nfmod(float a,float b)
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 1; //the higher the level, the faster the dropping speed
+    self.gameLevel = 10; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
@@ -161,7 +161,7 @@ float nfmod(float a,float b)
 - (PieceView *)generatePiece{
     [self.gameTimer invalidate];
     //generate a random tetris piece
-    int randomNumber = rand() % 7 +1; //7 types of pieces
+    int randomNumber = arc4random() % 7 +1; //7 types of pieces
     self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber];
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self

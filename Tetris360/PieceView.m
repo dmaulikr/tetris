@@ -101,11 +101,11 @@
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
                 break;
             case PieceTypeO:
-                point = CGPointMake(2, 1);
+                point = CGPointMake(0, 0);
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
-                point = CGPointMake(1, 2);
+                point = CGPointMake(0, 1);
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
-                point = CGPointMake(2, 2);
+                point = CGPointMake(1, 0);
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
                 break;
             default:
