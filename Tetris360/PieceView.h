@@ -35,10 +35,19 @@ typedef enum{
 } PieceType;
 
 
+typedef enum{
+    PieceOriginal = 0,
+    PieceRotateOnce,
+    PieceRotateTwice,
+    PieceRotateThreeTimes
+}PieceRotation;
+
 @interface PieceView : UIView
 
 @property (nonatomic, assign) PieceType pieceType;
 @property (nonatomic, assign) CGPoint pieceOriginLocation;
+@property (nonatomic, assign) PieceRotation pieceRotated;
+@property (nonatomic, assign) CGPoint pieceCenter;
 
 - (id)initWithPieceType:(PieceType)type;
 + (UIColor*)getColorOfType: (PieceType)type;

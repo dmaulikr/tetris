@@ -45,6 +45,7 @@
     if (self) {
         // Initialization code
         [self setBackgroundColor:[UIColor clearColor]];
+        self.pieceRotated = PieceOriginal;
     }
     return self;
 }
@@ -83,6 +84,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    self.pieceCenter = CGPointMake(1.5*kGridSize, 1.5*kGridSize);
     //draw each piece based on piece type
     CGRect rectangle;
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -117,7 +119,11 @@
             CGContextClearRect(context, rectangle);
             break;
         case PieceTypeI:
+            self.pieceCenter = CGPointMake(1.5*kGridSize, 0.5*kGridSize);
+            break;
         case PieceTypeO:
+            self.pieceCenter = CGPointMake(kGridSize, kGridSize);
+            break;
         default:
             break;
     }
@@ -127,17 +133,42 @@
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    self.layer.anchorPoint = CGPointMake(1.5*kGridSize, 1.5*kGridSize);
+    
+    [self setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.width)];
+
+    if (self.pieceType == PieceTypeI) {
+        self.layer.anchorPoint = CGPointMake(kGridSize, kGridSize);
+    }
+    
     if (self.pieceType != PieceTypeO) {
         // Repositions and resizes the view.
-//        CGRect contentRect = CGRectMake(0,0, self.frame.size.height, self.frame.size.width);
-//        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI_2);
-//        self.transform = transform;
-//        self.bounds = contentRect;
-
         [UIView beginAnimations:@"rotate" context:nil];
         [UIView setAnimationDuration:0.1];
-        [self setFrame:CGRectMake(self.frame.origin.x + kGridSize / 2.0, self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
-        self.transform = CGAffineTransformMakeRotation(DegreesToRadians(90));
+        
+        switch (self.pieceRotated) {
+            case PieceOriginal:
+                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(90));
+//                [self setFrame:CGRectMake(self.frame.origin.x + kGridSize / 2.0, self.frame.origin.y + kGridSize / 2.0, self.frame.size.width, self.frame.size.height)];
+                self.pieceRotated = PieceRotateOnce;
+                break;
+            case PieceRotateOnce:
+                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(180));
+                self.pieceRotated = PieceRotateTwice;
+                break;
+            case PieceRotateTwice:
+                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(270));
+//                [self setFrame:CGRectMake(self.frame.origin.x - kGridSize / 2.0, self.frame.origin.y - kGridSize / 2.0, self.frame.size.width, self.frame.size.height)];
+                self.pieceRotated = PieceRotateThreeTimes;
+                break;
+            case PieceRotateThreeTimes:
+                self.transform = CGAffineTransformMakeRotation(DegreesToRadians(0));
+                self.pieceRotated = PieceOriginal;
+                break;
+            default:
+                break;
+        }
+
         [UIView commitAnimations];
     }
 }
