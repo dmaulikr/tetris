@@ -162,7 +162,7 @@ float nfmod(float a,float b)
     [self.gameTimer invalidate];
     //generate a random tetris piece
     int randomNumber = arc4random() % 7 +1; //7 types of pieces
-    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(4, 0)];
+    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(0, 0)];
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self
                                                     selector:@selector(movePieceDown)
@@ -176,6 +176,8 @@ float nfmod(float a,float b)
     CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x, self.currentPieceView.center.y + kGridSize);
     CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x, self.currentPieceView.pieceCenter.y + 1);
     
+//    NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
+    
     NSArray *blocks = [self.currentPieceView blocksCenter];
     BOOL hittingAPiece = NO;
     BOOL hittingTheFloor = NO;
@@ -186,9 +188,6 @@ float nfmod(float a,float b)
         }
         if (newLogicalCenter.y >= kNUMBER_OF_ROW - 1) {
             hittingTheFloor = YES;
-        }
-        else {
-            NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
         }
     }
     
@@ -254,7 +253,7 @@ float nfmod(float a,float b)
     if (![self screenBorderCollisionForLocation:newViewCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        NSLog(@"Move piece left to column : %f", self.currentPieceView.pieceCenter.x);
+        NSLog(@"Current piece column  : %f", self.currentPieceView.pieceCenter.x);
     }
 }
 
@@ -265,7 +264,7 @@ float nfmod(float a,float b)
     if (![self screenBorderCollisionForLocation:newViewCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        NSLog(@"Move piece left to column : %f", self.currentPieceView.pieceCenter.x);
+        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
 }
 
@@ -273,10 +272,13 @@ float nfmod(float a,float b)
 - (void)moveScreenLeft{
     CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x-1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
+    NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
+    
     if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        self.columnOffset = self.currentPieceView.pieceCenter.x;
-        NSLog(@"Move left to column : %f", self.currentPieceView.pieceCenter.x);
+        self.columnOffset = nfmod(self.columnOffset-1, kNUMBER_OF_COLUMN);
+        NSLog(@"Current screen column : %d", self.columnOffset);
+        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
     
     [self.delegate refreshStackView];
@@ -284,12 +286,13 @@ float nfmod(float a,float b)
 
 
 - (void)moveScreenRight{
-    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x + 1, self.currentPieceView.pieceCenter.y);
+    CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x+1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
     if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        self.columnOffset = self.currentPieceView.pieceCenter.x;
-        NSLog(@"Move left to column : %f", self.currentPieceView.pieceCenter.x);
+        self.columnOffset = nfmod(self.columnOffset+1, kNUMBER_OF_COLUMN);
+        NSLog(@"Current screen column : %d", self.columnOffset);
+        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
     
     [self.delegate refreshStackView];
@@ -324,13 +327,11 @@ float nfmod(float a,float b)
         
         if (columnsToMove == columnsToMoveLeft) {
             for (int i = columnsToMove; i > 0; i--) {
-                NSLog(@"%d", i);
                 [self moveScreenLeft];
             }
         }
         else if (columnsToMove == columnsToMoveRight) {
             for (int i = abs(columnsToMove); i > 0; i--) {
-                NSLog(@"%d", i);
                 [self moveScreenRight];
             }
         }
@@ -339,6 +340,7 @@ float nfmod(float a,float b)
 
 
 - (void)recordBitmapWithCurrentPiece{
+    NSLog(@"Recording: %@", NSStringFromCGPoint(self.currentPieceView.pieceCenter));
     NSArray *blocks = [self.currentPieceView blocksCenter];
     for (NSValue *block in blocks) {
         CGPoint blockPoint = [block CGPointValue];
