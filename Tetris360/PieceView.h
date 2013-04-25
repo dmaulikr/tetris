@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define kGridSize 32
+#define kNUMBER_OF_BLOCKS 4
+
+
 typedef enum{
     PieceTypeNone = 0,
     PieceTypeI, // □□□□
@@ -47,7 +50,7 @@ typedef enum{
 @property (nonatomic, assign) PieceType pieceType;
 @property (nonatomic, assign) PieceRotation pieceRotated;
 @property (nonatomic, assign) CGPoint pieceCenter;
-@property (nonatomic, assign) NSMutableArray *blocksCenter;
+@property (nonatomic, retain) NSMutableArray *blocksCenter;
 
 - (id)initWithPieceType:(PieceType)type;
 + (UIColor*)getColorOfType: (PieceType)type;
