@@ -45,7 +45,6 @@ typedef enum{
 @interface PieceView : UIView
 
 @property (nonatomic, assign) PieceType pieceType;
-@property (nonatomic, assign) CGPoint pieceOriginLocation;
 @property (nonatomic, assign) PieceRotation pieceRotated;
 @property (nonatomic, assign) CGPoint pieceCenter;
 

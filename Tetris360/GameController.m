@@ -274,16 +274,10 @@ float nfmod(float a,float b)
     }
 }
 
-
-- (void)movePieceLeft{
-    //check colision
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = nfmod(self.columnOffset - 1, kNUMBER_OF_COLUMN);
-    int row = potentialFrame.origin.y/kGridSize;
-
+- (BOOL)leftCollisionForPieceType:(PieceType)pieceType row:(int)row column:(int)column
+{
     BOOL hittingAPiece = NO;
-
-    switch (self.currentPieceView.pieceType) {
+    switch (pieceType) {
         case PieceTypeI:
             if (pieceStack[row][(column + kNUMBER_OF_COLUMN -1)%kNUMBER_OF_COLUMN] != PieceTypeNone)
             {
@@ -335,25 +329,12 @@ float nfmod(float a,float b)
         case PieceTypeNone:
             break;
     }
-
-    if (!hittingAPiece) {
-        self.columnOffset = column;
-        NSLog(@"Move left to column : %d", column);
-    }
-    
-    [self.delegate refreshStackView];
+    return hittingAPiece;
 }
 
-
-
-- (void)movePieceRight{
-    //check colision
-    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = nfmod(self.columnOffset + 1, kNUMBER_OF_COLUMN);
-    int row = potentialFrame.origin.y/kGridSize;
-
+- (BOOL)rightCollisionForPieceType:(PieceType)pieceType row:(int)row column:(int)column
+{
     BOOL hittingAPiece = NO;
-
     switch (self.currentPieceView.pieceType) {
         case PieceTypeI:
             if (pieceStack[row][(column + 4)%kNUMBER_OF_COLUMN] != PieceTypeNone)
@@ -406,7 +387,75 @@ float nfmod(float a,float b)
         case PieceTypeNone:
             break;
     }
+    return hittingAPiece;
+}
 
+
+- (void)movePieceLeft{
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x - kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    
+    if (!(potentialFrame.origin.x < 0)) {
+        int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
+        int row = potentialFrame.origin.y/kGridSize;
+        
+        BOOL hittingAPiece = [self leftCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
+        
+        if (!hittingAPiece) {
+            self.currentPieceView.frame = potentialFrame;
+            NSLog(@"Move piece left to column : %d", column);
+        }
+        
+        [self.delegate refreshStackView];
+    }
+}
+
+- (void)movePieceRight{
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    
+    NSInteger farthestPointRight = potentialFrame.origin.x + potentialFrame.size.width;
+    NSInteger screenBorder = kGridSize * kNUMBER_OF_COLUMN_PER_SCREEN;
+    
+    if (!(farthestPointRight > screenBorder)) {
+        int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
+        int row = potentialFrame.origin.y/kGridSize;
+        
+        BOOL hittingAPiece = [self rightCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
+        
+        if (!hittingAPiece) {
+            self.currentPieceView.frame = potentialFrame;
+            NSLog(@"Move right to column : %d", column);
+        }
+        
+        [self.delegate refreshStackView];
+    }
+}
+
+
+- (void)moveScreenLeft{
+    //check colision
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    int column = nfmod(self.columnOffset - 1, kNUMBER_OF_COLUMN);
+    int row = potentialFrame.origin.y/kGridSize;
+    
+    BOOL hittingAPiece = [self leftCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
+    
+    if (!hittingAPiece) {
+        self.columnOffset = column;
+        NSLog(@"Move left to column : %d", column);
+    }
+    
+    [self.delegate refreshStackView];
+}
+
+
+- (void)moveScreenRight{
+    //check colision
+    CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
+    int column = nfmod(self.columnOffset + 1, kNUMBER_OF_COLUMN);
+    int row = potentialFrame.origin.y/kGridSize;
+    
+    BOOL hittingAPiece = [self rightCollisionForPieceType:self.currentPieceView.pieceType row:row column:column];
+    
     if (!hittingAPiece) {
         self.columnOffset = column;
         NSLog(@"Move right to column : %d", column);
@@ -445,13 +494,13 @@ float nfmod(float a,float b)
         if (columnsToMove == columnsToMoveLeft) {
             for (int i = columnsToMove; i > 0; i--) {
                 NSLog(@"%d", i);
-                [self movePieceLeft];
+                [self moveScreenLeft];
             }
         }
         else if (columnsToMove == columnsToMoveRight) {
             for (int i = abs(columnsToMove); i > 0; i--) {
                 NSLog(@"%d", i);
-                [self movePieceRight];
+                [self moveScreenRight];
             }
         }
     }
