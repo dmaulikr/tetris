@@ -47,7 +47,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         self.pieceRotated = PieceOriginal;
         self.blocksCenter = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_BLOCKS];
-        for (int i = 0; i < kNUMBER_OF_BLOCKS; i++) {
+        for (int i = 1; i < kNUMBER_OF_BLOCKS; i++) {
             CGPoint point = CGPointMake(0, 0);
             [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
         }
