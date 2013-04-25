@@ -244,7 +244,7 @@ float nfmod(float a,float b)
 
 - (void)movePieceLeft{
     CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x - kGridSize, self.currentPieceView.center.y);
-    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x - 1, self.currentPieceView.pieceCenter.y);
+    CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x-1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
     if (![self screenBorderCollisionForLocation:newLogicalCenter] && ![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.center = newViewCenter;
@@ -266,9 +266,9 @@ float nfmod(float a,float b)
 
 
 - (void)moveScreenLeft{
-    CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x - 1, self.currentPieceView.pieceCenter.y);
+    CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x-1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
-    if (![self screenBorderCollisionForLocation:newLogicalCenter]) {
+    if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
         self.columnOffset = self.currentPieceView.pieceCenter.x;
         NSLog(@"Move left to column : %f", self.currentPieceView.pieceCenter.x);
@@ -281,7 +281,7 @@ float nfmod(float a,float b)
 - (void)moveScreenRight{
     CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x + 1, self.currentPieceView.pieceCenter.y);
     
-    if (![self screenBorderCollisionForLocation:newLogicalCenter]) {
+    if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
         self.columnOffset = self.currentPieceView.pieceCenter.x;
         NSLog(@"Move left to column : %f", self.currentPieceView.pieceCenter.x);
