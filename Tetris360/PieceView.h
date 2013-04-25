@@ -37,7 +37,6 @@ typedef enum{
 
 @property (nonatomic, assign) PieceType pieceType;
 @property (nonatomic, assign) CGPoint pieceOriginLocation;
-@property (nonatomic, assign) NSInteger currentColumn;
 
 - (id)initWithPieceType:(PieceType)type;
 + (UIColor*)getColorOfType: (PieceType)type;

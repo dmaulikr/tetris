@@ -63,7 +63,7 @@ float nfmod(float a,float b)
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 5; //the higher the level, the faster the dropping speed
+    self.gameLevel = 1; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
@@ -227,7 +227,7 @@ float nfmod(float a,float b)
 - (void)movePieceLeft{
     //check colision
     CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
+    int column = self.columnOffset - 1;
     int row = potentialFrame.origin.y/kGridSize;
 
     BOOL hittingAPiece = NO;
@@ -286,7 +286,9 @@ float nfmod(float a,float b)
     }
 
     if (!hittingAPiece) {
-        [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x - kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+        [self.currentPieceView setFrame:potentialFrame];
+        self.columnOffset = column;
+        NSLog(@"Move left to column : %d", column);
     }
 }
 
@@ -295,7 +297,7 @@ float nfmod(float a,float b)
 - (void)movePieceRight{
     //check colision
     CGRect potentialFrame = CGRectMake(self.currentPieceView.frame.origin.x, self.currentPieceView.frame.origin.y + kGridSize, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height);
-    int column = potentialFrame.origin.x/kGridSize + self.columnOffset;
+    int column = self.columnOffset + 1;
     int row = potentialFrame.origin.y/kGridSize;
 
     BOOL hittingAPiece = NO;
@@ -354,12 +356,56 @@ float nfmod(float a,float b)
     }
 
     if (!hittingAPiece) {
-        [self.currentPieceView setFrame:CGRectMake(self.currentPieceView.frame.origin.x + kGridSize, self.currentPieceView.frame.origin.y, self.currentPieceView.frame.size.width, self.currentPieceView.frame.size.height)];
+        [self.currentPieceView setFrame:potentialFrame];
+        self.columnOffset = column;
+        NSLog(@"Move right to column : %d", column);
     }
 
 }
 
-
+- (void)moveToColumn:(NSInteger)column
+{
+    if (column == self.columnOffset) {
+        return;
+    }
+    
+    if (column == 0) {
+        // Recalibrate when passing through 0
+        self.gameStartHeading = self.lastHeading;
+    }
+    
+    if (column >= 0 & column < kNUMBER_OF_COLUMN) {
+        
+        NSInteger columnsToMoveLeft;
+        NSInteger columnsToMoveRight;
+        
+        if (column < self.columnOffset) {
+            columnsToMoveLeft = abs(self.columnOffset - column);
+            columnsToMoveRight = kNUMBER_OF_COLUMN - columnsToMoveLeft;
+        }
+        else {
+            columnsToMoveRight = abs(self.columnOffset - column);
+            columnsToMoveLeft = kNUMBER_OF_COLUMN - columnsToMoveRight;
+        }
+        
+        NSInteger columnsToMove = MIN(columnsToMoveLeft, columnsToMoveRight);
+        
+        if (columnsToMove == columnsToMoveLeft) {
+            for (int i = columnsToMove; i > 0; i--) {
+                NSLog(@"%d", i);
+                [self movePieceLeft];
+                [self.delegate refreshStackView];
+            }
+        }
+        else if (columnsToMove == columnsToMoveRight) {
+            for (int i = abs(columnsToMove); i > 0; i--) {
+                NSLog(@"%d", i);
+                [self movePieceRight];
+                [self.delegate refreshStackView];
+            }
+        }
+    }
+}
 
 
 - (void)recordBitmapWithCurrenetPiece{
@@ -431,25 +477,6 @@ float nfmod(float a,float b)
     pieceStack[row][column] = type;
     //update pieceStackView
     //    [self.delegate recordRectAtx:column andRow:row withType:type];
-}
-
-
-- (void)moveToColumn:(NSInteger)column
-{
-    NSLog(@"Move to column : %d", column);
-    if (column == self.columnOffset) {
-        return;
-    }
-    
-    if (column == 0) {
-        // Recalibrate when passing through 0
-        self.gameStartHeading = self.lastHeading;
-    }
-    
-    if (column > 0 & column < kNUMBER_OF_COLUMN) {
-        self.columnOffset = column;
-        [self.delegate centerOnStackViewColumn:column];
-    }
 }
 
 #pragma mark - CLLocationManagerDelegate methods

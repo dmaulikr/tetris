@@ -27,7 +27,7 @@ typedef enum{
 - (void)dropNewPiece;
 - (void)removeCurrentPiece;
 - (void)updateStackView;
-- (void)centerOnStackViewColumn:(NSInteger)column;
+- (void)refreshStackView;
 @end
 
 @interface GameController : NSObject{
@@ -44,8 +44,6 @@ typedef enum{
 
 @property (nonatomic, assign) int gameLevel;
 @property (nonatomic, assign) int pieceRotation;
-
-@property NSInteger currentColumn;
 
 
 //game control
