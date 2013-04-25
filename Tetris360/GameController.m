@@ -68,7 +68,7 @@ float nfmod(float a,float b)
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 4; //the higher the level, the faster the dropping speed
+    self.gameLevel = 1; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
@@ -421,46 +421,46 @@ float nfmod(float a,float b)
     int type = self.currentPieceView.pieceType;
     switch (type) {
         case PieceTypeI:
-            [self updateViewAtColumn:column andRow:row withType:type];
-            [self updateViewAtColumn:column+1 andRow:row withType:type];
-            [self updateViewAtColumn:column+2 andRow:row withType:type];
-            [self updateViewAtColumn:column+3 andRow:row withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+3)%kNUMBER_OF_COLUMN andRow:row withType:type];
             break;
         case PieceTypeO:
-            [self updateViewAtColumn:column andRow:row withType:type];
-            [self updateViewAtColumn:column+1 andRow:row withType:type];
-            [self updateViewAtColumn:column andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
             break;
         case PieceTypeJ:
-            [self updateViewAtColumn:column andRow:row withType:type];
-            [self updateViewAtColumn:column andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
             break;
         case PieceTypeL:
-            [self updateViewAtColumn:column+2 andRow:row withType:type];
-            [self updateViewAtColumn:column andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
             break;
         case PieceTypeS:
-            [self updateViewAtColumn:column andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+1 andRow:row withType:type];
-            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+2 andRow:row withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row withType:type];
             break;
         case PieceTypeT:
-            [self updateViewAtColumn:column andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+1 andRow:row withType:type];
-            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
             break;
         case PieceTypeZ:
-            [self updateViewAtColumn:column andRow:row withType:type];
-            [self updateViewAtColumn:column+1 andRow:row withType:type];
-            [self updateViewAtColumn:column+1 andRow:row+1 withType:type];
-            [self updateViewAtColumn:column+2 andRow:row+1 withType:type];
+            [self updateViewAtColumn:column%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row withType:type];
+            [self updateViewAtColumn:(column+1)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
+            [self updateViewAtColumn:(column+2)%kNUMBER_OF_COLUMN andRow:row+1 withType:type];
             break;
         default:
             break;

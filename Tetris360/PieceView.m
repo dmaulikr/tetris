@@ -128,6 +128,12 @@
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     if (self.pieceType != PieceTypeO) {
+        // Repositions and resizes the view.
+//        CGRect contentRect = CGRectMake(0,0, self.frame.size.height, self.frame.size.width);
+//        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI_2);
+//        self.transform = transform;
+//        self.bounds = contentRect;
+
         [UIView beginAnimations:@"rotate" context:nil];
         [UIView setAnimationDuration:0.1];
         [self setFrame:CGRectMake(self.frame.origin.x + kGridSize / 2.0, self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
