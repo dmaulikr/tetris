@@ -20,7 +20,7 @@
     CGRect frame;
     switch (type) {
         case PieceTypeI:
-            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 4, kGridSize * 2);
+            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 4, kGridSize * 4);
             break;
         case PieceTypeO:
             frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 2, kGridSize * 2);
@@ -30,7 +30,7 @@
         case PieceTypeS:
         case PieceTypeT:
         case PieceTypeZ:
-            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 3, kGridSize * 2);
+            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 3, kGridSize * 3);
             break;
         default:
             break;
@@ -94,13 +94,11 @@
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
                 break;
             case PieceTypeI:
-                point = CGPointMake(1, 0);
-                self.blocksCenter[0] = [NSValue valueWithCGPoint:point];
-                point = CGPointMake(0, 0);
+                point = CGPointMake(0, 1);
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
-                point = CGPointMake(2, 0);
+                point = CGPointMake(2, 1);
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
-                point = CGPointMake(3, 0);
+                point = CGPointMake(3, 1);
                 [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
                 break;
             case PieceTypeO:
@@ -171,36 +169,60 @@
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 
-//    if (self.pieceRotated == PieceRotateThreeTimes) {
-//        self.pieceRotated = PieceOriginal;
-//    }
-//    else{
-//        self.pieceRotated++;
-//    }
-//
-//    
+    if (self.pieceRotated == PieceRotateThreeTimes) {
+        self.pieceRotated = PieceOriginal;
+    }
+    else{
+        self.pieceRotated++;
+    }
+
+    //change frame of current view for rotation - doesn't work
 //    CGRect frame;
 //    switch (self.pieceType) {
 //        case PieceTypeI:
-//            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 4, kGridSize * 2);
-//            break;
-//        case PieceTypeO:
-//            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 2, kGridSize * 2);
+//            if (self.pieceRotated%2 == 0) {
+//                frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, kGridSize * 4, kGridSize * 1);
+//            }
+//            else{
+//                frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, kGridSize * 1, kGridSize * 4);
+//            }
 //            break;
 //        case PieceTypeJ:
 //        case PieceTypeL:
 //        case PieceTypeS:
 //        case PieceTypeT:
 //        case PieceTypeZ:
-//            frame = CGRectMake(kGridSize*center.x, kGridSize*center.y, kGridSize * 3, kGridSize * 2);
+//            if (self.pieceRotated%2 == 0) {
+//                frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, kGridSize * 3, kGridSize * 2);
+//            }
+//            else{
+//                frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, kGridSize * 2, kGridSize * 3);
+//            }
 //            break;
 //        default:
 //            break;
 //    }
+//    self.frame = frame;
+
 
     //rotate the piece 90 degrees clockwise
     if (self.pieceType == PieceTypeI) {
-        
+        if (self.pieceRotated%2 == 0) {
+            CGPoint newPoint = CGPointMake(0, 1);
+            self.blocksCenter[1] = [NSValue valueWithCGPoint:newPoint];
+            newPoint = CGPointMake(2, 1);
+            self.blocksCenter[2] = [NSValue valueWithCGPoint:newPoint];
+            newPoint = CGPointMake(3, 1);
+            self.blocksCenter[3] = [NSValue valueWithCGPoint:newPoint];
+        }
+        else{
+            CGPoint newPoint = CGPointMake(1, 0);
+            self.blocksCenter[1] = [NSValue valueWithCGPoint:newPoint];
+            newPoint = CGPointMake(1, 2);
+            self.blocksCenter[2] = [NSValue valueWithCGPoint:newPoint];
+            newPoint = CGPointMake(1, 3);
+            self.blocksCenter[3] = [NSValue valueWithCGPoint:newPoint];
+        }
     }
     else if (self.pieceType != PieceTypeO) {
         for (int i = 1; i < kNUMBER_OF_BLOCKS; i++) {
