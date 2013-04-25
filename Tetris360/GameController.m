@@ -32,7 +32,7 @@ float nfmod(float a,float b)
 @synthesize gameStatus = _gameStatus;
 @synthesize gameTimer = _gameTimer;
 @synthesize delegate = _delegate;
-
+@synthesize audioPlayer = _audioPlayer;
 
 //game manager singleton
 + (id)shareManager{
@@ -47,6 +47,11 @@ float nfmod(float a,float b)
 - (id)init {
     if (self = [super init]) { 
         [self setupCompass];
+        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"TetrisTheme" ofType:@"mp3"];
+        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+        self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+        self.audioPlayer.delegate = self;
+        self.audioPlayer.numberOfLoops = -1; //infinite
     }
     return self;
 }
@@ -63,7 +68,7 @@ float nfmod(float a,float b)
 - (void)startGame{
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 5; //the higher the level, the faster the dropping speed
+    self.gameLevel = 4; //the higher the level, the faster the dropping speed
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
@@ -73,6 +78,9 @@ float nfmod(float a,float b)
     }
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
     self.gameStartHeading = self.lastHeading;
+
+    //start background music
+    [self.audioPlayer play];
 }
 
 
@@ -80,6 +88,7 @@ float nfmod(float a,float b)
     //freeze piece and pause timer
     self.gameStatus = GamePaused;
     [self.gameTimer invalidate];
+    [self.audioPlayer pause];
 }
 
 - (void)resumeGame{
@@ -90,6 +99,44 @@ float nfmod(float a,float b)
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil
                                                      repeats:YES];
+
+    [self.audioPlayer play];
+}
+
+
+- (BOOL)checkClearLine{
+    for (int row_index = kNUMBER_OF_ROW; row_index >= 0; row_index--) {
+        //check for one line
+        BOOL isLineClear = YES;
+        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+            if (pieceStack[row_index][column_index] == PieceTypeNone) {
+                isLineClear = NO;
+                break;
+            }
+        }
+        if (isLineClear) {
+            [self pauseGame];
+            NSLog(@"One line %d is clear!!!!!", row_index);
+            [self clearALine:row_index];
+        }
+    }
+
+    return NO;
+}
+
+//remove the line after
+- (void)clearALine: (int)row{
+    for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+        pieceStack[row][column_index] = PieceTypeNone;
+    }
+
+    //move all the pieces above down one row
+    for (int row_index = row; row_index > 0; row_index--) {
+        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+            pieceStack[row_index][column_index] = pieceStack[row_index - 1][column_index];
+        }
+    }
+    [self resumeGame];
 }
 
 
@@ -104,6 +151,8 @@ float nfmod(float a,float b)
             pieceStack[row_index][column_index] = 0;
         }
     }
+
+    [self.audioPlayer stop];
     [self.delegate updateStackView];
 }
 
@@ -199,20 +248,22 @@ float nfmod(float a,float b)
             break;
     }
     
-
     if (hittingAPiece || hittingTheFloor) {
         //remove the subview of this piece
         if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
             [self.delegate removeCurrentPiece];
 
         [self recordBitmapWithCurrenetPiece];
-        
+
+        //check whether we can clear a line
+        BOOL hasLineClear = [self checkClearLine];
+
         if (self.currentPieceView.frame.origin.y == 0) { //game over
             [self gameOver];
             //auto restart game for testing
 //            [self startGame];
         }
-        else{
+        else if(!hasLineClear){
             //drop a new piece
             if([self.delegate respondsToSelector:@selector(dropNewPiece)])
                 [self.delegate dropNewPiece];

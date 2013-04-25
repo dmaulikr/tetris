@@ -9,6 +9,8 @@
 #import "PieceView.h"
 #import "GameController.h"
 
+#define DegreesToRadians(x) ((x) * M_PI / 180.0)
+
 @implementation PieceView
 
 
@@ -123,5 +125,14 @@
 }
 
 
+#pragma mark - touch events
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [UIView beginAnimations:@"rotate" context:nil];
+    [UIView setAnimationDuration:0.1];
+//    self.layer.anchorPoint = CGPointMake(kGridSize/2.0, kGridSize/2.0);
+//    self.center = CGPointMake(0, 0);
+    self.transform = CGAffineTransformMakeRotation(DegreesToRadians(90));
+    [UIView commitAnimations];
+}
 
 @end

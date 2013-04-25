@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #define kGridSize 32
 typedef enum{
     PieceTypeNone = 0,

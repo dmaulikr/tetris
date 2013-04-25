@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import "PieceView.h"
 
 #define kNUMBER_OF_ROW 15
@@ -30,7 +32,7 @@ typedef enum{
 - (void)centerOnStackViewColumn:(NSInteger)column;
 @end
 
-@interface GameController : NSObject{
+@interface GameController : NSObject <AVAudioPlayerDelegate>{
     
 }
 
@@ -41,6 +43,7 @@ typedef enum{
 @property (nonatomic, retain) NSTimer *gameTimer;
 @property (nonatomic, assign) GameStatus gameStatus;
 @property (nonatomic, retain) PieceView *currentPieceView;
+@property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 
 @property (nonatomic, assign) int gameLevel;
 @property (nonatomic, assign) int pieceRotation;
