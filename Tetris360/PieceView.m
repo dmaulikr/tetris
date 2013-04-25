@@ -16,25 +16,25 @@
 
 - (id)initWithPieceType:(PieceType)type{
     self.pieceType = type;
-    CGRect frame = CGRectMake(4*kGridSize, 0, kGridSize, kGridSize);
+    CGRect frame;
     switch (type) {
         case PieceTypeI:
-            frame = CGRectMake(3*kGridSize, 0, kGridSize * 4, kGridSize);
+            frame = CGRectMake(0, 0, kGridSize * 4, kGridSize * 2);
             break;
         case PieceTypeO:
-            frame = CGRectMake(4*kGridSize, 0, kGridSize * 2, kGridSize * 2);
+            frame = CGRectMake(0, 0, kGridSize * 2, kGridSize * 2);
             break;
         case PieceTypeJ:
         case PieceTypeL:
         case PieceTypeS:
         case PieceTypeT:
         case PieceTypeZ:
-            frame = CGRectMake(3*kGridSize, 0, kGridSize * 3, kGridSize * 2);
+            frame = CGRectMake(0, 0, kGridSize * 3, kGridSize * 2);
             break;
         default:
             break;
     }
-    
+
     return [self initWithFrame:frame];
 }
 
@@ -46,11 +46,73 @@
         // Initialization code
         [self setBackgroundColor:[UIColor clearColor]];
         self.pieceRotated = PieceOriginal;
+        //initializing blocks
         self.blocksCenter = [[NSMutableArray alloc] initWithCapacity:kNUMBER_OF_BLOCKS];
-        for (int i = 1; i < kNUMBER_OF_BLOCKS; i++) {
-            CGPoint point = CGPointMake(0, 0);
-            [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+        CGPoint point = CGPointMake(1, 1);
+        [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+
+        switch (self.pieceType) {
+            case PieceTypeJ:
+                point = CGPointMake(0, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(0, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            case PieceTypeL:
+                point = CGPointMake(0, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            case PieceTypeS:
+                point = CGPointMake(0, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(1, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            case PieceTypeT:
+                point = CGPointMake(0, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(1, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            case PieceTypeZ:
+                point = CGPointMake(0, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(1, 0);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            case PieceTypeI:
+                point = CGPointMake(0, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(3, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            case PieceTypeO:
+                point = CGPointMake(2, 1);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(1, 2);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                point = CGPointMake(2, 2);
+                [self.blocksCenter addObject:[NSValue valueWithCGPoint:point]];
+                break;
+            default:
+                break;
         }
+
+        
     }
     return self;
 }
@@ -89,50 +151,18 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    self.pieceCenter = CGPointMake(1.5*kGridSize, 1.5*kGridSize);
     //draw each piece based on piece type
     CGRect rectangle;
     CGContextRef context = UIGraphicsGetCurrentContext();
-//    [[UIColor blackColor] setStroke];
+    [[UIColor whiteColor] setStroke];
     [[PieceView getColorOfType:self.pieceType] setFill];
-    UIRectFill( rect );
-    switch (self.pieceType) {
-        case PieceTypeJ:
-            rectangle = CGRectMake(kGridSize, 0, kGridSize * 2, kGridSize);
-            CGContextClearRect(context, rectangle);
-            break;
-        case PieceTypeL:
-            rectangle = CGRectMake(0, 0, kGridSize * 2, kGridSize);
-            CGContextClearRect(context, rectangle);
-            break;
-        case PieceTypeS:
-            rectangle = CGRectMake(0, 0, kGridSize, kGridSize);
-            CGContextClearRect(context, rectangle);
-            rectangle = CGRectMake(kGridSize * 2, kGridSize, kGridSize, kGridSize);
-            CGContextClearRect(context, rectangle);
-            break;
-        case PieceTypeT:
-            rectangle = CGRectMake(0, 0, kGridSize, kGridSize);
-            CGContextClearRect(context, rectangle);
-            rectangle = CGRectMake(kGridSize * 2, 0, kGridSize, kGridSize);
-            CGContextClearRect(context, rectangle);
-            break;
-        case PieceTypeZ:
-            rectangle = CGRectMake(0, kGridSize, kGridSize, kGridSize);
-            CGContextClearRect(context, rectangle);
-            rectangle = CGRectMake(kGridSize * 2, 0, kGridSize, kGridSize);
-            CGContextClearRect(context, rectangle);
-            break;
-        case PieceTypeI:
-            self.pieceCenter = CGPointMake(1.5*kGridSize, 0.5*kGridSize);
-            break;
-        case PieceTypeO:
-            self.pieceCenter = CGPointMake(kGridSize, kGridSize);
-            break;
-        default:
-            break;
+
+    for (int i = 0; i < kNUMBER_OF_BLOCKS; i++) {
+        //draw each block
+        rectangle = CGRectMake(([[self.blocksCenter objectAtIndex:i] CGPointValue].x) * kGridSize, ([[self.blocksCenter objectAtIndex:i] CGPointValue].y) * kGridSize, kGridSize, kGridSize);
+        CGContextFillRect(context, rectangle);
+        CGContextStrokeRect(context, rectangle);
     }
-    
 }
 
 
