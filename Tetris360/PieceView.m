@@ -127,12 +127,13 @@
 
 #pragma mark - touch events
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [UIView beginAnimations:@"rotate" context:nil];
-    [UIView setAnimationDuration:0.1];
-//    self.layer.anchorPoint = CGPointMake(kGridSize/2.0, kGridSize/2.0);
-//    self.center = CGPointMake(0, 0);
-    self.transform = CGAffineTransformMakeRotation(DegreesToRadians(90));
-    [UIView commitAnimations];
+    if (self.pieceType != PieceTypeO) {
+        [UIView beginAnimations:@"rotate" context:nil];
+        [UIView setAnimationDuration:0.1];
+        [self setFrame:CGRectMake(self.frame.origin.x + kGridSize / 2.0, self.frame.origin.y, self.frame.size.width, self.frame.size.height)];
+        self.transform = CGAffineTransformMakeRotation(DegreesToRadians(90));
+        [UIView commitAnimations];
+    }
 }
 
 @end
