@@ -12,9 +12,9 @@
 #import "PieceView.h"
 
 #define kNUMBER_OF_ROW 15
-#define kNUMBER_OF_COLUMN 60
+#define kNUMBER_OF_COLUMN 30
 #define kNUMBER_OF_COLUMN_PER_SCREEN 10
-#define kDegreesPerColumn 6
+#define kDegreesPerColumn 12
 
 typedef enum{
     GameStopped,

@@ -60,7 +60,8 @@ float nfmod(float a,float b)
 {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.headingFilter = 1;
+    self.locationManager.headingFilter = 5;
+    [self.locationManager startUpdatingLocation];
     [self.locationManager startUpdatingHeading];
 }
 
@@ -379,12 +380,13 @@ float nfmod(float a,float b)
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
     if (self.gameStatus == GameRunning) {
-        float relativeHeading = newHeading.magneticHeading - self.gameStartHeading;
+        float relativeHeading = newHeading.trueHeading - self.gameStartHeading;
         NSInteger column = nfmod((int)(relativeHeading / kDegreesPerColumn), kNUMBER_OF_COLUMN);
         [self moveToColumn:column];
     }
     
-    self.lastHeading = newHeading.magneticHeading;
+    self.lastHeading = newHeading.trueHeading;
+    NSLog(@"heading %f", self.lastHeading);
 }
 
 @end
