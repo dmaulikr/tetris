@@ -187,7 +187,7 @@ float nfmod(float a,float b)
         if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)] != PieceTypeNone) {
             hittingAPiece = YES;
         }
-        if (newLogicalCenter.y >= kNUMBER_OF_ROW - 1) {
+        if ((newLogicalCenter.y + blockPoint.y) >= kNUMBER_OF_ROW - 1) {
             hittingTheFloor = YES;
         }
     }
