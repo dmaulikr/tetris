@@ -311,6 +311,7 @@ float nfmod(float a,float b)
     
     if (column == 0) {
         // Recalibrate when passing through 0
+        NSLog(@"Recalibrating");
         self.gameStartHeading = self.lastHeading;
     }
     

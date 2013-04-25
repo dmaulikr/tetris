@@ -59,6 +59,8 @@ typedef enum{
 - (PieceView *)generatePiece;
 - (void)movePieceLeft;
 - (void)movePieceRight;
+- (void)moveScreenLeft;
+- (void)moveScreenRight;
 - (PieceType)getTypeAtRow:(int)row andColumn:(int)column;
 - (NSInteger)columnForScreenColumn:(NSInteger)column;
 
