@@ -17,6 +17,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *startButton;
 @property (nonatomic, retain) IBOutlet UIButton *leftButton;
 @property (nonatomic, retain) IBOutlet UIButton *rightButton;
+@property IBOutlet UIView *calibratingView;
 
 - (IBAction)startGameClickeed:(id)sender;
 - (IBAction)leftClicked:(id)sender;

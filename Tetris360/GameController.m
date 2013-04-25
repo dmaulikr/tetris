@@ -60,7 +60,7 @@ float nfmod(float a,float b)
 {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.headingFilter = 5;
+    self.locationManager.headingFilter = 1;
     [self.locationManager startUpdatingHeading];
 }
 
@@ -162,7 +162,7 @@ float nfmod(float a,float b)
     [self.gameTimer invalidate];
     //generate a random tetris piece
     int randomNumber = arc4random() % 7 +1; //7 types of pieces
-    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(0, 0)];
+    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(self.columnOffset + 4, 0)];
     self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
                                                       target:self
                                                     selector:@selector(movePieceDown)
@@ -272,7 +272,7 @@ float nfmod(float a,float b)
 - (void)moveScreenLeft{
     CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x-1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
-    NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
+    NSLog(@"Move left %@", NSStringFromCGPoint(newLogicalCenter));
     
     if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
@@ -288,11 +288,16 @@ float nfmod(float a,float b)
 - (void)moveScreenRight{
     CGPoint newLogicalCenter = CGPointMake(nfmod(self.currentPieceView.pieceCenter.x+1, kNUMBER_OF_COLUMN), self.currentPieceView.pieceCenter.y);
     
+    NSLog(@"Move right %@", NSStringFromCGPoint(newLogicalCenter));
+    
     if (![self lateralCollisionForLocation:newLogicalCenter]) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
         self.columnOffset = nfmod(self.columnOffset+1, kNUMBER_OF_COLUMN);
         NSLog(@"Current screen column : %d", self.columnOffset);
         NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
+        if (self.columnOffset != (int)self.currentPieceView.pieceCenter.x) {
+            NSLog(@"WTF");
+        }
     }
     
     [self.delegate refreshStackView];
