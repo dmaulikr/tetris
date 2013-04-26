@@ -154,13 +154,15 @@
     //draw each piece based on piece type
     CGRect rectangle;
     CGContextRef context = UIGraphicsGetCurrentContext();
-    [[UIColor whiteColor] setStroke];
+    [[PieceView getColorOfType:self.pieceType] setStroke];
     [[PieceView getColorOfType:self.pieceType] setFill];
 
     for (int i = 0; i < kNUMBER_OF_BLOCKS; i++) {
         //draw each block
         rectangle = CGRectMake(([[self.blocksCenter objectAtIndex:i] CGPointValue].x) * kGridSize, ([[self.blocksCenter objectAtIndex:i] CGPointValue].y) * kGridSize, kGridSize, kGridSize);
+        CGContextSetAlpha(context, 1);
         CGContextFillRect(context, rectangle);
+        CGContextSetAlpha(context, 0.3);
         CGContextStrokeRect(context, rectangle);
     }
 }
