@@ -165,13 +165,12 @@ float nfmod(float a,float b)
 
     if (numberOfClearLine > 0) {
         //add score
-        self.gameScore += 5 * numberOfClearLine;
+        self.gameScore += 5 * pow(3, numberOfClearLine);
         [self.delegate updateScore:self.gameScore];
-        
     }
     
     //TODO - level up
-    if (self.gameScore >= self.gameLevel * 10) {
+    if (self.gameScore >= self.gameLevel * 40) {
         NSLog(@"Level up!!!!");
         self.gameLevel++;
         [self.delegate updateLevel:self.gameLevel];
@@ -241,7 +240,7 @@ float nfmod(float a,float b)
         if (hittingAPiece || hittingTheFloor) {
             //stop moving pieces
             self.canMove = NO;
-
+            self.currentPieceView.pieceRotated = PieceRotateStoped;
             //record this piece to bitmap and remove the subview of this piece
             [self recordBitmapWithCurrentPiece];
             if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])

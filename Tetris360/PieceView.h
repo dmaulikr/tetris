@@ -42,7 +42,8 @@ typedef enum{
     PieceOriginal = 0,
     PieceRotateOnce,
     PieceRotateTwice,
-    PieceRotateThreeTimes
+    PieceRotateThreeTimes,
+    PieceRotateStoped
 }PieceRotation;
 
 @interface PieceView : UIView

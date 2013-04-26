@@ -36,6 +36,13 @@
     self.calibrationTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(finishedCalibrating) userInfo:nil repeats:NO];
 }
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.view addSubview:self.tutorialView];
+}
+
+
 - (void)setupCameraView
 {
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]){
@@ -63,6 +70,7 @@
     [self.view addSubview:self.pieceStackView];
     [self.view bringSubviewToFront:self.startButton];
     [self.view bringSubviewToFront:self.stopButton];
+    [self.view bringSubviewToFront:self.tutorialButton];
     [self.stopButton setHidden:YES];
     [self.view bringSubviewToFront:self.leftButton];
     [self.view bringSubviewToFront:self.rightButton];
@@ -77,6 +85,7 @@
 }
 
 - (IBAction)startGameClickeed:(id)sender{
+    [self.tutorialView setHidden:YES];
     if ([[GameController shareManager] gameStatus] == GameRunning) { //pause game
         [[GameController shareManager] pauseGame];
         [self.startButton setImage:[UIImage imageNamed:@"gtk_media_play_ltr.png"] forState:UIControlStateNormal];
@@ -103,6 +112,17 @@
     [self removeCurrentPiece];
     
     [[GameController shareManager] gameOver];
+}
+
+
+- (IBAction)showTutorial:(id)sender{
+    if (self.tutorialView.isHidden) {
+        [[GameController shareManager] gameOver];
+        [self.tutorialView setHidden:NO];
+    }
+    else{
+        [self.tutorialView setHidden:YES];
+    }
 }
 
 - (void)updateStackView{
@@ -177,20 +197,32 @@
 
 - (void)updateLevel:(int)newLevel{
     self.levelLabel.text = [NSString stringWithFormat:@"%d", newLevel];
+
+    self.gameStatusLabel.text = @"Level Up!!";
+    self.gameStatusLabel.alpha = 0.0;
+    [self.view bringSubviewToFront:self.gameStatusLabel];
+    [UIView animateWithDuration:1.0 animations:^{
+        self.gameStatusLabel.hidden = NO;
+        self.gameStatusLabel.alpha = 1.0;
+    } completion:^(BOOL finished){
+        self.gameStatusLabel.alpha = 0.0;
+        self.gameStatusLabel.hidden = YES;
+    }];
 }
 
 
 - (void)gameOver
 {
     [self.startButton setImage:[UIImage imageNamed:@"gtk_media_play_ltr.png"] forState:UIControlStateNormal];
-    self.gameOverLabel.alpha = 0.0;
-    [self.view bringSubviewToFront:self.gameOverLabel];
+    self.gameStatusLabel.text = @"Game Over!";
+    self.gameStatusLabel.alpha = 0.0;
+    [self.view bringSubviewToFront:self.gameStatusLabel];
     [UIView animateWithDuration:1.0 animations:^{
-        self.gameOverLabel.hidden = NO;
-        self.gameOverLabel.alpha = 1.0;
+        self.gameStatusLabel.hidden = NO;
+        self.gameStatusLabel.alpha = 1.0;
     } completion:^(BOOL finished){
-        self.gameOverLabel.alpha = 0.0;
-        self.gameOverLabel.hidden = YES;
+        self.gameStatusLabel.alpha = 0.0;
+        self.gameStatusLabel.hidden = YES;
     }];
 }
 
