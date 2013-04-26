@@ -15,8 +15,6 @@
 #import "TetrisI.h"
 #import "TetrisT.h"
 
-#define RUN_TEST    0
-
 static TetrisContainer *sGameContainer;
 
 @implementation TetrisPieceFactory

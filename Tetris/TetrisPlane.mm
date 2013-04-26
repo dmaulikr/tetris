@@ -17,7 +17,7 @@
     GLKVector4 color = GLKVector4Make(1, 0.25, 0.25, 1);
     TetrisDrawable *block;
     for (int x = 0; x < CONTAINER_DIM; x++) {
-        for (int z = 0; z < CONTAINER_DIM-1; z++) {
+        for (int z = 0; z < CONTAINER_DIM; z++) {
             // add block
             block = [TetrisDrawable new];
             [block setPosition:x-CONTAINER_OFFSET :0 :z-CONTAINER_OFFSET];

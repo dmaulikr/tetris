@@ -9,10 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 
+#define RUN_TEST    0
 #define CONTAINER_DIM       11
 #define CONTAINER_HEIGHT    36
 #define CONTAINER_OFFSET    5
-#define FALL_RATE           0.5
+
+#if RUN_TEST
+const float FALL_RATE = 0.06;
+#else
+const float FALL_RATE = 0.5;
+#endif
 
 
 @class TetrisContainer;
