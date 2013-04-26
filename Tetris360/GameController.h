@@ -54,6 +54,7 @@ typedef enum{
 - (void)startGame;
 - (void)pauseGame;
 - (void)resumeGame;
+- (void)gameOver;
 
 //piece control
 - (PieceView *)generatePiece;

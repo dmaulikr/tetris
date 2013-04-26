@@ -25,6 +25,12 @@
 		660EB33C172607BC002C493E /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660EB33B172607BB002C493E /* GameController.m */; };
 		6616B85F1729F8010045BF3E /* tetris.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B85E1729F8010045BF3E /* tetris.png */; };
 		6616B8611729F8080045BF3E /* tetris@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8601729F8080045BF3E /* tetris@2x.png */; };
+		6616B8681729FF350045BF3E /* gtk_media_forward_ltr.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8621729FF350045BF3E /* gtk_media_forward_ltr.png */; };
+		6616B8691729FF350045BF3E /* go_jump.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8631729FF350045BF3E /* go_jump.png */; };
+		6616B86A1729FF350045BF3E /* edit_undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8641729FF350045BF3E /* edit_undo.png */; };
+		6616B86B1729FF350045BF3E /* gtk_media_stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8651729FF350045BF3E /* gtk_media_stop.png */; };
+		6616B86C1729FF350045BF3E /* gtk_media_play_ltr.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8661729FF350045BF3E /* gtk_media_play_ltr.png */; };
+		6616B86D1729FF350045BF3E /* gtk_media_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8671729FF350045BF3E /* gtk_media_pause.png */; };
 		66617B471728609700244561 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66617B461728609700244561 /* StackView.m */; };
 		66617B491728C16800244561 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66617B481728C16800244561 /* QuartzCore.framework */; };
 		66617B4B1728C55C00244561 /* TetrisTheme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66617B4A1728C55C00244561 /* TetrisTheme.mp3 */; };
@@ -57,6 +63,12 @@
 		660EB33B172607BB002C493E /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 		6616B85E1729F8010045BF3E /* tetris.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tetris.png; sourceTree = "<group>"; };
 		6616B8601729F8080045BF3E /* tetris@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tetris@2x.png"; sourceTree = "<group>"; };
+		6616B8621729FF350045BF3E /* gtk_media_forward_ltr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_forward_ltr.png; sourceTree = "<group>"; };
+		6616B8631729FF350045BF3E /* go_jump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go_jump.png; sourceTree = "<group>"; };
+		6616B8641729FF350045BF3E /* edit_undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_undo.png; sourceTree = "<group>"; };
+		6616B8651729FF350045BF3E /* gtk_media_stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_stop.png; sourceTree = "<group>"; };
+		6616B8661729FF350045BF3E /* gtk_media_play_ltr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_play_ltr.png; sourceTree = "<group>"; };
+		6616B8671729FF350045BF3E /* gtk_media_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_pause.png; sourceTree = "<group>"; };
 		66617B451728609700244561 /* StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackView.h; sourceTree = "<group>"; };
 		66617B461728609700244561 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 		66617B481728C16800244561 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -154,6 +166,12 @@
 		6616B85D1729F5F00045BF3E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6616B8621729FF350045BF3E /* gtk_media_forward_ltr.png */,
+				6616B8631729FF350045BF3E /* go_jump.png */,
+				6616B8641729FF350045BF3E /* edit_undo.png */,
+				6616B8651729FF350045BF3E /* gtk_media_stop.png */,
+				6616B8661729FF350045BF3E /* gtk_media_play_ltr.png */,
+				6616B8671729FF350045BF3E /* gtk_media_pause.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -218,6 +236,12 @@
 				66617B4B1728C55C00244561 /* TetrisTheme.mp3 in Resources */,
 				6616B85F1729F8010045BF3E /* tetris.png in Resources */,
 				6616B8611729F8080045BF3E /* tetris@2x.png in Resources */,
+				6616B8681729FF350045BF3E /* gtk_media_forward_ltr.png in Resources */,
+				6616B8691729FF350045BF3E /* go_jump.png in Resources */,
+				6616B86A1729FF350045BF3E /* edit_undo.png in Resources */,
+				6616B86B1729FF350045BF3E /* gtk_media_stop.png in Resources */,
+				6616B86C1729FF350045BF3E /* gtk_media_play_ltr.png in Resources */,
+				6616B86D1729FF350045BF3E /* gtk_media_pause.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
