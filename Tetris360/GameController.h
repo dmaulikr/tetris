@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AudioToolbox/AudioToolbox.h>
-#import <AVFoundation/AVFoundation.h>
 #import "PieceView.h"
 
 #define kNUMBER_OF_ROW 15
@@ -33,11 +31,11 @@ typedef enum{
 - (void)finishedCalibrating;
 
 - (void)updateScore:(int)newScore;
-- (void)levelUp:(int)newLevel;
+- (void)updateLevel:(int)newLevel;
 - (void)gameOver;
 @end
 
-@interface GameController : NSObject <AVAudioPlayerDelegate>{
+@interface GameController : NSObject{
     
 }
 
@@ -45,14 +43,12 @@ typedef enum{
 // define delegate property
 @property (nonatomic, assign) id<GameControllerDelegate> delegate;
 
-@property (nonatomic, retain) NSTimer *gameTimer;
+//game status
 @property (nonatomic, assign) GameStatus gameStatus;
 @property (nonatomic, retain) PieceView *currentPieceView;
-@property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 
 @property (nonatomic, assign) int gameLevel;
 @property (nonatomic, assign) int gameScore;
-@property (nonatomic, assign) int pieceRotation;
 
 
 //game control

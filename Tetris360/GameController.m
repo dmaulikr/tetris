@@ -8,7 +8,9 @@
 
 #import "GameController.h"
 #import "ViewController.h"
-#import "PieceView.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
+
 #import <CoreLocation/CoreLocation.h>
 
 static PieceType pieceStack[kNUMBER_OF_ROW][kNUMBER_OF_COLUMN];
@@ -18,9 +20,11 @@ float nfmod(float a,float b)
     return a - b * floor(a / b);
 }
 
-@interface GameController () <CLLocationManagerDelegate>
+@interface GameController () <CLLocationManagerDelegate, AVAudioPlayerDelegate>
 
 @property CLLocationManager *locationManager;
+@property (nonatomic, retain) AVAudioPlayer *audioPlayer;
+@property (nonatomic, retain) NSTimer *gameTimer;
 
 @property (assign) float lastHeading;
 @property (assign) float zeroColumnHeading;
@@ -100,7 +104,7 @@ float nfmod(float a,float b)
     //start background music
     [self.audioPlayer play];
 
-    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
+    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                       target:self
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil
@@ -123,7 +127,7 @@ float nfmod(float a,float b)
 - (void)resumeGame{
     //freeze piece and pause timer
     self.gameStatus = GameRunning;
-    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
+    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                       target:self
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil
@@ -170,7 +174,7 @@ float nfmod(float a,float b)
     if (self.gameScore >= self.gameLevel * 10) {
         NSLog(@"Level up!!!!");
         self.gameLevel++;
-        [self.delegate levelUp:self.gameLevel];
+        [self.delegate updateLevel:self.gameLevel];
     }
 
     return numberOfClearLine > 0;
@@ -181,6 +185,12 @@ float nfmod(float a,float b)
     self.gameStatus = GameStopped;
     [self.gameTimer invalidate];
     self.gameTimer = nil;
+    self.gameScore = 0;
+    self.gameLevel = 1;
+    [self.delegate updateLevel:self.gameLevel];
+    [self.delegate updateScore:self.gameScore];
+    if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
+        [self.delegate removeCurrentPiece];
     
     [self.delegate gameOver];
 
@@ -202,66 +212,68 @@ float nfmod(float a,float b)
     self.canMove = YES;
     //generate a random tetris piece
     int randomNumber = arc4random() % 7 +1; //7 types of pieces
-    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(self.columnOffset + 4, 0)];
+    self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake((self.columnOffset + 4)%kNUMBER_OF_COLUMN, 0)];
     
     return self.currentPieceView;
 }
 
 - (BOOL)movePieceDown {
+    
     CGPoint newViewCenter = CGPointMake(self.currentPieceView.center.x, self.currentPieceView.center.y + kGridSize);
     CGPoint newLogicalCenter = CGPointMake(self.currentPieceView.pieceCenter.x, self.currentPieceView.pieceCenter.y + 1);
     
-//    NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
-    
+    NSLog(@"%@", NSStringFromCGPoint(newLogicalCenter));
+
     NSArray *blocks = [self.currentPieceView blocksCenter];
     BOOL hittingAPiece = NO;
     BOOL hittingTheFloor = NO;
     for (NSValue *block in blocks) {
         CGPoint blockPoint = [block CGPointValue];
-        if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)] != PieceTypeNone) {
+        if (pieceStack[(int)(newLogicalCenter.y+blockPoint.y)][(int)(newLogicalCenter.x+blockPoint.x)%kNUMBER_OF_COLUMN] != PieceTypeNone) {
             hittingAPiece = YES;
         }
         if ((newLogicalCenter.y + blockPoint.y) > kNUMBER_OF_ROW - 1) {
             hittingTheFloor = YES;
         }
     }
-    
-    
-    if (hittingAPiece || hittingTheFloor) {
-        self.canMove = NO;
-        
-        //record this piece to bitmap - TODO: why this line hit another time after clear the line???
-        [self recordBitmapWithCurrentPiece];
-        
-        //remove the subview of this piece
-        if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
-            [self.delegate removeCurrentPiece];
 
-        //check whether we can clear a line
-        BOOL hasLineClear = [self checkClearLine];
+    if (self.canMove) {
+        if (hittingAPiece || hittingTheFloor) {
+            //stop moving pieces
+            self.canMove = NO;
 
-        if (self.currentPieceView.frame.origin.y == 0) { //game over
-            [self gameOver];
-            //auto restart game for testing
-//            [self startGame];
+            //record this piece to bitmap and remove the subview of this piece
+            [self recordBitmapWithCurrentPiece];
+            if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
+                [self.delegate removeCurrentPiece];
+
+            //check whether we can clear a line
+            [self checkClearLine];
+            
+            //check whether it's game over
+            if (self.currentPieceView.frame.origin.y == 0) {
+                [self gameOver];
+            }
+            else{
+                //drop a new piece
+                if([self.delegate respondsToSelector:@selector(dropNewPiece)])
+                    [self.delegate dropNewPiece];
+            }
         }
-        else if(!hasLineClear){
-            //drop a new piece
-            if([self.delegate respondsToSelector:@selector(dropNewPiece)])
-                [self.delegate dropNewPiece];
+        else{
+            self.currentPieceView.center = newViewCenter;
+            self.currentPieceView.pieceCenter = newLogicalCenter;
         }
     }
-    else{
-        self.currentPieceView.center = newViewCenter;
-        self.currentPieceView.pieceCenter = newLogicalCenter;
-    }
+    
+    [self.delegate updateStackView];
     
     return hittingAPiece || hittingTheFloor;
 }
 
 - (void)dropPiece
 {
-    while (![self movePieceDown]) {
+    while (![self movePieceDown] && self.canMove) {
         continue;
     }
 }
@@ -324,7 +336,7 @@ float nfmod(float a,float b)
 
     if (![self lateralCollisionForLocation:newLogicalCenter] && self.canMove) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        self.columnOffset = nfmod(self.columnOffset-1, kNUMBER_OF_COLUMN);
+        self.columnOffset = nfmod((self.columnOffset+ kNUMBER_OF_COLUMN-1)%kNUMBER_OF_COLUMN, kNUMBER_OF_COLUMN);
 //        NSLog(@"Current screen column : %d", self.columnOffset);
 //        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
@@ -340,7 +352,7 @@ float nfmod(float a,float b)
     
     if (![self lateralCollisionForLocation:newLogicalCenter] && self.canMove) {
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        self.columnOffset = nfmod(self.columnOffset+1, kNUMBER_OF_COLUMN);
+        self.columnOffset = nfmod((self.columnOffset+1)%kNUMBER_OF_COLUMN, kNUMBER_OF_COLUMN);
 //        NSLog(@"Current screen column : %d", self.columnOffset);
 //        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }

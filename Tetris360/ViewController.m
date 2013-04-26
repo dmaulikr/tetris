@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 
-//    [self setupCameraView];
+    [self setupCameraView];
     [self setupStackView];
     
     self.calibrationTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(finishedCalibrating) userInfo:nil repeats:NO];
@@ -38,20 +38,22 @@
 
 - (void)setupCameraView
 {
-    self.captureSession = [[AVCaptureSession alloc] init];
-    [self.captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
-    
-    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
-    [self.captureSession addInput:input];
-    [self.captureSession setSessionPreset:@"AVCaptureSessionPresetPhoto"];
-    [self.captureSession startRunning];
-    
-    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
-    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.previewLayer.frame = self.view.frame;
-    
-    [self.cameraView.layer addSublayer:self.previewLayer];
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]){
+        self.captureSession = [[AVCaptureSession alloc] init];
+        [self.captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
+
+        AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
+        [self.captureSession addInput:input];
+        [self.captureSession setSessionPreset:@"AVCaptureSessionPresetPhoto"];
+        [self.captureSession startRunning];
+
+        self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
+        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        self.previewLayer.frame = self.view.frame;
+
+        [self.cameraView.layer addSublayer:self.previewLayer];
+    }
 }
 
 
@@ -173,7 +175,7 @@
 }
 
 
-- (void)levelUp:(int)newLevel{
+- (void)updateLevel:(int)newLevel{
     self.levelLabel.text = [NSString stringWithFormat:@"%d", newLevel];
 }
 
