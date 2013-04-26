@@ -17,7 +17,7 @@
 #if RUN_TEST
 const float FALL_RATE = 0.06;
 #else
-const float FALL_RATE = 0.5;
+const float FALL_RATE = 0.1;
 #endif
 
 

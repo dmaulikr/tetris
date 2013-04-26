@@ -14,8 +14,8 @@ typedef enum {
     PIECE_O,
     PIECE_I,
     PIECE_T,
-    PIECE_NUM,
-    PIECE_P
+    PIECE_P,
+    PIECE_NUM
 } TETRIS_PIECE;
 
 @interface TetrisPieceFactory : TetrisContainer
