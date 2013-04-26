@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 
-//    [self setupCameraView];
+    [self setupCameraView];
     [self setupStackView];
     
     self.calibrationTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(finishedCalibrating) userInfo:nil repeats:NO];
