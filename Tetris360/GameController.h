@@ -31,6 +31,7 @@ typedef enum{
 - (void)updateStackView;
 - (void)refreshStackView;
 - (void)finishedCalibrating;
+- (void)gameOver;
 @end
 
 @interface GameController : NSObject <AVAudioPlayerDelegate>{

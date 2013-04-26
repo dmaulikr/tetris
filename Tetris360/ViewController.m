@@ -168,4 +168,18 @@
     [self.calibratingView removeFromSuperview];
 }
 
+- (void)gameOver
+{
+    [self.startButton setImage:[UIImage imageNamed:@"gtk_media_play_ltr.png"] forState:UIControlStateNormal];
+    self.gameOverLabel.alpha = 0.0;
+    [self.view bringSubviewToFront:self.gameOverLabel];
+    [UIView animateWithDuration:1.0 animations:^{
+        self.gameOverLabel.hidden = NO;
+        self.gameOverLabel.alpha = 1.0;
+    } completion:^(BOOL finished){
+        self.gameOverLabel.alpha = 0.0;
+        self.gameOverLabel.hidden = YES;
+    }];
+}
+
 @end

@@ -164,6 +164,8 @@ float nfmod(float a,float b)
     self.gameStatus = GameStopped;
     [self.gameTimer invalidate];
     self.gameTimer = nil;
+    
+    [self.delegate gameOver];
 
     //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
