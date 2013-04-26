@@ -31,6 +31,9 @@ typedef enum{
 - (void)updateStackView;
 - (void)refreshStackView;
 - (void)finishedCalibrating;
+
+- (void)updateScore:(int)newScore;
+- (void)levelUp:(int)newLevel;
 - (void)gameOver;
 @end
 
@@ -48,6 +51,7 @@ typedef enum{
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 
 @property (nonatomic, assign) int gameLevel;
+@property (nonatomic, assign) int gameScore;
 @property (nonatomic, assign) int pieceRotation;
 
 

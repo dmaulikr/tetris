@@ -18,6 +18,11 @@
 @property (nonatomic, retain) IBOutlet UIButton *stopButton;
 @property (nonatomic, retain) IBOutlet UIButton *leftButton;
 @property (nonatomic, retain) IBOutlet UIButton *rightButton;
+
+@property (nonatomic, retain) IBOutlet UILabel *levelLabel;
+@property (nonatomic, retain) IBOutlet UILabel *scoreLabel;
+
+
 @property IBOutlet UIView *calibratingView;
 @property IBOutlet UILabel *gameOverLabel;
 

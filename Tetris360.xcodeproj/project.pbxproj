@@ -32,6 +32,7 @@
 		6616B86F172A0C720045BF3E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B86E172A0C720045BF3E /* Default.png */; };
 		6616B871172A0C860045BF3E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B870172A0C860045BF3E /* Default@2x.png */; };
 		6616B873172A0D0F0045BF3E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B872172A0D0F0045BF3E /* Default-568h@2x.png */; };
+		6616B875172A13080045BF3E /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6616B874172A13080045BF3E /* level2.txt */; };
 		66617B471728609700244561 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66617B461728609700244561 /* StackView.m */; };
 		66617B491728C16800244561 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66617B481728C16800244561 /* QuartzCore.framework */; };
 		66617B4B1728C55C00244561 /* TetrisTheme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66617B4A1728C55C00244561 /* TetrisTheme.mp3 */; };
@@ -71,6 +72,7 @@
 		6616B86E172A0C720045BF3E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6616B870172A0C860045BF3E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6616B872172A0D0F0045BF3E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6616B874172A13080045BF3E /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
 		66617B451728609700244561 /* StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackView.h; sourceTree = "<group>"; };
 		66617B461728609700244561 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 		66617B481728C16800244561 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				5E4423D21729FBF00039946F /* level1.txt */,
+				6616B874172A13080045BF3E /* level2.txt */,
 				5815960E1724D33B00046DFD /* AppDelegate.h */,
 				5815960F1724D33B00046DFD /* AppDelegate.m */,
 				66617B451728609700244561 /* StackView.h */,
@@ -246,6 +249,7 @@
 				6616B86F172A0C720045BF3E /* Default.png in Resources */,
 				6616B871172A0C860045BF3E /* Default@2x.png in Resources */,
 				6616B873172A0D0F0045BF3E /* Default-568h@2x.png in Resources */,
+				6616B875172A13080045BF3E /* level2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

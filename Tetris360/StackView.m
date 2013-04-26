@@ -39,14 +39,14 @@
             if (type != PieceTypeNone) {
                 UIColor *color = [PieceView getColorOfType:type];
                 CGContextSetFillColorWithColor(context, color.CGColor);
-                CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+                CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
                 CGContextFillRect(context, rectangle);
             }
 
-            CGContextSetAlpha(context, 0.1);
             CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-            CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
             CGContextStrokeRect(context, rectangle);
+            CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+            
             
             if (i == kNUMBER_OF_ROW - 1) {
                 NSString *columnNumber = [NSString stringWithFormat:@"%d", [[GameController shareManager] columnForScreenColumn:j]];

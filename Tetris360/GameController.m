@@ -91,8 +91,8 @@ float nfmod(float a,float b)
     
     //init game status
     self.gameStatus = GameRunning;
-    self.gameLevel = 2; //the higher the level, the faster the dropping speed
-
+    self.gameLevel = 1; //the higher the level, the faster the dropping speed
+    self.gameScore = 0;
 
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
     self.zeroColumnHeading = self.lastHeading;
@@ -125,6 +125,10 @@ float nfmod(float a,float b)
 
 
 - (BOOL)checkClearLine{
+    NSMutableArray *linesToClear = [[NSMutableArray alloc] init];
+
+    BOOL hasClearLine = NO;
+    
     for (int row_index = kNUMBER_OF_ROW; row_index >= 0; row_index--) {
         //check for one line
         BOOL isLineClear = YES;
@@ -135,28 +139,48 @@ float nfmod(float a,float b)
             }
         }
         if (isLineClear) {
-            [self pauseGame];
+            hasClearLine = YES;
             NSLog(@"One line %d is clear!!!!!", row_index);
-            [self clearALine:row_index];
+            [linesToClear addObject:[NSNumber numberWithInt:row_index]];
         }
     }
+    [self clearALine:linesToClear];
 
-    return NO;
+
+    if (hasClearLine) {
+        [self pauseGame];
+        
+        //add score
+        self.gameScore += 5 * [linesToClear count];
+        [self.delegate updateScore:self.gameScore];
+        
+    }
+    //TODO - level up
+    if (self.gameScore >= self.gameLevel * 10) {
+        NSLog(@"Level up!!!!");
+        self.gameLevel++;
+        [self.delegate levelUp:self.gameLevel];
+//        [self gameOver];
+    }
+    [self resumeGame];
+    
+    return hasClearLine;
 }
 
 //remove the line after
-- (void)clearALine: (int)row{
-    for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
-        pieceStack[row][column_index] = PieceTypeNone;
-    }
-
-    //move all the pieces above down one row
-    for (int row_index = row; row_index > 0; row_index--) {
+- (void)clearALine: (NSMutableArray *)linesToClear{
+    for (int row = 0; row > [linesToClear count]; row++) {
         for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
-            pieceStack[row_index][column_index] = pieceStack[row_index - 1][column_index];
+            pieceStack[row][column_index] = PieceTypeNone;
+        }
+
+        //move all the pieces above down one row
+        for (int row_index = row; row_index > 0; row_index--) {
+            for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+                pieceStack[row_index][column_index] = pieceStack[row_index - 1][column_index];
+            }
         }
     }
-    [self resumeGame];
 }
 
 
@@ -175,6 +199,7 @@ float nfmod(float a,float b)
     }
 
     [self.audioPlayer stop];
+    [self.audioPlayer setCurrentTime:0];
     [self.delegate updateStackView];
 }
 

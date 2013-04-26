@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 
-    [self setupCameraView];
+//    [self setupCameraView];
     [self setupStackView];
     
     self.calibrationTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(finishedCalibrating) userInfo:nil repeats:NO];
@@ -167,6 +167,16 @@
 {
     [self.calibratingView removeFromSuperview];
 }
+
+- (void)updateScore:(int)newScore{
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+}
+
+
+- (void)levelUp:(int)newLevel{
+    self.levelLabel.text = [NSString stringWithFormat:@"%d", newLevel];
+}
+
 
 - (void)gameOver
 {
