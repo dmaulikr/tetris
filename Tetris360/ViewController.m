@@ -80,8 +80,8 @@
         [self.startButton setImage:[UIImage imageNamed:@"gtk_media_play_ltr.png"] forState:UIControlStateNormal];
     }
     else if([[GameController shareManager] gameStatus] == GameStopped) { //start game
-        [[GameController shareManager] startGame];
         [[GameController shareManager] setDelegate:self];
+        [[GameController shareManager] startGame];
         [self.startButton setImage:[UIImage imageNamed:@"gtk_media_pause.png"] forState:UIControlStateNormal];
         movingPieceView = [[GameController shareManager] generatePiece];
         [self.view addSubview:movingPieceView];
