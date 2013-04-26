@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 
-//    [self setupCameraView];
+    [self setupCameraView];
     [self setupStackView];
     
     self.calibrationTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(finishedCalibrating) userInfo:nil repeats:NO];
@@ -60,6 +60,8 @@
     self.pieceStackView  = [[StackView alloc] initWithFrame:CGRectMake(0, 0, kGridSize * kNUMBER_OF_COLUMN, kGridSize * kNUMBER_OF_ROW)];
     [self.view addSubview:self.pieceStackView];
     [self.view bringSubviewToFront:self.startButton];
+    [self.view bringSubviewToFront:self.stopButton];
+    [self.stopButton setHidden:YES];
     [self.view bringSubviewToFront:self.leftButton];
     [self.view bringSubviewToFront:self.rightButton];
     [self.view bringSubviewToFront:self.calibratingView];
@@ -75,26 +77,35 @@
 - (IBAction)startGameClickeed:(id)sender{
     if ([[GameController shareManager] gameStatus] == GameRunning) { //pause game
         [[GameController shareManager] pauseGame];
-        [self.startButton setTitle:@"Play" forState:UIControlStateNormal];
+        [self.startButton setImage:[UIImage imageNamed:@"gtk_media_play_ltr.png"] forState:UIControlStateNormal];
     }
     else if([[GameController shareManager] gameStatus] == GameStopped) { //start game
         [[GameController shareManager] setDelegate:self];
         [[GameController shareManager] startGame];
-        [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
+        [self.startButton setImage:[UIImage imageNamed:@"gtk_media_pause.png"] forState:UIControlStateNormal];
         movingPieceView = [[GameController shareManager] generatePiece];
         [self.view addSubview:movingPieceView];
     }
     else if([[GameController shareManager] gameStatus] == GamePaused) { //resume game
-        [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
+        [self.startButton setImage:[UIImage imageNamed:@"gtk_media_pause.png"] forState:UIControlStateNormal];
         [[GameController shareManager] resumeGame];
     }
+    [self.stopButton setHidden:NO];
+    
+}
+
+- (IBAction)stopGame:(id)sender{
+    [self.stopButton setHidden:YES];
+    [self.startButton setImage:[UIImage imageNamed:@"gtk_media_play_ltr.png"] forState:UIControlStateNormal];
+
+    [self removeCurrentPiece];
+    
+    [[GameController shareManager] gameOver];
 }
 
 - (void)updateStackView{
-    //TODO - add offset from compass to draw only one section
     if ([[GameController shareManager] gameStatus] == GameStopped) {
         movingPieceView = nil;
-        [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
     }
     [self.pieceStackView setNeedsDisplay];
 }

@@ -43,8 +43,8 @@
                 CGContextFillRect(context, rectangle);
             }
             
-            CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
-            CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+            CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+            CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
             CGContextStrokeRect(context, rectangle);
             
             if (i == kNUMBER_OF_ROW - 1) {
