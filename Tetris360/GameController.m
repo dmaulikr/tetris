@@ -99,6 +99,12 @@ float nfmod(float a,float b)
 
     //start background music
     [self.audioPlayer play];
+
+    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
+                                                      target:self
+                                                    selector:@selector(movePieceDown)
+                                                    userInfo:nil
+                                                     repeats:YES];
     
     [self.delegate refreshStackView];
 }
@@ -107,9 +113,12 @@ float nfmod(float a,float b)
 - (void)pauseGame{
     //freeze piece and pause timer
     self.gameStatus = GamePaused;
+    //once invalidated, the timer can't bereused
     [self.gameTimer invalidate];
+    self.gameTimer = nil;
     [self.audioPlayer pause];
 }
+
 
 - (void)resumeGame{
     //freeze piece and pause timer
@@ -125,8 +134,8 @@ float nfmod(float a,float b)
 
 
 - (BOOL)checkClearLine{
-    int numberOfClearLine = 0;
 
+    int numberOfClearLine = 0;
     //check from top to bottom
     for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
         //check for one line
@@ -163,6 +172,7 @@ float nfmod(float a,float b)
         self.gameLevel++;
         [self.delegate levelUp:self.gameLevel];
     }
+
     return numberOfClearLine > 0;
 }
 
@@ -189,16 +199,10 @@ float nfmod(float a,float b)
 #pragma mark - control of pieces
 
 - (PieceView *)generatePiece{
-    [self.gameTimer invalidate];
     self.canMove = YES;
     //generate a random tetris piece
     int randomNumber = arc4random() % 7 +1; //7 types of pieces
     self.currentPieceView = [[PieceView alloc] initWithPieceType:randomNumber pieceCenter:CGPointMake(self.columnOffset + 4, 0)];
-    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/self.gameLevel
-                                                      target:self
-                                                    selector:@selector(movePieceDown)
-                                                    userInfo:nil
-                                                     repeats:YES];
     
     return self.currentPieceView;
 }
@@ -222,13 +226,16 @@ float nfmod(float a,float b)
         }
     }
     
+    
     if (hittingAPiece || hittingTheFloor) {
         self.canMove = NO;
+        
+        //record this piece to bitmap - TODO: why this line hit another time after clear the line???
+        [self recordBitmapWithCurrentPiece];
+        
         //remove the subview of this piece
         if([self.delegate respondsToSelector:@selector(removeCurrentPiece)])
             [self.delegate removeCurrentPiece];
-
-        [self recordBitmapWithCurrentPiece];
 
         //check whether we can clear a line
         BOOL hasLineClear = [self checkClearLine];
