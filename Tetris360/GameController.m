@@ -266,7 +266,7 @@ float nfmod(float a,float b)
     if (![self screenBorderCollisionForLocation:newViewCenter] && ![self lateralCollisionForLocation:newLogicalCenter] && self.canMove) {
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        NSLog(@"Current piece column  : %f", self.currentPieceView.pieceCenter.x);
+//        NSLog(@"Current piece column  : %f", self.currentPieceView.pieceCenter.x);
     }
 }
 
@@ -277,7 +277,7 @@ float nfmod(float a,float b)
     if (![self screenBorderCollisionForLocation:newViewCenter] && ![self lateralCollisionForLocation:newLogicalCenter] && self.canMove) {
         self.currentPieceView.center = newViewCenter;
         self.currentPieceView.pieceCenter = newLogicalCenter;
-        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
+//        NSLog(@"Current piece column : %f", self.currentPieceView.pieceCenter.x);
     }
 }
 
