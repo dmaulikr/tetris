@@ -125,62 +125,45 @@ float nfmod(float a,float b)
 
 
 - (BOOL)checkClearLine{
-    NSMutableArray *linesToClear = [[NSMutableArray alloc] init];
+    int numberOfClearLine = 0;
 
-    BOOL hasClearLine = NO;
-    
-    for (int row_index = kNUMBER_OF_ROW; row_index >= 0; row_index--) {
+    //check from top to bottom
+    for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
         //check for one line
-        BOOL isLineClear = YES;
+        BOOL thislineClear = YES;
         for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
             if (pieceStack[row_index][column_index] == PieceTypeNone) {
-                isLineClear = NO;
+                thislineClear = NO;
                 break;
             }
         }
-        if (isLineClear) {
-            hasClearLine = YES;
+        if (thislineClear) {
+            numberOfClearLine++;
             NSLog(@"One line %d is clear!!!!!", row_index);
-            [linesToClear addObject:[NSNumber numberWithInt:row_index]];
+
+            //move all the pieces above down one row
+            for (int i = row_index; i > 0; i--) {
+                for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+                    pieceStack[i][column_index] = pieceStack[i - 1][column_index];
+                }
+            }
         }
     }
-    [self clearALine:linesToClear];
 
-
-    if (hasClearLine) {
-        [self pauseGame];
-        
+    if (numberOfClearLine > 0) {
         //add score
-        self.gameScore += 5 * [linesToClear count];
+        self.gameScore += 5 * numberOfClearLine;
         [self.delegate updateScore:self.gameScore];
         
     }
+    
     //TODO - level up
     if (self.gameScore >= self.gameLevel * 10) {
         NSLog(@"Level up!!!!");
         self.gameLevel++;
         [self.delegate levelUp:self.gameLevel];
-//        [self gameOver];
     }
-    [self resumeGame];
-    
-    return hasClearLine;
-}
-
-//remove the line after
-- (void)clearALine: (NSMutableArray *)linesToClear{
-    for (int row = 0; row > [linesToClear count]; row++) {
-        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
-            pieceStack[row][column_index] = PieceTypeNone;
-        }
-
-        //move all the pieces above down one row
-        for (int row_index = row; row_index > 0; row_index--) {
-            for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
-                pieceStack[row_index][column_index] = pieceStack[row_index - 1][column_index];
-            }
-        }
-    }
+    return numberOfClearLine > 0;
 }
 
 
