@@ -42,7 +42,8 @@
                 CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
                 CGContextFillRect(context, rectangle);
             }
-            
+
+            CGContextSetAlpha(context, 0.1);
             CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
             CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
             CGContextStrokeRect(context, rectangle);
