@@ -78,8 +78,8 @@
         [self.startButton setTitle:@"Play" forState:UIControlStateNormal];
     }
     else if([[GameController shareManager] gameStatus] == GameStopped) { //start game
-        [[GameController shareManager] startGame];
         [[GameController shareManager] setDelegate:self];
+        [[GameController shareManager] startGame];
         [self.startButton setTitle:@"Pause" forState:UIControlStateNormal];
         movingPieceView = [[GameController shareManager] generatePiece];
         [self.view addSubview:movingPieceView];

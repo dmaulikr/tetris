@@ -26,6 +26,7 @@ float nfmod(float a,float b)
 @property (assign) float zeroColumnHeading;
 @property (assign) int columnOffset;
 @property (assign) BOOL isMovingScreen;
+@property (assign) int puzzle;
 
 @end
 
@@ -53,6 +54,8 @@ float nfmod(float a,float b)
         self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
         self.audioPlayer.delegate = self;
         self.audioPlayer.numberOfLoops = -1; //infinite
+        
+        self.puzzle = 1;
     }
     return self;
 }
@@ -68,21 +71,35 @@ float nfmod(float a,float b)
 
 #pragma mark - game play
 - (void)startGame{
+    
+    // Read puzzle
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"level%d", self.puzzle]
+                                                         ofType:@"txt"];
+    NSString *fileString = [NSString stringWithContentsOfFile:filePath encoding:NSASCIIStringEncoding error:nil];
+    NSArray *lines = [fileString componentsSeparatedByString:@"\n"];
+    
+    //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
+    for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
+        NSString *row = [lines objectAtIndex:row_index];
+        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
+            NSString *typeString = [row substringWithRange:NSMakeRange(column_index, 1)];
+            int type = [typeString intValue];
+            pieceStack[row_index][column_index] = type;
+        }
+    }
+    
     //init game status
     self.gameStatus = GameRunning;
     self.gameLevel = 2; //the higher the level, the faster the dropping speed
 
-    //initialize bitmap for current stack, number in each grid stands for different type of piece; 0 means the grid is empty
-    for (int row_index = 0; row_index < kNUMBER_OF_ROW; row_index++) {
-        for (int column_index = 0; column_index < kNUMBER_OF_COLUMN; column_index++) {
-            pieceStack[row_index][column_index] = 0;
-        }
-    }
+
     //start the loop of game control and add piece into map when it reaches the bottom line in bitmap
     self.zeroColumnHeading = self.lastHeading;
 
     //start background music
     [self.audioPlayer play];
+    
+    [self.delegate refreshStackView];
 }
 
 
@@ -313,12 +330,13 @@ float nfmod(float a,float b)
 
 - (void)moveToColumn:(NSInteger)column
 {
-    NSLog(@"Move to column: %d", column);
     if (column == self.columnOffset) {
         return;
     }
     
     self.isMovingScreen = YES;
+    
+    NSLog(@"Move to column: %d", column);
     
     if (column == 0) {
         // Recalibrate when passing through 0
@@ -394,7 +412,6 @@ float nfmod(float a,float b)
     if (self.gameStatus == GameRunning) {
         float relativeHeading = newHeading.trueHeading - self.zeroColumnHeading;
         NSInteger column = nfmod((int)(relativeHeading / kDegreesPerColumn), kNUMBER_OF_COLUMN);
-        
         [self moveToColumn:column];
     }
     
