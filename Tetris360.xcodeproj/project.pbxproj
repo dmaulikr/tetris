@@ -13,9 +13,6 @@
 		5815960A1724D33B00046DFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 581596081724D33B00046DFD /* InfoPlist.strings */; };
 		5815960C1724D33B00046DFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5815960B1724D33B00046DFD /* main.m */; };
 		581596101724D33B00046DFD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5815960F1724D33B00046DFD /* AppDelegate.m */; };
-		581596121724D33C00046DFD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 581596111724D33C00046DFD /* Default.png */; };
-		581596141724D33C00046DFD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 581596131724D33C00046DFD /* Default@2x.png */; };
-		581596161724D33C00046DFD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 581596151724D33C00046DFD /* Default-568h@2x.png */; };
 		581596191724D33C00046DFD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 581596181724D33C00046DFD /* ViewController.m */; };
 		5815961C1724D33C00046DFD /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5815961A1724D33C00046DFD /* ViewController_iPhone.xib */; };
 		5815961F1724D33C00046DFD /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5815961D1724D33C00046DFD /* ViewController_iPad.xib */; };
@@ -32,6 +29,9 @@
 		6616B86B1729FF350045BF3E /* gtk_media_stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8651729FF350045BF3E /* gtk_media_stop.png */; };
 		6616B86C1729FF350045BF3E /* gtk_media_play_ltr.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8661729FF350045BF3E /* gtk_media_play_ltr.png */; };
 		6616B86D1729FF350045BF3E /* gtk_media_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B8671729FF350045BF3E /* gtk_media_pause.png */; };
+		6616B86F172A0C720045BF3E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B86E172A0C720045BF3E /* Default.png */; };
+		6616B871172A0C860045BF3E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B870172A0C860045BF3E /* Default@2x.png */; };
+		6616B873172A0D0F0045BF3E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6616B872172A0D0F0045BF3E /* Default-568h@2x.png */; };
 		66617B471728609700244561 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66617B461728609700244561 /* StackView.m */; };
 		66617B491728C16800244561 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66617B481728C16800244561 /* QuartzCore.framework */; };
 		66617B4B1728C55C00244561 /* TetrisTheme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66617B4A1728C55C00244561 /* TetrisTheme.mp3 */; };
@@ -49,9 +49,6 @@
 		5815960D1724D33B00046DFD /* Tetris360-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tetris360-Prefix.pch"; sourceTree = "<group>"; };
 		5815960E1724D33B00046DFD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5815960F1724D33B00046DFD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		581596111724D33C00046DFD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		581596131724D33C00046DFD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		581596151724D33C00046DFD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		581596171724D33C00046DFD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		581596181724D33C00046DFD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5815961B1724D33C00046DFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
@@ -71,6 +68,9 @@
 		6616B8651729FF350045BF3E /* gtk_media_stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_stop.png; sourceTree = "<group>"; };
 		6616B8661729FF350045BF3E /* gtk_media_play_ltr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_play_ltr.png; sourceTree = "<group>"; };
 		6616B8671729FF350045BF3E /* gtk_media_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gtk_media_pause.png; sourceTree = "<group>"; };
+		6616B86E172A0C720045BF3E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		6616B870172A0C860045BF3E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		6616B872172A0D0F0045BF3E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		66617B451728609700244561 /* StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackView.h; sourceTree = "<group>"; };
 		66617B461728609700244561 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 		66617B481728C16800244561 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -99,6 +99,9 @@
 		581595F31724D33B00046DFD = {
 			isa = PBXGroup;
 			children = (
+				6616B872172A0D0F0045BF3E /* Default-568h@2x.png */,
+				6616B870172A0C860045BF3E /* Default@2x.png */,
+				6616B86E172A0C720045BF3E /* Default.png */,
 				6616B8601729F8080045BF3E /* tetris@2x.png */,
 				6616B85E1729F8010045BF3E /* tetris.png */,
 				581596051724D33B00046DFD /* Tetris360 */,
@@ -159,9 +162,6 @@
 				581596081724D33B00046DFD /* InfoPlist.strings */,
 				5815960B1724D33B00046DFD /* main.m */,
 				5815960D1724D33B00046DFD /* Tetris360-Prefix.pch */,
-				581596111724D33C00046DFD /* Default.png */,
-				581596131724D33C00046DFD /* Default@2x.png */,
-				581596151724D33C00046DFD /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -231,9 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5815960A1724D33B00046DFD /* InfoPlist.strings in Resources */,
-				581596121724D33C00046DFD /* Default.png in Resources */,
-				581596141724D33C00046DFD /* Default@2x.png in Resources */,
-				581596161724D33C00046DFD /* Default-568h@2x.png in Resources */,
 				5815961C1724D33C00046DFD /* ViewController_iPhone.xib in Resources */,
 				5815961F1724D33C00046DFD /* ViewController_iPad.xib in Resources */,
 				66617B4B1728C55C00244561 /* TetrisTheme.mp3 in Resources */,
@@ -246,6 +243,9 @@
 				6616B86C1729FF350045BF3E /* gtk_media_play_ltr.png in Resources */,
 				5E4423D31729FBF00039946F /* level1.txt in Resources */,
 				6616B86D1729FF350045BF3E /* gtk_media_pause.png in Resources */,
+				6616B86F172A0C720045BF3E /* Default.png in Resources */,
+				6616B871172A0C860045BF3E /* Default@2x.png in Resources */,
+				6616B873172A0D0F0045BF3E /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
