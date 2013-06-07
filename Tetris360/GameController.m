@@ -61,6 +61,7 @@ float nfmod(float a,float b)
         self.audioPlayer.numberOfLoops = -1; //infinite
         
         self.puzzle = 1;
+        self.gameSpeed = 1.5f;
     }
     return self;
 }
@@ -104,7 +105,7 @@ float nfmod(float a,float b)
     //start background music
     [self.audioPlayer play];
 
-    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:self.gameSpeed
                                                       target:self
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil
@@ -127,7 +128,7 @@ float nfmod(float a,float b)
 - (void)resumeGame{
     //freeze piece and pause timer
     self.gameStatus = GameRunning;
-    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:self.gameSpeed
                                                       target:self
                                                     selector:@selector(movePieceDown)
                                                     userInfo:nil

@@ -49,7 +49,7 @@ typedef enum{
 
 @property (nonatomic, assign) int gameLevel;
 @property (nonatomic, assign) int gameScore;
-
+@property (nonatomic, assign) float gameSpeed;
 
 //game control
 - (void)startGame;

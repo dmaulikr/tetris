@@ -40,6 +40,8 @@
 		E42AF52C1729B34A0010F02C /* TetrisWall.mm in Sources */ = {isa = PBXBuildFile; fileRef = E42AF51F1729B34A0010F02C /* TetrisWall.mm */; };
 		E42AF52D1729B34A0010F02C /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E42AF5211729B34A0010F02C /* ViewController.mm */; };
 		E42AF532172A44AE0010F02C /* TetrisPlane.mm in Sources */ = {isa = PBXBuildFile; fileRef = E42AF531172A44AE0010F02C /* TetrisPlane.mm */; };
+		E4331766172B397A00C1783A /* translate.png in Resources */ = {isa = PBXBuildFile; fileRef = E4331765172B397A00C1783A /* translate.png */; };
+		E4331768172B3BFA00C1783A /* rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = E4331767172B3BFA00C1783A /* rotate.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,8 @@
 		E42AF5211729B34A0010F02C /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		E42AF52E172A43730010F02C /* TetrisPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TetrisPlane.h; sourceTree = "<group>"; };
 		E42AF531172A44AE0010F02C /* TetrisPlane.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TetrisPlane.mm; sourceTree = "<group>"; };
+		E4331765172B397A00C1783A /* translate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = translate.png; sourceTree = "<group>"; };
+		E4331767172B3BFA00C1783A /* rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,8 @@
 				E42AF4B2172842F30010F02C /* MainStoryboard_iPad.storyboard */,
 				E42AF4B7172842F30010F02C /* Shader.vsh */,
 				E42AF4B5172842F30010F02C /* Shader.fsh */,
+				E4331765172B397A00C1783A /* translate.png */,
+				E4331767172B3BFA00C1783A /* rotate.png */,
 			);
 			path = Tetris;
 			sourceTree = "<group>";
@@ -316,6 +322,8 @@
 				E42AF4B4172842F30010F02C /* MainStoryboard_iPad.storyboard in Resources */,
 				E42AF4B6172842F30010F02C /* Shader.fsh in Resources */,
 				E42AF4B8172842F30010F02C /* Shader.vsh in Resources */,
+				E4331766172B397A00C1783A /* translate.png in Resources */,
+				E4331768172B3BFA00C1783A /* rotate.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +563,7 @@
 				E42AF4D5172842F30010F02C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E42AF4D6172842F30010F02C /* Build configuration list for PBXNativeTarget "TetrisTests" */ = {
 			isa = XCConfigurationList;
@@ -563,6 +572,7 @@
 				E42AF4D8172842F30010F02C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

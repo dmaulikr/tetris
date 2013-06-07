@@ -35,13 +35,15 @@ float EYE_HEIGHT = 15;
     mCameraYaw = 0;
     mFlaggedForUpdate = false;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:
-                      CGRectMake(0, 0, 200, 25)];
-    //label.font = [UIFont fontWithName:m_fontType size:20];
-    label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    label.text = @"test";
-    label.textColor = [UIColor orangeColor];
-    [view addSubview:label];
+    UIImageView *translate = [[UIImageView alloc] initWithFrame:
+                          CGRectMake(0, self.view.bounds.size.height-150, 150, 150)];
+    translate.image = [UIImage imageNamed:@"translate.png"];
+    [view addSubview:translate];
+    
+    UIImageView *rotate = [[UIImageView alloc] initWithFrame:
+                              CGRectMake(self.view.bounds.size.width-150, self.view.bounds.size.height-150, 150, 150)];
+    rotate.image = [UIImage imageNamed:@"rotate.png"];
+    [view addSubview:rotate];
     
     [self setupGL];
 }
